@@ -1,0 +1,42 @@
+#!/usr/lib/expect -f
+
+#source [file dirname [info script]]/debug.tcl
+puts [info script]
+
+proc check_cmd_exist {cmd {help ""}} {
+	if {![string length [auto_execok $cmd]]} {
+		puts "Please install $cmd $help"
+	}
+}
+
+check_cmd_exist plink "yum install putty"
+check_cmd_exist ping
+check_cmd_exist telnet
+check_cmd_exist curl
+check_cmd_exist ssh
+
+#stty -echo
+#
+#proc myfunc {} {
+#puts "timeout=3"
+#set timeout 3
+#send "echo hello\r"
+#expect "helloworld"
+#
+#}
+#
+#spawn $env(SHELL)
+#
+#puts "timeout=10"
+#send "echo hello\r"
+#expect "helloworld"
+#
+#myfunc
+#
+#puts "timeout=10"
+#send "echo hello\r"
+#expect "helloworld"
+#
+#puts "finish!"
+#
+#stty echo

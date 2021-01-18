@@ -1,0 +1,52 @@
+---
+# Root layout
+layout: even-vertical
+
+# Root window options
+pane-border-status: bottom
+
+# List of windows
+windows:
+  ## The 1st window: Name only, no panes
+  #- empty, named window
+
+  - win-console:            # Name of the window
+      layout: tiled         # Window layout, overrides root layout
+      panes:                # List of panes
+        - pan-client:
+          - ssh hyu@client
+          - expect: '[Pp]assword:'
+          - {{ $MY_SSH_PASSWORD }}
+          - keys: Enter
+        - pan-server:
+          - ssh hyu@server
+          - expect: '[Pp]assword:'
+          - {{ $MY_SSH_PASSWORD }}
+          - keys: Enter
+          - cd www
+        - pan-fgt-left:
+          - ssh hyu@kvm
+          - expect: '[Pp]assword:'
+          - {{ $MY_SSH_PASSWORD }}
+          - virsh console fortios-125
+          - keys: Enter
+          - expect: '[Ll]ogin:'
+          - admin
+          - keys: Enter
+        - pan-fgt-right:
+          - ssh hyu@kvm
+          - expect: '[Pp]assword:'
+          - {{ $MY_SSH_PASSWORD }}
+          - virsh console fortios-127
+          - keys: Enter
+          - expect: '[Ll]ogin:'
+          - admin
+          - keys: Enter
+        - pan-cmdssh-left:
+          - cmdssh -d left.dut -u admin -p ''
+          - keys: Enter
+        - pan-cmdssh-right:
+          - cmdssh -d right.dut -u admin -p ''
+          - keys: Enter
+      pane-border-status: top
+

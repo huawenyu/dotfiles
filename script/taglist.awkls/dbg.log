@@ -1,0 +1,659 @@
+Expect Debugging is ON
+Print all test output to screen
+WARNING: No tool specified
+Opening log files in /home/wilson/script/test-wad/log
+Test Run By wilson on Fri Jun 19 11:00:53 2015
+Native configuration is x86_64-unknown-linux-gnu
+
+		===  tests ===
+
+trap: setting up signal 15 ("SIGTERM")
+setting trap for SIGTERM to terminated
+trap: setting up signal 2 ("SIGINT")
+setting trap for SIGINT to interrupted by user
+trap: setting up signal 3 ("SIGQUIT")
+setting trap for SIGQUIT to interrupted by user
+dirlist is /usr/local/share/dejagnu/baseboards
+pushing config for build, name is localhost
+dirlist is /usr/local/share/dejagnu/baseboards
+pushing config for host, name is localhost
+Schedule of variations:
+    unix
+
+target is unix
+Running target unix
+dirlist is /usr/local/share/dejagnu/baseboards/localhost /usr/local/share/dejagnu/baseboards
+Using /usr/local/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /usr/local/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/wilson/script/test-wad/wad.test/config/unix.exp as tool-and-target-specific interface file.
+spawn /bin/zsh -c ssh wilson@localhost | tee /home/wilson/script/test-wad/log/log.pc
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+spawn: returns {20245}
+spawn /bin/zsh -c plink -telnet 192.168.1.99 | tee /home/wilson/script/test-wad/log/log.box
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+spawn: returns {20249}
+
+expect: does "" (spawn_id exp10) match glob pattern "login:"? no
+
+VM64 login: 
+expect: does "\r\nVM64 login: " (spawn_id exp10) match glob pattern "login:"? yes
+expect: set expect_out(0,string) "login:"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\nVM64 login:"
+send: sending "admin\r" to { exp10 }
+
+expect: does " " (spawn_id exp10) match glob pattern "Password:"? no
+admin
+Password: 
+expect: does " admin\r\nPassword: " (spawn_id exp10) match glob pattern "Password:"? yes
+expect: set expect_out(0,string) "Password:"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) " admin\r\nPassword:"
+send: sending "\r\r" to { exp10 }
+
+expect: does " " (spawn_id exp10) match glob pattern "Welcome"? no
+
+
+expect: does " \r\n" (spawn_id exp10) match glob pattern "Welcome"? no
+
+Welcome !
+
+VM64 # 
+VM64 # 
+expect: does " \r\n\r\nWelcome !\r\n\r\nVM64 # \r\r\nVM64 # " (spawn_id exp10) match glob pattern "Welcome"? yes
+expect: set expect_out(0,string) "Welcome"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) " \r\n\r\nWelcome"
+Gate keeper glob pattern for '.*
+([A-Za-z0-9_].*) #' is '*
+* #'. Activating booster.
+
+expect: does " !\r\n\r\nVM64 # \r\r\nVM64 # " (spawn_id exp10) match regular expression ".*\n([A-Za-z0-9_].*) #"? Gate "*\n* #"? gate=yes re=yes
+expect: set expect_out(0,string) " !\r\n\r\nVM64 # \r\r\nVM64 #"
+expect: set expect_out(1,string) "VM64"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) " !\r\n\r\nVM64 # \r\r\nVM64 #"
+send: sending "\r" to { exp10 }
+
+expect: does " " (spawn_id exp10) match glob pattern " #*"? no
+
+
+expect: does " \r\r\n" (spawn_id exp10) match glob pattern " #*"? no
+VM64 # 
+expect: does " \r\r\nVM64 # " (spawn_id exp10) match glob pattern " #*"? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) " \r\r\nVM64 # "
+send: sending "get system status\r" to { exp10 }
+Gate keeper glob pattern for 'Version: (.*?)
+' is 'Version: *
+'. Activating booster.
+
+expect: does "" (spawn_id exp10) match regular expression "Version: (.*?)\n"? Gate "Version: *\n"? gate=no
+get system status
+expect: does "get system status" (spawn_id exp10) match regular expression "Version: (.*?)\n"? Gate "Version: *\n"? gate=no
+
+Version: FortiGate-VM64 v5.2.0,build0678,150611 (Interim)
+Virus-DB: 16.00560(2012-10-19 08:31)
+Extended DB: 1.00000(2012-10-17 15:46)
+IPS-DB: 5.00555(2014-10-07 01:21)
+IPS-ETDB: 0.00000(2001-01-01 00:00)
+Serial-Number: FGVMEV0000000000
+Botnet DB: 1.00000(2012-05-28 22:51)
+License Status: Valid
+Evaluation License Expires: Fri Jul  3 14:48:46 2015
+VM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed
+BIOS version: 04000002
+Log hard disk: Need format
+Hostname: VM64
+Operation Mode: NAT
+Current virtual domain: root
+Max number of virtual domains: 1
+Virtual domains status: 1 in NAT mode, 0 in TP mode
+Virtual domain configuration: disable
+FIPS-CC mode: disable
+Current HA mode: standalone
+Branch point: 678
+Release Version Information: Interim
+FortiOS x86-64: Yes
+System time: Fri Jun 19 11:00:53 2015
+
+VM64 # 
+expect: does "get system status\r\r\nVersion: FortiGate-VM64 v5.2.0,build0678,150611 (Interim)\r\nVirus-DB: 16.00560(2012-10-19 08:31)\r\nExtended DB: 1.00000(2012-10-17 15:46)\r\nIPS-DB: 5.00555(2014-10-07 01:21)\r\nIPS-ETDB: 0.00000(2001-01-01 00:00)\r\nSerial-Number: FGVMEV0000000000\r\nBotnet DB: 1.00000(2012-05-28 22:51)\r\nLicense Status: Valid\r\nEvaluation License Expires: Fri Jul  3 14:48:46 2015\r\nVM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed\r\nBIOS version: 04000002\r\nLog hard disk: Need format\r\nHostname: VM64\r\nOperation Mode: NAT\r\nCurrent virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Version: (.*?)\n"? Gate "Version: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Version: FortiGate-VM64 v5.2.0,build0678,150611 (Interim)\r\n"
+expect: set expect_out(1,string) "FortiGate-VM64 v5.2.0,build0678,150611 (Interim)\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "get system status\r\r\nVersion: FortiGate-VM64 v5.2.0,build0678,150611 (Interim)\r\n"
+Gate keeper glob pattern for 'Virus-DB: (.*?)
+' is 'Virus-DB: *
+'. Activating booster.
+
+expect: does "Virus-DB: 16.00560(2012-10-19 08:31)\r\nExtended DB: 1.00000(2012-10-17 15:46)\r\nIPS-DB: 5.00555(2014-10-07 01:21)\r\nIPS-ETDB: 0.00000(2001-01-01 00:00)\r\nSerial-Number: FGVMEV0000000000\r\nBotnet DB: 1.00000(2012-05-28 22:51)\r\nLicense Status: Valid\r\nEvaluation License Expires: Fri Jul  3 14:48:46 2015\r\nVM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed\r\nBIOS version: 04000002\r\nLog hard disk: Need format\r\nHostname: VM64\r\nOperation Mode: NAT\r\nCurrent virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Virus-DB: (.*?)\n"? Gate "Virus-DB: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Virus-DB: 16.00560(2012-10-19 08:31)\r\n"
+expect: set expect_out(1,string) "16.00560(2012-10-19 08:31)\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "Virus-DB: 16.00560(2012-10-19 08:31)\r\n"
+Gate keeper glob pattern for 'Log hard disk: (.*?)
+' is 'Log hard disk: *
+'. Activating booster.
+
+expect: does "Extended DB: 1.00000(2012-10-17 15:46)\r\nIPS-DB: 5.00555(2014-10-07 01:21)\r\nIPS-ETDB: 0.00000(2001-01-01 00:00)\r\nSerial-Number: FGVMEV0000000000\r\nBotnet DB: 1.00000(2012-05-28 22:51)\r\nLicense Status: Valid\r\nEvaluation License Expires: Fri Jul  3 14:48:46 2015\r\nVM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed\r\nBIOS version: 04000002\r\nLog hard disk: Need format\r\nHostname: VM64\r\nOperation Mode: NAT\r\nCurrent virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Log hard disk: (.*?)\n"? Gate "Log hard disk: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Log hard disk: Need format\r\n"
+expect: set expect_out(1,string) "Need format\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "Extended DB: 1.00000(2012-10-17 15:46)\r\nIPS-DB: 5.00555(2014-10-07 01:21)\r\nIPS-ETDB: 0.00000(2001-01-01 00:00)\r\nSerial-Number: FGVMEV0000000000\r\nBotnet DB: 1.00000(2012-05-28 22:51)\r\nLicense Status: Valid\r\nEvaluation License Expires: Fri Jul  3 14:48:46 2015\r\nVM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed\r\nBIOS version: 04000002\r\nLog hard disk: Need format\r\n"
+Gate keeper glob pattern for 'Hostname: (.*?)
+' is 'Hostname: *
+'. Activating booster.
+
+expect: does "Hostname: VM64\r\nOperation Mode: NAT\r\nCurrent virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Hostname: (.*?)\n"? Gate "Hostname: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Hostname: VM64\r\n"
+expect: set expect_out(1,string) "VM64\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "Hostname: VM64\r\n"
+Gate keeper glob pattern for 'Operation Mode: (.*?)
+' is 'Operation Mode: *
+'. Activating booster.
+
+expect: does "Operation Mode: NAT\r\nCurrent virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Operation Mode: (.*?)\n"? Gate "Operation Mode: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Operation Mode: NAT\r\n"
+expect: set expect_out(1,string) "NAT\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "Operation Mode: NAT\r\n"
+Gate keeper glob pattern for 'Virtual domain configuration: (.*?)
+' is 'Virtual domain configuration: *
+'. Activating booster.
+
+expect: does "Current virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\nFIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match regular expression "Virtual domain configuration: (.*?)\n"? Gate "Virtual domain configuration: *\n"? gate=yes re=yes
+expect: set expect_out(0,string) "Virtual domain configuration: disable\r\n"
+expect: set expect_out(1,string) "disable\r"
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "Current virtual domain: root\r\nMax number of virtual domains: 1\r\nVirtual domains status: 1 in NAT mode, 0 in TP mode\r\nVirtual domain configuration: disable\r\n"
+
+expect: does "FIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern "*"? yes
+expect: set expect_out(0,string) "FIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "FIPS-CC mode: disable\r\nCurrent HA mode: standalone\r\nBranch point: 678\r\nRelease Version Information: Interim\r\nFortiOS x86-64: Yes\r\nSystem time: Fri Jun 19 11:00:53 2015\r\n\r\nVM64 # "
+pushing config for target, name is unix
+Running /home/wilson/script/test-wad/wad.test/wad.test/wad.exp ...
+send: sending "\r" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "diag debug console no en\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+diag debug console no en
+
+expect: does "diag debug console no en\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 # 
+expect: does "diag debug console no en\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "diag debug console no en\r\r\n\r\nVM64 # "
+send: sending "diag debug enable\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+diag debug enable
+
+expect: does "diag debug enable\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 # 
+expect: does "diag debug enable\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "diag debug enable\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "config system global\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+config system global
+
+expect: does "config system global\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (global) # 
+expect: does "config system global\r\r\n\r\nVM64 (global) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "config system global\r\r\n\r\nVM64 (global) # "
+send: sending "    set admintimeout 480\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    set admintimeout 480
+
+expect: does "    set admintimeout 480\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (global) # 
+expect: does "    set admintimeout 480\r\r\n\r\nVM64 (global) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    set admintimeout 480\r\r\n\r\nVM64 (global) # "
+send: sending "    set hostname "VM64"\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    set hostname "VM64"
+
+expect: does "    set hostname "VM64"\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (global) # 
+expect: does "    set hostname "VM64"\r\r\n\r\nVM64 (global) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    set hostname "VM64"\r\r\n\r\nVM64 (global) # "
+send: sending "    set gui-wanopt-cache enable\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    set gui-wanopt-cache enable
+
+expect: does "    set gui-wanopt-cache enable\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (global) # 
+expect: does "    set gui-wanopt-cache enable\r\r\n\r\nVM64 (global) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    set gui-wanopt-cache enable\r\r\n\r\nVM64 (global) # "
+send: sending "    set gui-explicit-proxy enable\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    set gui-explicit-proxy enable
+
+expect: does "    set gui-explicit-proxy enable\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (global) # 
+expect: does "    set gui-explicit-proxy enable\r\r\n\r\nVM64 (global) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    set gui-explicit-proxy enable\r\r\n\r\nVM64 (global) # "
+send: sending "end\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+end
+
+expect: does "end\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 # 
+expect: does "end\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "end\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "config system interface\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+config system interface
+
+expect: does "config system interface\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (interface) # 
+expect: does "config system interface\r\r\n\r\nVM64 (interface) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "config system interface\r\r\n\r\nVM64 (interface) # "
+send: sending "    edit "port1"\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    edit "port1"
+
+expect: does "    edit "port1"\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (port1) # 
+expect: does "    edit "port1"\r\r\n\r\nVM64 (port1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    edit "port1"\r\r\n\r\nVM64 (port1) # "
+send: sending "        set ip 192.168.1.99 255.255.255.0\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+        set ip 192.168.1.99 255
+expect: does "        set ip 192.168.1.99 255" (spawn_id exp10) match glob pattern " # "? no
+.255.255.0
+
+VM64 (port1) # 
+expect: does "        set ip 192.168.1.99 255.255.255.0\r\r\n\r\nVM64 (port1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set ip 192.168.1.99 255.255.255.0\r\r\n\r\nVM64 (port1) # "
+send: sending "        set allowaccess ping https ssh snmp http telnet\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set allowaccess ping https ssh snmp http telnet
+
+VM64 (port1) # 
+expect: does "        set allowaccess ping https ssh snmp http telnet\r\r\n\r\nVM64 (port1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set allowaccess ping https ssh snmp http telnet\r\r\n\r\nVM64 (port1) # "
+send: sending "        set type physical\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+        set type physical
+
+expect: does "        set type physical\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (port1) # 
+expect: does "        set type physical\r\r\n\r\nVM64 (port1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set type physical\r\r\n\r\nVM64 (port1) # "
+send: sending "        set explicit-web-proxy enable\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+        set explicit-web-proxy enable
+
+expect: does "        set explicit-web-proxy enable\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (port1) # 
+expect: does "        set explicit-web-proxy enable\r\r\n\r\nVM64 (port1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set explicit-web-proxy enable\r\r\n\r\nVM64 (port1) # "
+send: sending "    next\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+    next
+
+expect: does "    next\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+
+VM64 (interface) # 
+expect: does "    next\r\r\n\r\nVM64 (interface) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    next\r\r\n\r\nVM64 (interface) # "
+send: sending "    edit "port2"\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+   edit "port2"
+
+VM64 (port2) # 
+expect: does "    edit "port2"\r\r\n\r\nVM64 (port2) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    edit "port2"\r\r\n\r\nVM64 (port2) # "
+send: sending "        set ip 172.16.80.124 255.255.255.0\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set ip 172.16.80.124 255.255.255.0
+
+VM64 (port2) # 
+expect: does "        set ip 172.16.80.124 255.255.255.0\r\r\n\r\nVM64 (port2) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set ip 172.16.80.124 255.255.255.0\r\r\n\r\nVM64 (port2) # "
+send: sending "        set allowaccess ping https ssh snmp http telnet\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set allowaccess ping https ssh snmp http telnet
+
+VM64 (port2) # 
+expect: does "        set allowaccess ping https ssh snmp http telnet\r\r\n\r\nVM64 (port2) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set allowaccess ping https ssh snmp http telnet\r\r\n\r\nVM64 (port2) # "
+send: sending "        set type physical\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set type physical
+
+VM64 (port2) # 
+expect: does "        set type physical\r\r\n\r\nVM64 (port2) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set type physical\r\r\n\r\nVM64 (port2) # "
+send: sending "    next\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+   next
+
+VM64 (interface) # 
+expect: does "    next\r\r\n\r\nVM64 (interface) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    next\r\r\n\r\nVM64 (interface) # "
+send: sending "end\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+e
+expect: does "e" (spawn_id exp10) match glob pattern " # "? no
+nd
+
+VM64 # 
+expect: does "end\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "end\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "config router static\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+c
+expect: does "c" (spawn_id exp10) match glob pattern " # "? no
+onfig router static
+
+VM64 (static) # 
+expect: does "config router static\r\r\n\r\nVM64 (static) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "config router static\r\r\n\r\nVM64 (static) # "
+send: sending "    edit 1\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+   edit 1
+
+VM64 (1) # 
+expect: does "    edit 1\r\r\n\r\nVM64 (1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    edit 1\r\r\n\r\nVM64 (1) # "
+send: sending "        set device "port2"\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set device "port2"
+
+VM64 (1) # 
+expect: does "        set device "port2"\r\r\n\r\nVM64 (1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set device "port2"\r\r\n\r\nVM64 (1) # "
+send: sending "        set gateway 172.16.80.1\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+       set gateway 172.16.80.1
+
+VM64 (1) # 
+expect: does "        set gateway 172.16.80.1\r\r\n\r\nVM64 (1) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "        set gateway 172.16.80.1\r\r\n\r\nVM64 (1) # "
+send: sending "    next\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+   next
+
+VM64 (static) # 
+expect: does "    next\r\r\n\r\nVM64 (static) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "    next\r\r\n\r\nVM64 (static) # "
+send: sending "end\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+e
+expect: does "e" (spawn_id exp10) match glob pattern " # "? no
+nd
+
+VM64 # 
+expect: does "end\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "end\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "config log memory setting\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+c
+expect: does "c" (spawn_id exp10) match glob pattern " # "? no
+onfig log memory setting
+
+VM64 (setting) # 
+expect: does "config log memory setting\r\r\n\r\nVM64 (setting) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "config log memory setting\r\r\n\r\nVM64 (setting) # "
+send: sending "   set status enable\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+ 
+expect: does " " (spawn_id exp10) match glob pattern " # "? no
+  set status enable
+
+VM64 (setting) # 
+expect: does "   set status enable\r\r\n\r\nVM64 (setting) # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "   set status enable\r\r\n\r\nVM64 (setting) # "
+send: sending "end\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+e
+expect: does "e" (spawn_id exp10) match glob pattern " # "? no
+nd
+
+VM64 # 
+expect: does "end\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "end\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+send: sending "exec log filter device memory\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+e
+expect: does "e" (spawn_id exp10) match glob pattern " # "? no
+xec log filter device memory
+
+VM64 # 
+expect: does "exec log filter device memory\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "exec log filter device memory\r\r\n\r\nVM64 # "
+send: sending "exec log filter cat 3\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+e
+expect: does "e" (spawn_id exp10) match glob pattern " # "? no
+xec log filter cat 3
+
+VM64 # 
+expect: does "exec log filter cat 3\r\r\n\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "exec log filter cat 3\r\r\n\r\nVM64 # "
+send: sending "\n" to { exp10 }
+
+expect: does "" (spawn_id exp10) match glob pattern " # "? no
+
+
+expect: does "\r\r\n" (spawn_id exp10) match glob pattern " # "? no
+VM64 # 
+expect: does "\r\r\nVM64 # " (spawn_id exp10) match glob pattern " # "? yes
+expect: set expect_out(0,string) " # "
+expect: set expect_out(spawn_id) "exp10"
+expect: set expect_out(buffer) "\r\r\nVM64 # "
+testcase /home/wilson/script/test-wad/wad.test/wad.test/wad.exp completed in 2 seconds
+
+		===  Summary ===
+
+runtest completed at Fri Jun 19 11:00:55 2015

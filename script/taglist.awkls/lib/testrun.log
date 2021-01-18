@@ -1,0 +1,28 @@
+Opening log files in .
+Test Run By wilson on Thu Jun 18 17:17:06 2015
+Native configuration is x86_64-unknown-linux-gnu
+
+		===  tests ===
+
+setting trap for SIGTERM to terminated
+setting trap for SIGINT to interrupted by user
+setting trap for SIGQUIT to interrupted by user
+dirlist is /usr/local/share/dejagnu/baseboards
+pushing config for build, name is localhost
+dirlist is /usr/local/share/dejagnu/baseboards
+pushing config for host, name is localhost
+Schedule of variations:
+    unix
+
+target is unix
+Running target unix
+dirlist is /usr/local/share/dejagnu/baseboards/localhost /usr/local/share/dejagnu/baseboards
+Using /usr/local/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /usr/local/share/dejagnu/config/unix.exp as generic interface file for target.
+WARNING: Couldn't find tool config file for unix, using default.
+Loading /usr/local/share/dejagnu/config/default.exp
+pushing config for target, name is unix
+
+		===  Summary ===
+
+runtest completed at Thu Jun 18 17:17:06 2015

@@ -1,0 +1,30 @@
+--- /etc/samba/smb.conf	2015-11-16 12:30:46.960388333 -0800
++++ smb.conf	2015-11-18 13:34:24.075956988 -0800
+@@ -190,21 +190,21 @@
+ # Un-comment the following (and tweak the other settings below to suit)
+ # to enable the default home directory shares. This will share each
+ # user's home directory as \\server\username
+-;[homes]
+-;   comment = Home Directories
+-;   browseable = no
++[homes]
++   comment = Home Directories
++   browseable = yes
+ 
+ # By default, the home directories are exported read-only. Change the
+ # next parameter to 'no' if you want to be able to write to them.
+-;   read only = yes
++   read only = no
+ 
+ # File creation mask is set to 0700 for security reasons. If you want to
+ # create files with group=rw permissions, set next parameter to 0775.
+-;   create mask = 0700
++   create mask = 0775
+ 
+ # Directory creation mask is set to 0700 for security reasons. If you want to
+ # create dirs. with group=rw permissions, set next parameter to 0775.
+-;   directory mask = 0700
++   directory mask = 0775
+ 
+ # By default, \\server\username shares can be connected to by anyone
+ # with access to the samba server.

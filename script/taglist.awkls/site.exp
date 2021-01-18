@@ -1,0 +1,60 @@
+#################################################
+# config
+set debugMode 1
+set DEBUG 1
+
+#set curdir [file dirname [info script]]
+#[file join [pwd] $pathname]
+set GLOBAL(cwd) [pwd]
+puts [info script]
+
+set srcdir .
+set objdir $GLOBAL(cwd)
+set outdir $GLOBAL(cwd)/log
+
+#log_file
+#log_file -a $GLOBAL(cwd)/log.console
+#################################################
+
+
+#################################################
+# common library
+source $GLOBAL(cwd)/lib/debug.tcl
+source $GLOBAL(cwd)/lib/check.exp
+source $GLOBAL(cwd)/lib/box.exp
+source $GLOBAL(cwd)/config/config.exp
+#################################################
+
+
+#################################################
+# global variable:
+#     GLOBAL(cwd)
+#     HOSTS(box,name)
+#     CONFIG("fortigate", 520), 'fortigate' come from HOSTS(,type)
+#                               520 come from HOSTS(,Ver)
+
+# GLOBAL(cwd,)
+#
+
+# HOSTS(*,
+#   #config# [name,type=(linux,fortigate),note,prompt,ip,user,password,log]
+#   #get#    [Version,Ver,Virus,Log,Hostname,Operation,Vdom]
+#   #private#[spawn_id,])
+#
+set HOSTS(pc,name) "my linux pc"
+set HOSTS(pc,type) "linux"
+set HOSTS(pc,note) "my test box 111C"
+set HOSTS(pc,ip) "192.168.1.121"
+set HOSTS(pc,user) "wilson"
+set HOSTS(pc,password) ""
+set HOSTS(pc,log) 1
+
+set HOSTS(box,name) "my box 111C"
+set HOSTS(box,type) "fortigate"
+set HOSTS(box,note) "my test box VM64"
+set HOSTS(box,prompt) "" ;# Placeholder
+set HOSTS(box,ip) "192.168.1.99"
+set HOSTS(box,user) "admin"
+set HOSTS(box,password) ""
+set HOSTS(box,log) 1
+#################################################

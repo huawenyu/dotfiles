@@ -1,0 +1,21 @@
+{
+	"name": "Vimium C",
+	"@time": "02/10/2019, 20:30:27",
+	"time": 1570073427626,
+	"environment": {
+		"extension": "1.77.1",
+		"platform": "linux",
+		"chrome": 73
+	},
+	"exclusionRules": [
+		{
+			"pattern": ":https://mail.google.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://remotedesktop.google.com",
+			"passKeys": ""
+		}
+	],
+	"showAdvancedOptions": true
+}

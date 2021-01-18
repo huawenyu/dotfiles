@@ -1,0 +1,165 @@
+//
+// Auto generate when install/download adapters,
+//   the original file is ~/.vim/bundle/vimspector/gadgets/linux/.gadgets.json,
+//   offcourse also have some modify ourself.
+// Install like:
+//    cd ~/.vim/bundle/vimspector
+//    ./install_gadget.py --enable-python --update-gadget-config
+//    ./install_gadget.py --enable-c --update-gadget-config
+//    ./install_gadget.py --enable-cpp --update-gadget-config
+//    ./install_gadget.py --enable-rust --update-gadget-config
+//    ./install_gadget.py --enable-bash --update-gadget-config
+//
+{
+	"adapters": {
+		"CodeLLDB": {
+			"command": [
+				"${gadgetDir}/CodeLLDB/adapter/codelldb",
+				"--port",
+				"${unusedLocalPort}"
+			],
+			"configuration": {
+				"args": [],
+				"cargo": {},
+				"cwd": "${workspaceRoot}",
+				"env": {},
+				"name": "lldb",
+				"terminal": "integrated",
+				"type": "lldb"
+			},
+			"name": "CodeLLDB",
+			"port": "${unusedLocalPort}",
+			"type": "CodeLLDB"
+		},
+		// Copy from https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c
+		"lldb-vscode": {
+			"variables": {
+				"LLVM": {
+					"shell": "brew --prefix llvm"
+				}
+			},
+			"attach": {
+				"pidProperty": "pid",
+				"pidSelect": "none"
+			},
+			"command": [
+				"${LLVM}/bin/lldb-vscode"
+			],
+			"env": {
+				"LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY": "YES"
+			},
+			"name": "lldb"
+		},
+		"debugpy": {
+			"command": [
+				"/usr/bin/python3",
+				"${gadgetDir}/debugpy/build/lib/debugpy/adapter"
+			],
+			"configuration": {
+				"python": "/usr/bin/python3",
+				"subProcess": false
+			},
+			"name": "debugpy"
+		},
+		"multi-session": {
+			"host": "${host}",
+			"port": "${port}"
+		},
+		"vscode-bash": {
+			"command": [
+				"node",
+				"${gadgetDir}/vscode-bash-debug/out/bashDebug.js"
+			],
+			"configuration": {
+				"args": [],
+				"cwd": "${workspaceRoot}",
+				"env": {},
+				"pathBash": "bash",
+				"pathBashdb": "${BASHDB_HOME}/bashdb",
+				"pathBashdbLib": "${BASHDB_HOME}",
+				"pathCat": "cat",
+				"pathMkfifo": "mkfifo",
+				"pathPkill": "pkill",
+				"program": "${file}",
+				"request": "launch",
+				"terminalKind": "integrated",
+				"type": "bashdb"
+			},
+			"name": "bashdb",
+			"variables": {
+				"BASHDB_HOME": "${gadgetDir}/vscode-bash-debug/bashdb_dir"
+			}
+		},
+		"vscode-cpptools": {
+			"attach": {
+				"pidProperty": "processId",
+				"pidSelect": "ask"
+			},
+			"command": [
+				"${gadgetDir}/vscode-cpptools/debugAdapters/OpenDebugAD7"
+			],
+			"configuration": {
+				"args": [],
+				"cwd": "${workspaceRoot}",
+				"environment": [],
+				"type": "cppdbg"
+			},
+			"name": "cppdbg"
+		},
+		// Copy from  https://puremourning.github.io/vimspector/configuration.html#remote-debugging-support
+		"cpptools-remote": {
+			"command": [
+				"${gadgetDir}/vscode-cpptools/debugAdapters/OpenDebugAD7"
+			],
+			"name": "cppdbg",
+			"configuration": {
+				"type": "cppdbg"
+			},
+			"launch": {
+				"remote": {
+					"host": "${host}",
+					"account": "${account}",
+					"runCommand": [
+						"gdbserver",
+						"--once",
+						"--no-startup-with-shell",
+						"--disable-randomisation",
+						"0.0.0.0:${port}",
+						// @ref configurations.remote-cmdLine
+						"%CMD%"
+				}
+			},
+			"attach": {
+				"remote": {
+					"host": "${host}",  // Remote host to ssh to (@MUST if not using container)
+					"account": "${account}", // User to connect as (optional)
+					"pidCommand": [  // @MUST
+						"/path/to/secret/script/GetPIDForService", "${ServiceName}"
+					],
+					"attachCommand": [
+						"gdbserver",
+						"--once",
+						"--attach",
+						"0.0.0.0:${port}",
+						// @ref adapters.pidCommand
+						"%PID%"
+					],
+					//
+					// If your application is started by a wrapper script, then you might
+					// need the followin. GDB can't pause an application because it only
+					// sends the signal to the process group leader. Or something.
+					// Basically, if you find that everything just hangs and the
+					// application never attaches, try using the following to manually
+					// force the trap signal.
+					//
+					"initCompleteCommand": [
+						"kill",
+						"-TRAP",
+						"%PID%"
+					]
+				}
+			}
+		}
+	}
+}
+

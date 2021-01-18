@@ -1,0 +1,50 @@
+// Come from:
+//   https://puremourning.github.io/vimspector/configuration.html#remote-debugging-support
+//
+{
+	"configurations": {
+		"remote launch": {
+			"adapter": "cpptools-remote",
+			"remote-cmdLine": [ "/path/to/the/remote/executable", "args..." ],  // @MUST
+			"remote-request": "launch",
+			"configuration": {
+				"request": "attach", // yes, attach!
+
+				"program": "/path/to/the/local/executable",
+				"MIMode": "gdb",
+				"miDebuggerAddress": "${host}:${port}"
+			}
+		},
+		"remote attach": {
+			"adapter": "cpptools-remote",
+			"remote-request": "attach",
+			"configuration": {
+				"request": "attach",
+
+				"program": "/path/to/the/local/executable",
+				"MIMode": "gdb",
+				"miDebuggerAddress": "${host}:${port}"
+			}
+		},
+		"cpp:launch": {
+			"default": true,  // default using this one
+			"adapter": "vscode-cpptools",
+			"configuration": {
+				"name": "cpp",
+				"type": "cppdbg",
+				"request": "launch",
+				"program": "sysinit/init",
+				"miDebuggerServerAddress": "dut:444",
+				"cwd": "${workspaceRoot}",
+				"environment": [],
+				"externalConsole": true,
+				"stopAtEntry": true,
+				"MIMode": "gdb",
+				"logging": {
+					"engineLogging": false
+				}
+			}
+		}
+	}
+}
+

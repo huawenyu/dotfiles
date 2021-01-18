@@ -1,0 +1,107 @@
+
+VM64 login: admin
+Password: 
+
+Welcome !
+
+VM64 # 
+VM64 # 
+VM64 # get system status
+Version: FortiGate-VM64 v5.2.0,build0678,150611 (Interim)
+Virus-DB: 16.00560(2012-10-19 08:31)
+Extended DB: 1.00000(2012-10-17 15:46)
+IPS-DB: 5.00555(2014-10-07 01:21)
+IPS-ETDB: 0.00000(2001-01-01 00:00)
+Serial-Number: FGVMEV0000000000
+Botnet DB: 1.00000(2012-05-28 22:51)
+License Status: Valid
+Evaluation License Expires: Fri Jul  3 14:48:46 2015
+VM Resources: 1 CPU/1 allowed, 972 MB RAM/1024 MB allowed
+BIOS version: 04000002
+Log hard disk: Need format
+Hostname: VM64
+Operation Mode: NAT
+Current virtual domain: root
+Max number of virtual domains: 1
+Virtual domains status: 1 in NAT mode, 0 in TP mode
+Virtual domain configuration: disable
+FIPS-CC mode: disable
+Current HA mode: standalone
+Branch point: 678
+Release Version Information: Interim
+FortiOS x86-64: Yes
+System time: Fri Jun 19 11:00:53 2015
+
+VM64 # 
+VM64 # 
+VM64 # diag debug console no en
+
+VM64 # diag debug enable
+
+VM64 # 
+VM64 # config system global
+
+VM64 (global) #     set admintimeout 480
+
+VM64 (global) #     set hostname "VM64"
+
+VM64 (global) #     set gui-wanopt-cache enable
+
+VM64 (global) #     set gui-explicit-proxy enable
+
+VM64 (global) # end
+
+VM64 # 
+VM64 # config system interface
+
+VM64 (interface) #     edit "port1"
+
+VM64 (port1) #         set ip 192.168.1.99 255.255.255.0
+
+VM64 (port1) #         set allowaccess ping https ssh snmp http telnet
+
+VM64 (port1) #         set type physical
+
+VM64 (port1) #         set explicit-web-proxy enable
+
+VM64 (port1) #     next
+
+VM64 (interface) #     edit "port2"
+
+VM64 (port2) #         set ip 172.16.80.124 255.255.255.0
+
+VM64 (port2) #         set allowaccess ping https ssh snmp http telnet
+
+VM64 (port2) #         set type physical
+
+VM64 (port2) #     next
+
+VM64 (interface) # end
+
+VM64 # 
+VM64 # config router static
+
+VM64 (static) #     edit 1
+
+VM64 (1) #         set device "port2"
+
+VM64 (1) #         set gateway 172.16.80.1
+
+VM64 (1) #     next
+
+VM64 (static) # end
+
+VM64 # 
+VM64 # config log memory setting
+
+VM64 (setting) #    set status enable
+
+VM64 (setting) # end
+
+VM64 # 
+VM64 # exec log filter device memory
+
+VM64 # exec log filter cat 3
+
+VM64 # 
+VM64 # 

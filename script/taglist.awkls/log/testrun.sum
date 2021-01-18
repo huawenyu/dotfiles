@@ -1,0 +1,13 @@
+Test Run By wilson on Fri Jun 19 11:00:53 2015
+Native configuration is x86_64-unknown-linux-gnu
+
+		===  tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running /home/wilson/script/test-wad/wad.test/wad.test/wad.exp ...
+
+		===  Summary ===
+

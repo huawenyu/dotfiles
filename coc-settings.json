@@ -1,0 +1,45 @@
+{
+  "coc.preferences.useQuickfixForLocations": true,
+  "coc.preferences.timeout": 500000,
+  "coc.preferences.noselect": false,
+  "coc.preferences.preferCompleteThanJumpPlaceholder": false,
+  "coc.preferences.acceptSuggestionOnCommitCharacter": false,
+  "coc.preferences.diagnostic.displayByAle": false,
+  "coc.preferences.formatOnType": false,
+
+  "coc.preferences.localityBonus": false,
+  "coc.preferences.codeLens.enable": false,
+  "coc.preferences.autoTrigger": "none",
+  "suggest.autoTrigger": "none",
+
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "clang": {
+          "extraArgs": ["-Wmicrosoft"]
+        }
+      }
+    },
+    "rust": {
+      "command": "ra_lsp_server",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    },
+    "efm": {
+      "command": "efm-langserver",
+      "args": ["-c", "~/dotfiles/efm-config.yaml"],
+      "filetypes": ["vim", "eruby", "markdown", "yaml"]
+    }
+  },
+  "python.jediEnabled": false
+}

@@ -1,0 +1,124 @@
+Found /home/wilson/script/test-wad/site.exp
+Using test sources in .
+Using test binaries in /home/wilson/script/test-wad
+Tool root directory is /home/wilson
+Using /usr/local/share/dejagnu to find libraries
+Found /usr/local/share/dejagnu/libexec/config.guess
+Assuming build host is x86_64-unknown-linux-gnu
+WARNING: Couldn't find the global config file.
+Loading /usr/local/share/dejagnu/utils.exp
+Loading /usr/local/share/dejagnu/framework.exp
+Loading /usr/local/share/dejagnu/debugger.exp
+Loading /usr/local/share/dejagnu/remote.exp
+Loading /usr/local/share/dejagnu/telnet.exp
+Loading /usr/local/share/dejagnu/rlogin.exp
+Loading /usr/local/share/dejagnu/kermit.exp
+Loading /usr/local/share/dejagnu/tip.exp
+Loading /usr/local/share/dejagnu/rsh.exp
+Loading /usr/local/share/dejagnu/ftp.exp
+Loading /usr/local/share/dejagnu/target.exp
+Loading /usr/local/share/dejagnu/targetdb.exp
+Loading /usr/local/share/dejagnu/libgloss.exp
+Expect Debugging is ON
+Print all test output to screen
+WARNING: No tool specified
+cannot start logging without first stopping logging
+    while executing
+"log_file -a "$outdir/$tool.log""
+    (procedure "open_logs" line 25)
+    invoked from within
+"open_logs"
+    (file "/usr/local/share/dejagnu/runtest.exp" line 1239)
+Found /home/wilson/script/test-wad/site.exp
+Using test sources in .
+Using test binaries in /home/wilson/script/test-wad
+Tool root directory is /home/wilson
+Using /usr/local/share/dejagnu to find libraries
+Found /usr/local/share/dejagnu/libexec/config.guess
+Assuming build host is x86_64-unknown-linux-gnu
+WARNING: Couldn't find the global config file.
+Loading /usr/local/share/dejagnu/utils.exp
+Loading /usr/local/share/dejagnu/framework.exp
+Loading /usr/local/share/dejagnu/debugger.exp
+Loading /usr/local/share/dejagnu/remote.exp
+Loading /usr/local/share/dejagnu/telnet.exp
+Loading /usr/local/share/dejagnu/rlogin.exp
+Loading /usr/local/share/dejagnu/kermit.exp
+Loading /usr/local/share/dejagnu/tip.exp
+Loading /usr/local/share/dejagnu/rsh.exp
+Loading /usr/local/share/dejagnu/ftp.exp
+Loading /usr/local/share/dejagnu/target.exp
+Loading /usr/local/share/dejagnu/targetdb.exp
+Loading /usr/local/share/dejagnu/libgloss.exp
+Expect Debugging is ON
+Print all test output to screen
+WARNING: No tool specified
+cannot start logging without first stopping logging
+    while executing
+"log_file -a "$outdir/$tool.log""
+    (procedure "open_logs" line 25)
+    invoked from within
+"open_logs"
+    (file "/usr/local/share/dejagnu/runtest.exp" line 1239)
+Found /home/wilson/script/test-wad/site.exp
+Using test sources in .
+Using test binaries in /home/wilson/script/test-wad
+Tool root directory is /home/wilson
+Using /usr/local/share/dejagnu to find libraries
+Found /usr/local/share/dejagnu/libexec/config.guess
+Assuming build host is x86_64-unknown-linux-gnu
+WARNING: Couldn't find the global config file.
+Loading /usr/local/share/dejagnu/utils.exp
+Loading /usr/local/share/dejagnu/framework.exp
+Loading /usr/local/share/dejagnu/debugger.exp
+Loading /usr/local/share/dejagnu/remote.exp
+Loading /usr/local/share/dejagnu/telnet.exp
+Loading /usr/local/share/dejagnu/rlogin.exp
+Loading /usr/local/share/dejagnu/kermit.exp
+Loading /usr/local/share/dejagnu/tip.exp
+Loading /usr/local/share/dejagnu/rsh.exp
+Loading /usr/local/share/dejagnu/ftp.exp
+Loading /usr/local/share/dejagnu/target.exp
+Loading /usr/local/share/dejagnu/targetdb.exp
+Loading /usr/local/share/dejagnu/libgloss.exp
+Expect Debugging is ON
+Print all test output to screen
+WARNING: No tool specified
+cannot start logging without first stopping logging
+    while executing
+"log_file -a "$outdir/$tool.log""
+    (procedure "open_logs" line 25)
+    invoked from within
+"open_logs"
+    (file "/usr/local/share/dejagnu/runtest.exp" line 1239)
+Found /home/wilson/script/test-wad/site.exp
+Using test sources in .
+Using test binaries in /home/wilson/script/test-wad
+Tool root directory is /home/wilson
+Using /usr/local/share/dejagnu to find libraries
+Found /usr/local/share/dejagnu/libexec/config.guess
+Assuming build host is x86_64-unknown-linux-gnu
+WARNING: Couldn't find the global config file.
+Loading /usr/local/share/dejagnu/utils.exp
+Loading /usr/local/share/dejagnu/framework.exp
+Loading /usr/local/share/dejagnu/debugger.exp
+Loading /usr/local/share/dejagnu/remote.exp
+Loading /usr/local/share/dejagnu/telnet.exp
+Loading /usr/local/share/dejagnu/rlogin.exp
+Loading /usr/local/share/dejagnu/kermit.exp
+Loading /usr/local/share/dejagnu/tip.exp
+Loading /usr/local/share/dejagnu/rsh.exp
+Loading /usr/local/share/dejagnu/ftp.exp
+Loading /usr/local/share/dejagnu/target.exp
+Loading /usr/local/share/dejagnu/targetdb.exp
+Loading /usr/local/share/dejagnu/libgloss.exp
+Expect Debugging is ON
+Print all test output to screen
+WARNING: No tool specified
+cannot start logging without first stopping logging
+    while executing
+"log_file -a "$outdir/$tool.log""
+    (procedure "open_logs" line 25)
+    invoked from within
+"open_logs"
+    (file "/usr/local/share/dejagnu/runtest.exp" line 1239)

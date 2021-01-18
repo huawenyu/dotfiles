@@ -1,0 +1,24 @@
+#!/usr/bin/awk -f
+@include "my.awk"
+
+BEGIN{
+    RS = "commit ";
+    FS = "\n|[:]|[<]";
+    SHA = 0;
+    author = 1;
+    summary = 2;
+} 
+
+{
+    report[NR][SHA]=substr($1,1,6);
+    report[NR][author]=$3;
+    report[NR][summary]=$10;
+}
+
+END{ print "svnlog end " NR;
+    for (i=1; i<=NR; i++) {
+        print green(report[i][SHA]) blue(report[i][author]) report[i][summary];
+        cmd = "git --no-pager show "  report[i][SHA]; 
+        exec_cmd(cmd)    
+    }
+}

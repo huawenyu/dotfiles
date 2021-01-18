@@ -1,0 +1,76 @@
+# GNU Screen - main configuration file 
+# All other .screenrc files will source this file to inherit settings.
+# Help: Ctrl+a ?
+#   screen -ls
+#   screen -S session_name
+#   screen -r session_name		attach the session, only works when no-other attach it
+#   screen -x session_name		share the session
+#   Ctrl+a d					detach from the screen session at any time by typing:
+# Shortcut:
+#   Ctrl+a c		Create a new window (with shell)
+#   Ctrl+a " 		List all window
+#   Ctrl+a 0 		Switch to window 0 (by number )
+#   Ctrl+a A 		Rename the current window
+#   Ctrl+a S 		Split current region horizontally into two regions
+#   Ctrl+a | 		Split current region vertically into two regions
+#   Ctrl+a tab		Switch the input focus to the next region
+#   Ctrl+a Ctrl+a	Toggle between the current and previous region
+#   Ctrl+a Q		Close all regions but the current one
+#   Ctrl+a X		Close the current region
+#
+
+# For tmux already use CTRL-A as the pre-leader
+escape ^Bb
+startup_message off
+
+vbell off
+vbell_msg ""
+bell_msg "!!! Ding !!!"
+
+# Allow bold colors - necessary for some reason
+attrcolor b ".I"
+# Tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# Enables use of shift-PgUp and shift-PgDn
+#termcapinfo xterm|xterms|xs|rxvt ti@:te@
+# Erase background with current bg color
+defbce "on"
+
+defflow auto
+defutf8 on
+msgwait 1
+nethack on
+nonblock on
+
+# Cache 2000 lines for scroll back
+defscrollback 1000
+
+# mouse tracking allows to switch region focus by clicking
+mousetrack on
+# Sick of full-screen programs like vim remaining in the scrollback buffer after you've closed them?
+altscreen on
+
+# Enable 256 color term
+term xterm-256color
+
+# File-base status notify
+#backtick 101 60 60 $HOME/.screenrc.acpi    # .screenrc.acpi contains 1 line: acpi | awk -F ', ' '{print $2}'
+backtick 101 60 60 $HOME/.screenrc.task
+
+# Doc: https://www.linuxjournal.com/article/10950
+hardstatus alwayslastline
+#hardstatus alwaysfirstline
+# Very nice tabbed colored hardstatus line
+#hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
+hardstatus string '%{KG} %H%{KW}|%{KY}%101`%{KW} %{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %D %M %d %Y%{= Kc} %C%A%{-}'
+
+# change command character from ctrl-a to ctrl-b (emacs users may want this)
+#escape ^Bb
+
+# Hide hardstatus: ctrl-a f 
+bind f eval "hardstatus ignore"
+# Show hardstatus: ctrl-a F
+bind F eval "hardstatus alwayslastline"
+
+pow_detach_msg "Screen session for \${LOGNAME} \$:cr:\$:nl:ended"
+

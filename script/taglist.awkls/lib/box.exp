@@ -1,0 +1,154 @@
+#!/usr/lib/expect -f
+
+source [file dirname [info script]]/debug.tcl
+dputs [info script]
+
+proc box_open {host} {
+	global HOSTS
+	global GLOBAL
+	global env
+
+	if {$HOSTS($host,type) == "fortigate"} {
+		if {$HOSTS($host,log)} {
+			spawn $env(SHELL) -c "plink -telnet $HOSTS($host,ip) | tee $GLOBAL(cwd)/log/log.$host"
+		} else {
+			spawn $env(SHELL) -c "telnet $HOSTS($host,ip)"
+		}
+		set HOSTS($host,spawn_id) $spawn_id
+
+		expect "login:"; send "$HOSTS($host,user)\r";
+		expect "Password:"; send "$HOSTS($host,password)\r\r";
+		expect "Welcome";
+
+		expect -re ".*\n(\[A-Za-z0-9_].*) #"
+		set HOSTS($host,prompt) $expect_out(1,string)
+		dputs HOSTS($host,prompt)
+
+		box_sys_status $host
+	} elseif {$HOSTS($host,type) == "linux"} {
+		if {$HOSTS($host,log)} {
+			spawn $env(SHELL) -c "ssh $HOSTS($host,user)@localhost | tee $GLOBAL(cwd)/log/log.$host"
+		} else {
+			spawn $env(SHELL) -c "ssh $HOSTS($host,user)@localhost"
+		}
+		set HOSTS($host,spawn_id) $spawn_id
+	}
+	
+	!# host
+}
+
+proc box_sys_status {host} {
+	global HOSTS
+
+	if { $HOSTS($host,type) != "fortigate"} {
+		return
+	}
+
+	log_user 0
+	set spawn_id $HOSTS($host,spawn_id)
+	send "\r"; expect " #*"
+	send "get system status\r"
+
+	expect -re "Version: (.*?)\n";
+	set HOSTS($host,"Version") $expect_out(1,string)
+	regexp "(.*?) v(.*?),build(.*?)," $expect_out(1,string) matched model ver build
+	dputs "Version: $expect_out(1,string)"
+	dputs "matched $matched"
+	dputs "model $model"
+	dputs "ver $ver"
+	dputs "build $build"
+	if {[scan $ver "%d.%d.%d" a b c] == 3} {
+		set HOSTS($host,Ver) [format "%d%d%d" $a $b $c]
+		dputs "buildnumber $HOSTS($host,Ver)"
+	}
+
+	expect -re "Virus-DB: (.*?)\n";
+	set HOSTS($host,Virus) $expect_out(1,string)
+
+	expect -re "Log hard disk: (.*?)\n";
+	set HOSTS($host,Log) $expect_out(1,string)
+	
+	expect -re "Hostname: (.*?)\n";
+	set HOSTS($host,Hostname) $expect_out(1,string)
+	
+	expect -re "Operation Mode: (.*?)\n";
+	set HOSTS($host,Operation) $expect_out(1,string)
+	
+	expect -re "Virtual domain configuration: (.*?)\n";
+	set HOSTS($host,Vdom) $expect_out(1,string)
+	
+	expect *
+	log_user 1
+}
+
+proc box_context_set {host} {
+	uplevel 1 {
+		global HOSTS
+		set spawn_id $HOSTS($host,spawn_id)
+		send "\r"; expect " # "
+	}
+}
+
+proc box_connect {host} {
+	global GLOBAL
+	global HOSTS
+
+	# waiting box start succ
+	set timeout 300
+	send -i $HOSTS(pc,spawn_id) "ping -c 1 $HOSTS($host,ip)\r"
+	expect -i $HOSTS(pc,spawn_id) {
+		-re "(.*?) bytes from (.*?) time=(.*)" {
+			puts "Connect $HOSTS($host,ip) Succ."
+		}
+
+		default {
+			sleep 3
+			send -i $HOSTS(pc,spawn_id) "ping -c 1 $HOSTS($host,ip)\r"
+			exp_continue
+		}
+
+		timeout {
+			puts "Cann't connect to $HOSTS($host,ip)"
+			exit 1
+		}
+	}
+	expect -i $HOSTS(pc,spawn_id) *
+
+	box_open $host
+}
+
+proc box_load_config {host cfgfile} {
+	global GLOBAL
+
+	box_context_set $host
+
+	exec cp $GLOBAL(cwd)/config/$cfgfile /var/lib/tftpboot/.
+	exec chmod a+r /var/lib/tftpboot/$cfgfile
+	send -i $HOSTS($host,spawn_id) "exec restore config tftp $cfgfile $HOSTS(pc,ip)\r"
+	expect -i $HOSTS($host,spawn_id) "\(y/n\)"
+	send -i $HOSTS($host,spawn_id) "y\r"
+	sleep 10
+	
+	box_connect $host
+}
+
+proc box_config_one_line {host line} {
+	global HOSTS
+
+	set conf [string trim $line " \r\n"]
+	if { [string length $conf] } {
+		return
+	}
+	send -i $HOSTS($host,spawn_id) "$conf\n"
+	#expect -i $HOSTS($host,spawn_id) "$HOSTS($host,prompt)"
+	expect -i $HOSTS($host,spawn_id) " # "
+}
+
+proc box_config {host config} {
+	box_context_set $host
+
+	set configs [split $config '\n']
+	foreach conf $configs {
+		box_config_one_line $host $conf
+	}
+}

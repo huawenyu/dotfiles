@@ -1,0 +1,45 @@
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\[\033[32m\]\W\[\033[31m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# fake sudo vim ~/root/etc/hosts
+#    ln -s /drives/c/Windows/System32/drivers/ ./root
+alias sudo="cygstart --action=runas"
+alias up-share="rsync -avrz --progress ~/share/ hyu@172.16.80.121:/home/hyu/workref/share/"
+alias upr-share="rsync -avrz --progress hyu@172.16.80.121:/home/hyu/workref/share/ ~/share/"
+
+if [ ! -d root ]; then
+	ln -s /drives/c/Windows/System32/drivers ~/root
+fi
+
+if [ ! -d share ] && [ -d /drives/D/share ]; then
+	ln -s /drives/D/share ~/share
+fi
+
+if [ ! -d work ] && [ -d /drives/D/work ]; then
+	ln -s /drives/D/work ~/work
+fi
+
+# Q: Why does Cygwin execute shell commands very slowly?
+#     https://stackoverflow.com/questions/6811435/why-does-cygwin-execute-shell-commands-very-slowly
+
+# A: Below are 3 possible causes which I encountered. Of course, other problems not mentioned can also cause slow shell commands in Cygwin.
+#
+# If you have the option "Automatically detect settings" in "LAN Settings", Windows will use the WPAD protocol to discover the local HTTP proxy. First it will send a DHCP "Inform"
+# 	request with option 252, then it will try a DNS lookup on "wpad". These 2 operations can take a few seconds to time-out.
+#
+# 	If the shell accesses some paths like /cygdrive/... , a NetBIOS name query will be executed, which can also take some time to time out.
+# 	If the shell accesses some paths like /drives/... , a NetBIOS name query will be executed, which can also take some time to time out.
+# 	If the shell accesses some paths like //mypath/... , a NetBIOS name query will be executed, which can also take some time to time out.
+#
+# 	Solutions :
+#
+# 	1. Disable "Automatically detect settings" in "LAN Settings" in the Windows "Internet Options" control panel.
+#
+# 	2. Add the following entry in %SystemRoot%\system32\drivers\etc\hosts :
+#
+# 	127.0.0.1 localhost cygdrive drives wpad
+#
+# 	3. Make sure to avoid double slashes at the beginning of all paths.
+

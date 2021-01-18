@@ -1,0 +1,72 @@
+#!/usr/lib/expect -f
+
+###################################
+# basic
+set CONFIG("fortigate",520,basic) {
+diag debug console no en
+diag debug enable
+
+config system global
+    set admintimeout 480
+    set hostname "VM64"
+    set gui-wanopt-cache enable
+    set gui-explicit-proxy enable
+end
+
+config system interface
+    edit "port1"
+        set ip 192.168.1.99 255.255.255.0
+        set allowaccess ping https ssh snmp http telnet
+        set type physical
+        set explicit-web-proxy enable
+    next
+    edit "port2"
+        set ip 172.16.80.124 255.255.255.0
+        set allowaccess ping https ssh snmp http telnet
+        set type physical
+    next
+end
+
+config router static
+    edit 1
+        set device "port2"
+        set gateway 172.16.80.1
+    next
+end
+
+config log memory setting
+   set status enable
+end
+
+exec log filter device memory
+exec log filter cat 3
+}
+###################################
+
+###################################
+# explicit_proxy
+set CONFIG("fortigate",520,explicit_proxy) {
+config system global
+    set gui-explicit-proxy enable
+end
+
+config web-proxy explicit
+    set status enable
+    set ftp-over-http enable
+    set pac-file-server-status enable
+end
+
+config ftp-proxy explicit
+    set status enable
+end
+}
+###################################
+
+###################################
+# cache
+set CONFIG("fortigate",520,cache) {
+config system global
+    set gui-wanopt-cache enable
+}
+###################################
+

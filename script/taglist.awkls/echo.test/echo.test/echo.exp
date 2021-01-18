@@ -1,0 +1,22 @@
+dputs [info script]
+
+set timeout 3
+set test "box name"
+dputs $HOSTS(box,name)
+pass $test
+
+set test "Local Hello World"
+spawn echo Hello World
+expect {
+  "Hello World" { pass $test }
+  default { fail $test }
+}
+
+set test "open"
+spawn telnet $HOSTS(box,ip)
+#catch {box_open box}
+box_open box
+expect {
+  $HOSTS(box,prompt) { pass $test }
+  default { fail $test }
+}

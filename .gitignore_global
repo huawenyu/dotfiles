@@ -1,0 +1,34 @@
+# Maybe run the following command to make it valid:
+#   git config --global core.excludesfile ~/.gitignore_global
+
+.svn*
+.svn/
+*.gitignore
+__pycache__/
+*.gdb_history
+Session.vim
+session.vim
+Default.vim
+default.vim
+log.*
+patch.*
+tage
+tags
+tagx
+GTAGS
+GPATH
+GRTAGS
+rusty-tags.vi
+*.tage
+*.tags
+*.tagx
+*.cscope.files
+*.orig
+*.rej
+*/.gdb*
+*.ccls-cache
+.ccls-cache
+*/.ccls-cache/*
+fgtcoveragebuild.tar.xz
+migadmin/node_modules/grunt-jscs/*
+target/rls/*
