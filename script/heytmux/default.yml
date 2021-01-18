@@ -1,5 +1,25 @@
-- heytmux-test:
-  - main: sleep 1
-  - pane 2-2: |
-      sleep 2
-      sleep 3
+---
+# Root layout
+layout: even-vertical
+
+# Root window options
+pane-border-status: top
+
+# List of windows
+windows:
+  ## The 1st window: Name only, no panes
+  #- empty, named window
+
+  - {{ $heyWindow }}:            # Name of the window
+      layout: tiled         # Window layout, overrides root layout
+      panes:                # List of panes
+        - pan-build:
+          - pwd
+        - pan-model:
+          - echo "alter model"
+        - pan-doc:
+          - new-doc.sh {{ $heyBug }}
+        - pan-main:
+          - df -hm
+          - tmux select-pane -t 2
+
