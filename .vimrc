@@ -59,21 +59,18 @@
 "       @note:vim_runtime
 " 6. Remote-mode:
 "       NVIM_LISTEN_ADDRESS=/tmp/nvim.trace nvim
-" 7. Options for .vimrc from env or command-line arguments:
+" 7. Options for .vimrc from env command-line:
 "       debugger=vimspector vi <file>
-"       <or>
-"       $ vim --cmd 'let vimgdb=1' <file>
-"
-"       Use the --cmd switch to execute a command before any VIMRC is loaded,
-"       So plugin can load/unload by arguments like this:
-"       $ vim --cmd 'let weak=1' and then in $VIMRC:
-"           if exists('weak')
-"             echo "poor machine"
-"           endif
-" 8. Doc:
-"       https://medium.com/codex/vim-neovim-plugins-to-help-you-code-faster-8f5733afcbfc
+" 8. MACRO, suppose recorded the macro into register q by qq, then we can change the macro like:
+"    "qp    paste the contents of the register to the current cursor position
+"    I      enter insert mode at the begging of the pasted line
+"    ^      add the missing motion to return to the front of the line
+"    <c-[>  return to visual mode
+"    "qyy   yank this new modified macro back into the q register
 "
 " 9. @note:troubleshooting
+" 10. [Neovim 0.5 features and the switch to init.lua](https://oroques.dev/notes/neovim-init/)
+"     [Learn X in Y minutes](https://learnxinyminutes.com/docs/lua/)
 " =============================================================
 "@mode: ['all', 'basic', 'theme', 'local', 'editor',
 "      \   'admin', 'QA', 'coder',
@@ -600,9 +597,12 @@ call plug#begin('~/.vim/bundle')
         Plug 'timonv/vim-cargo', Cond(Mode(['coder',]) && Mode(['rust',]), {'for': 'rust'})
     "}}}
 
-    " Markdown/Writing {{{3
-        Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
-        "Plug 'tpope/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'} )     | " no pretty code-fence/blocks
+    " Markdown/Writing/Wiki {{{3
+    " 1. `mdp`:  PPT-command-line-base, A command-line based markdown presentation tool.  https://github.com/visit1985/mdp
+    " 2. `grip`: Render to HTML, But event render not better than vim.  https://github.com/joeyespo/grip
+    "
+        Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})  | Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
+        Plug 'huawenyu/tpope-markdown', Cond(Mode(['editor',]), {'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
         "
         " Set prefix=;
         "   prefix i        Insert/update TOC
@@ -614,37 +614,56 @@ call plug#begin('~/.vim/bundle')
         "   prefix /b`s     Toggle italic/bold/code/strike
         " List:
         "   shift+enter     Support multi-line list
-        Plug 'SidOfc/mkdx', Cond(Mode(['editor',]), {'for': 'markdown'})
+        "Plug 'SidOfc/mkdx', Cond(Mode(['editor',]), {'for': 'markdown'})
 
         "Plug 'vim-pandoc/vim-pandoc', Cond(Mode(['editor',]), {'for': 'markdown'})
         "Plug 'vim-pandoc/vim-pandoc-syntax', Cond(Mode(['editor',]), {'for': 'markdown'})
 
-        Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})   | "[Look like 'vim-easy-align' is better and more powerful]
         Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})
         "Plug 'tomtom/vikibase_vim', Cond(Mode(['editor',]), {'for': 'markdown'})
-        "Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-    "}}}
 
-    " Vimwiki {{{3
-        "Plug 'vimwiki/vimwiki', Cond(Mode(['editor',]), { 'branch': 'dev' })  | " Another choice is [Gollum](https://github.com/gollum/gollum)
-        "Plug 'mattn/calendar-vim', Cond(Mode(['editor',])) | " :Calendar
+        "Plug 'iamcco/markdown-preview.nvim', Cond(Mode(['editor',]), { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']})
+        "Plug 'sindresorhus/github-markdown-css', Cond(Mode(['editor',]), {'for': 'markdown'})
 
-        "Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))     | " Like todo.txt-cli command-line, but here really needed is the wrap of Todo.txt-cli.
-        "Plug 'elentok/todo.vim', Cond(Mode(['editor',]))
-        "
-        " Require vimwiki, tasklib, [taskwarrior](https://taskwarrior.org/download/)
-        " taskwarrior: a command line task management tool, config by ~/.taskrc
-        "Plug 'blindFS/vim-taskwarrior', Cond(executable('task') && Mode(['editor',]))
+        " Todo/list {{{4
+            Plug 'romainl/vim-qf', Cond(Mode(['editor',]))              | " Tame the quickfix window
+            "Plug 'tomtom/quickfixsigns_vim', Cond(Mode(['editor',]))
+            "Plug 'jceb/vim-editqf', Cond(Mode(['editor',]))            | " when review source
 
-        " Prerequirement: brew install task; sudo pip3 install tasklib; ln -s ~/.task, ~/.taskrc;
-        "Plug 'tbabej/taskwiki', Cond(executable('task') && Mode(['editor',]))  | " Only handles *.wiki file contain check lists which beginwith asterisk '*'
-        Plug 'huawenyu/vim-notes', Cond(Mode(['editor',])) | Plug 'xolox/vim-misc', Cond(Mode(['editor',]))    | " Use as our plugins help
-        Plug 'pbrisbin/vim-mkdir', Cond(Mode(['editor',]))
+            Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
+            "Plug 'Olical/vim-enmasse', Cond(Mode(['editor',]))  | " Popup another view for our change, Refactor code from a quickfix list and makes it editable
 
-        Plug 'michal-h21/vim-zettel', Cond(Mode(['editor',])) | " :Note indexer
+            Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))       | " codeblock with 'todo', http://todotxt.org/
+            "Plug 'dkarter/bullets.vim', Cond(Mode(['editor',]))       | " Implement by markdown
+        "}}}
 
-        "Plug 'asciidoc/asciidoc', Cond(Mode(['editor',])) | " :Notepad
-        "Plug 'habamax/vim-asciidoctor', Cond(Mode(['editor',])) | " :Notepad
+        " Vimwiki {{{4
+            "Plug 'vimwiki/vimwiki', Cond(Mode(['editor',]), { 'branch': 'dev' })  | " Another choice is [Gollum](https://github.com/gollum/gollum)
+            "Plug 'mattn/calendar-vim', Cond(Mode(['editor',])) | " :Calendar
+
+            "Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))     | " Like todo.txt-cli command-line, but here really needed is the wrap of Todo.txt-cli.
+            "Plug 'elentok/todo.vim', Cond(Mode(['editor',]))
+            "
+            " Require vimwiki, tasklib, [taskwarrior](https://taskwarrior.org/download/)
+            " taskwarrior: a command line task management tool, config by ~/.taskrc
+            "Plug 'blindFS/vim-taskwarrior', Cond(executable('task') && Mode(['editor',]))
+
+            " Prerequirement: brew install task; sudo pip3 install tasklib; ln -s ~/.task, ~/.taskrc;
+            "Plug 'tbabej/taskwiki', Cond(executable('task') && Mode(['editor',]))  | " Only handles *.wiki file contain check lists which beginwith asterisk '*'
+            Plug 'huawenyu/vim-notes', Cond(Mode(['editor',])) | Plug 'xolox/vim-misc', Cond(Mode(['editor',]))    | " Use as our plugins help
+            Plug 'pbrisbin/vim-mkdir', Cond(Mode(['editor',]))
+
+            Plug 'michal-h21/vim-zettel', Cond(Mode(['editor',])) | " :Note indexer
+
+            "Plug 'asciidoc/asciidoc', Cond(Mode(['editor',])) | " :Notepad
+            "Plug 'habamax/vim-asciidoctor', Cond(Mode(['editor',])) | " :Notepad
+        "}}}
+
+        " viki {{{4
+            "Plug 'tomtom/tlib_vim', Cond(Mode(['editor',]))   | " :VikiMinorMode
+            "Plug 'tomtom/vikibase_vim', Cond(Mode(['editor',]))   | " :VikiMinorMode
+            "Plug 'tomtom/autolinker_vim', Cond(Mode(['editor',])) | " :Autolinkbuffer
+        "}}}
     "}}}
 
     Plug 'vim-scripts/iptables', Cond(Mode(['admin',]))
@@ -738,7 +757,46 @@ call plug#begin('~/.vim/bundle')
     Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))
     Plug 'terryma/vim-expand-region', Cond(Mode(['editor',]))   | "   W - select region expand; B - shrink
 
-    Plug 'tpope/vim-surround', Cond(Mode(['editor',]))          | " ds - remove surround; cs - change surround; After Selected, S} - surround the selected; yss - surround the whole line; ysiw' - surround the current word;
+    " http://www.futurile.net/2016/03/19/vim-surround-plugin-tutorial/
+    "   <command><(s)urroundMode>[count]<surround-target>[replacement]
+    "       <command>: (d)elete, (c)hange, vi(S)ual, (y)add
+    "
+    "       <surround-object>: sS -- cS(new-line), yS<motion><addition>
+    "       <surround-target>: (<[{'"`<b> <word><sentence><paragrph>      -- the add/delete str,
+    "                          barB    t   w     s         p
+    "       [replacement]:     '"(                  -- only require under (c)hange/(y)add mode
+    " Sample:
+    "   ds"         -- remove "
+    "   dst         -- remove <tag>
+    "   ds( | dsb   -- remove ()
+    "
+    "   cs<surround target><replacement>:
+    "       cs"'        -- change from " to '
+    "       cS'<p>      -- change from ' to <p>, also put then end '</p>' into new-line
+    "
+    "   ys<motion|text-object><addition>:
+    "       ys$"        -- wrap by " from cur to <end>
+    "       ys3wb       -- wrap by ) from cur to 3w
+    "
+    "    +yss<addition>: wrap current line
+    "       yssB        -- wrap by { of current line
+    "
+    "   yS<motion><addition>:
+    "       ySf"t       -- wrap by <tag> from cur to (f)ound "
+    "    +ySS<addition>: Whole line and do the above/after
+    "       ySSb        -- add () into two-lines
+    "   vS<surround target>:
+    "       viwS*       -- *<word>*
+    "       Shift-v+S<p>-- <p>
+    "                      <selected>
+    "                      </p>
+    "       Ctrl-v+S<li>-- <li>item 1</li>
+    "                      <li>item 2</li>
+    "   (S)elected:
+    "       <Selected>S"-- wrap by " of selected-text
+    "
+    Plug 'tpope/vim-surround', Cond(Mode(['editor',]))         | " Help add/remove surround
+    Plug 'tpope/vim-endwise', Cond(Mode(['editor',]))          | " smart insert certain end structures automatically.
     Plug 'tpope/vim-rsi', Cond(Mode(['admin',]))               | " Readline shortcut for vim
 
     "Plug 'nathanaelkane/vim-indent-guides', Cond(Mode(['editor',]) && Mode(['advance',])) | "[Color issue]
@@ -754,25 +812,35 @@ call plug#begin('~/.vim/bundle')
 
     Plug 'huawenyu/vim-mark', Cond(Mode(['editor',]))
     "Plug 'tomtom/tmarks_vim', Cond(Mode(['editor',]))
-    "Plug 'tomtom/quickfixsigns_vim', Cond(Mode(['editor',]))
     "Plug 'tomtom/vimform_vim', Cond(Mode(['editor',]))
-    "Plug 'jceb/vim-editqf', Cond(Mode(['editor',]))            | " when review source
     "Plug 'huawenyu/highlight.vim', Cond(Mode(['editor',]))
     Plug 'huawenyu/vim-signature', Cond(Mode(['editor',]))      | " place, toggle and display marks
-    Plug 'romainl/vim-qf', Cond(Mode(['editor',]))              | " Tame the quickfix window
 
     " CommandLine {{{3
         Plug 'houtsnip/vim-emacscommandline', Cond(Mode(['editor',]))   | " Improve command line shortcut like bash
         " Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
     "}}}
 
+    " Quickfix {{{3
+        Plug 'romainl/vim-qf', Cond(Mode(['editor',]))              | " Tame the quickfix window
+        "Plug 'tomtom/quickfixsigns_vim', Cond(Mode(['editor',]))
+        "Plug 'jceb/vim-editqf', Cond(Mode(['editor',]))            | " when review source
+
+        Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
+        "Plug 'Olical/vim-enmasse', Cond(Mode(['editor',]))  | " Popup another view for our change, Refactor code from a quickfix list and makes it editable
+    "}}}
+
     " Motion {{{3
         "Plug 'justinmk/vim-sneak', Cond(Mode(['editor',]))    | " s + prefix-2-char to choose the words
         Plug 'easymotion/vim-easymotion', Cond(Mode(['editor',]))
         Plug 'tpope/vim-abolish', Cond(Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
-        " gA                   shows the four representations of the number under the cursor.
-        " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
-        Plug 'tpope/vim-repeat', Cond(Mode(['editor',])) | Plug 'glts/vim-radical', Cond(Mode(['editor',])) |  Plug 'glts/vim-magnum', Cond(Mode(['editor',]))
+
+        " 1. Rename a var:  search the var -> cgn -> change-it -> .(repeat-it-whole)
+        Plug 'tpope/vim-repeat', Cond(Mode(['editor',]))
+            " gA                   shows the four representations of the number under the cursor.
+            " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
+            Plug 'glts/vim-radical', Cond(Mode(['editor',]))
+            Plug 'glts/vim-magnum', Cond(Mode(['editor',]))
         "Plug 'vim-utils/vim-vertical-move', Cond(Mode(['editor',]))
         "Plug 'rhysd/accelerated-jk', Cond(Mode(['editor',]))   | " Cause h/j cannot move If sometimes not load the plug
         "Plug 'unblevable/quick-scope', Cond(Mode(['editor',]))
@@ -782,6 +850,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'rhysd/clever-f.vim', Cond(Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
 
         Plug 'huawenyu/vim-motion', Cond(Mode(['editor',]))  | " Jump according indent
+        " @Devote: https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
+        "Plug 'terryma/vim-multiple-cursors', Cond(Mode(['editor',]))  | " Don't really need it
     "}}}
 
     " Tools {{{3
@@ -794,7 +864,6 @@ call plug#begin('~/.vim/bundle')
         "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))                        | " Performance issue
         Plug 'sk1418/blockit', Cond(Mode(['editor',]))                           | " :Block -- Draw a Box around text region
         Plug 'chrisbra/NrrwRgn', Cond(Mode(['editor',]))                         | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
-        Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))
         Plug 'junegunn/vim-easy-align', Cond(Mode(['editor',]))                  | " tablize selected and ga=
         "Plug 'webdevel/tabulous', Cond(Mode(['editor',]))                       | " draw table
         Plug 'dhruvasagar/vim-table-mode', Cond(Mode(['editor',]))               | " <leader>tm :TableModeToggle
@@ -868,7 +937,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'vim-scripts/taglist.vim', Cond(Mode(['coder',]) && LINUX())
         Plug 'majutsushi/tagbar', Cond(Mode(['coder',]))
         "Plug 'tomtom/ttags_vim', Cond(Mode(['coder',]))
-        "Plug 'wellle/context.vim', Cond(Mode(['coder',]))
+        "Plug 'wellle/context.vim', Cond(Mode(['coder',]))  | " performance issue: show code function-name/while/for as context
     "}}}
 
 "}}}
@@ -969,11 +1038,13 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/vim-snippets.local', Cond(Mode(['editor',]) && has('nvim'))
 
     "Plug 'ncm2/ncm2', Cond(Mode(['editor',]) && has('nvim'))                   | " Compare to deoplete, it's slower
-    "Plug 'SirVer/ultisnips', Cond(Mode(['editor',]) && has('nvim'))
-    Plug 'honza/vim-snippets', Cond(Mode(['editor',]) && has('nvim'))
+    "Plug 'SirVer/ultisnips', Cond(Mode(['editor',]))
+    Plug 'honza/vim-snippets', Cond(Mode(['editor',]))
 
-    Plug 'reedes/vim-wordy', Cond(Mode(['editor',]) && has('nvim'))
+    Plug 'reedes/vim-wordy', Cond(Mode(['editor',]))
     "Plug 'vim-scripts/CmdlineComplete', Cond(Mode(['admin',]) && has('nvim'))
+    "Plug 'vim-scripts/AutoComplPop', Cond(Mode(['editor',]))  | " Looks already implement by deoplete or other plug
+
 "}}}
 
 " Text Objects {{{2, https://github.com/kana/vim-textobj-user/wiki

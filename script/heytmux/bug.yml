@@ -10,16 +10,22 @@ windows:
   ## The 1st window: Name only, no panes
   #- empty, named window
 
-  - {{ $heyWindow }}:            # Name of the window
+  - {{ $heyWindow }}:       # Name of the window
       layout: tiled         # Window layout, overrides root layout
       panes:                # List of panes
-        - pan-build:
-          - pwd
-        - pan-model:
-          - echo "alter model"
-        - pan-doc:
+        - [build]:
+          - mkdir -p {{ $HOME }}/work/{{ $heyWindow }}
+          - cd {{ $HOME }}/work/{{ $heyWindow }}
+        - [model]:
+          - sleep 1
+          - cd {{ $HOME }}/work/{{ $heyWindow }}
+        - [doc]:
+          - sleep 1
+          - cd {{ $HOME }}/work/{{ $heyWindow }}
           - new-doc.sh {{ $heyBug }}
-        - pan-main:
+        - [main]:
+          - sleep 1
+          - cd {{ $HOME }}/work/{{ $heyWindow }}
           - df -hm
           - tmux select-pane -t 2
 

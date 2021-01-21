@@ -4,16 +4,16 @@
 windows:
   - win-console:            # Name of the window
       panes:                # List of panes
-        - pan-client:
+        - '[client]':
           - keys: Enter
-        - pan-server:
+        - '[server]':
           - keys: Enter
-        - pan-fgt-left:
+        - '[fgt-left]':
           - keys: Enter
-        - pan-fgt-right:
+        - '[fgt-right]':
           - keys: Enter
-        - pan-cmdssh-left:
+        - '[cmdssh-left]':
           - keys: Enter
-        - pan-cmdssh-right:
+        - '[cmdssh-right]':
           - keys: Enter
 

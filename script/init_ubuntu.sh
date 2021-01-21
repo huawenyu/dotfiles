@@ -70,6 +70,7 @@ sudo dpkg -i fzy_0.9-1_amd64.deb
 ##sudo update-alternatives --config vim
 ##sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 ##sudo update-alternatives --config editor
+##sudo update-alternatives --config vimdiff		+=== choose /usr/bin/vimdiff.nvim
 
 # home brew {{{2
 # [brew](http://http://linuxbrew.sh/): substitute for apt-get install
