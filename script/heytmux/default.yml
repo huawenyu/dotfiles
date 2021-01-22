@@ -13,17 +13,17 @@ windows:
   - {{ $heyWindow }}:       # Name of the window
       layout: tiled         # Window layout, overrides root layout
       panes:                # List of panes
-        - '[build]':
+        - build:
           - mkdir -p {{ $HOME }}/work/{{ $heyWindow }}
           - cd {{ $HOME }}/work/{{ $heyWindow }}
-        - '[model]':
+        - model:
           - sleep 1
           - cd {{ $HOME }}/work/{{ $heyWindow }}
-        - '[doc]':
+        - doc:
           - sleep 1
           - cd {{ $HOME }}/work/{{ $heyWindow }}
           - new-doc.sh {{ $heyBug }}
-        - '[main]':
+        - main:
           - sleep 1
           - cd {{ $HOME }}/work/{{ $heyWindow }}
           - df -hm

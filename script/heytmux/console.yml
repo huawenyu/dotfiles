@@ -13,18 +13,18 @@ windows:
   - win-console:            # Name of the window
       layout: tiled         # Window layout, overrides root layout
       panes:                # List of panes
-        - '[client]':
+        - client:
           - ssh hyu@client
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
           - keys: Enter
-        - '[server]':
+        - server':
           - ssh hyu@server
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
           - keys: Enter
           - cd www
-        - '[fgt-left]':
+        - fgt-left:
           - ssh hyu@kvm
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
@@ -33,7 +33,7 @@ windows:
           - expect: '[Ll]ogin:'
           - admin
           - keys: Enter
-        - '[fgt-right]':
+        - fgt-right:
           - ssh hyu@kvm
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
@@ -42,10 +42,10 @@ windows:
           - expect: '[Ll]ogin:'
           - admin
           - keys: Enter
-        - '[cmdssh-left]':
+        - cmdssh-left:
           - cmdssh -d left.dut -u admin -p ''
           - keys: Enter
-        - '[cmdssh-right]':
+        - cmdssh-right:
           - cmdssh -d right.dut -u admin -p ''
           - keys: Enter
       pane-border-status: top

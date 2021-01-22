@@ -60,7 +60,9 @@
 " 6. Remote-mode:
 "       NVIM_LISTEN_ADDRESS=/tmp/nvim.trace nvim
 " 7. Options for .vimrc from env command-line:
+"       mode=basic vi <file>
 "       debugger=vimspector vi <file>
+"       debugger=vimdgb vi <file>
 " 8. MACRO, suppose recorded the macro into register q by qq, then we can change the macro like:
 "    "qp    paste the contents of the register to the current cursor position
 "    I      enter insert mode at the begging of the pasted line
@@ -125,6 +127,13 @@ if g:vim_confi_option.change_leader
     " diable Ex mode
     map Q <Nop>
 endif
+
+
+if !empty($mode)
+    let g:vim_confi_option.mode = [$mode]
+    "echomsg "UserMode=". $mode
+endif
+
 
 " Environment {{{1
     " Platform identification {
@@ -748,7 +757,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'mhinz/vim-grepper', Cond(Mode(['editor',]))    | " :Grepper text
     "}}}
 
-    Plug 'sunaku/vim-shortcut', Cond(Mode(['editor',]))         | " ';;' Popup shortcut help, but don't execute
+    Plug 'sunaku/vim-shortcut', Cond(Mode(['basic',]))         | " ';;' Popup shortcut help, but don't execute
     Plug 'liuchengxu/vim-which-key', Cond(Mode(['editor',]), { 'on': ['WhichKey', 'WhichKey!'] })   | " Cannot work
     "Plug 'lambdalisue/lista.nvim', Cond(Mode(['editor',]))     | " Cannot work
     "Plug 'markonm/traces.vim', Cond(Mode(['editor',]))         | " Range, pattern and substitute preview for Vim [Just worry about performance]
@@ -847,7 +856,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'unblevable/quick-scope', Cond(Mode(['editor',]))
         "Plug 'dbakker/vim-paragraph-motion', Cond(Mode(['editor',])) | " treat whitespace only lines as paragraph breaks so { and } will jump to them
         "Plug 'vim-scripts/Improved-paragraph-motion', Cond(Mode(['editor',]))
-        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['editor',]))
+        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor']))
         Plug 'rhysd/clever-f.vim', Cond(Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
 
         Plug 'huawenyu/vim-motion', Cond(Mode(['editor',]))  | " Jump according indent
@@ -1048,7 +1057,22 @@ call plug#begin('~/.vim/bundle')
 
 "}}}
 
-" Text Objects {{{2, https://github.com/kana/vim-textobj-user/wiki
+" Text Objects {{{2
+" https://blog.carbonfive.com/vim-text-objects-the-definitive-guide/
+" Built-in Text Objects:  words, sentences and paragraphs, with 'a' include-surrounding, and exclude with 'i'.
+"   Format: [<number>]<command><text-object or motion>
+"     <command>: (c)hange, (d)elete(cut), or (y)ank(copy)
+"       aw/iw   Word by punctuation
+"       aW/iW   Word by whitespace  (see :help WORD)
+"       as/is   Sentence
+"       ap/ip   Paragraph
+"       a"/i"   Quotes
+"       a)/i)   Parentheses
+"       a]/i]   Brackets
+"       a}/i}   Braces
+"       a>/i>   Angle Brackets
+"       at/it   Tags (e.g. <html>inner</html>)
+"
     " vimwiki                               vah
     Plug 'wellle/targets.vim', Cond(Mode(['editor',]))           | " Support build-in obj number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
 
@@ -1124,6 +1148,7 @@ endif
 
 " END-setting {{{1
     " Only here works {{{2
+    if Mode(['coder',])
         augroup ugly_set
             autocmd!
             autocmd BufEnter * call cscope#LoadCscope()
@@ -1133,6 +1158,7 @@ endif
             autocmd BufRead,BufNewFile * setlocal signcolumn=yes
             autocmd FileType tagbar,nerdtree,voomtree,qf setlocal signcolumn=no
         augroup end
+    endif
     "}}}
 
     " reset to sure scroll perfermance {{{2
