@@ -834,6 +834,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'justinmk/vim-sneak', Cond(Mode(['editor',]))    | " s + prefix-2-char to choose the words
         Plug 'easymotion/vim-easymotion', Cond(Mode(['editor',]))
         Plug 'tpope/vim-abolish', Cond(Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
+        Plug 'tpope/vim-commentary', Cond(Mode(['editor',]))   | " gcc comment-line, gc<motion>: gcap comment-paragraph)
 
         " 1. Rename a var:  search the var -> cgn -> change-it -> .(repeat-it-whole)
         Plug 'tpope/vim-repeat', Cond(Mode(['editor',]))

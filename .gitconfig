@@ -41,3 +41,5 @@
 	username = wilson_hyu
 [commit]
 	template = ~/.config/gitconf/gitmessage
+[pull]
+	ff = only
