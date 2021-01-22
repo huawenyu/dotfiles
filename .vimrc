@@ -488,9 +488,8 @@ call plug#begin('~/.vim/bundle')
         "Plug 'prettier/vim-prettier', Cond(Mode(['editor',]), { 'do': 'yarn install' })  | " brew install prettier
     "}}}
 
-    " Script {{{3
-    " Take current text file as script
-        "
+    " ShellScript {{{3
+    " https://github.com/koalaman/shellcheck
     "}}}
 
     " VimScript {{{3
@@ -549,7 +548,8 @@ call plug#begin('~/.vim/bundle')
         " https://github.com/zchee/deoplete-jedi
         "Plug 'neovim/python-client', Cond(Mode(['coder',]) && Mode(['python',]))
         Plug 'python-mode/python-mode', Cond(Mode(['coder',]) && Mode(['python',]), {'for': 'python'})
-        Plug 'davidhalter/jedi-vim', Cond(Mode(['coder',]) && Mode(['python',]), {'for': 'python'})
+        Plug 'davidhalter/jedi-vim', Cond(Mode(['coder',]) && Mode(['python',]), {'for': 'python'}) | " K: doc-of-method;  <leader>d: go-definition;  n: usage-of-file;  r: rename
+        "Plug 'zchee/deoplete-jedi'
     "}}}
 
     " LaTeX {{{3
@@ -896,6 +896,7 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'Shougo/vimproc.vim', Cond(Mode(['admin',]), {'do' : 'make'})
         Plug 'skywind3000/asyncrun.vim', Cond(Mode(['admin',]))
+        Plug 'skywind3000/asynctasks.vim', Cond(Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
         Plug 'huawenyu/neomake', Cond(has('nvim') && Mode(['coder',]))
         "Plug 'neomake/neomake', Cond(has('nvim') && Mode(['coder',]))
         "Plug 'vhdirk/vim-cmake', Cond(has('nvim') && Mode(['coder',]))
