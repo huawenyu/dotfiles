@@ -711,7 +711,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'Raimondi/delimitMate'
     Plug 'millermedeiros/vim-statline'      | " Simple, not annoy to distract our focus
     Plug 'huawenyu/vim-linux-coding-style'
-    "Plug 'paroxayte/vwm.vim', Cond(Mode(['editor',]) && has('nvim'))    | " vim windows management
+    Plug 'paroxayte/vwm.vim', Cond(Mode(['editor',]))    | " vim windows management
     "Plug 'vim-airline/vim-airline'
     "Plug 'vim-airline/vim-airline-themes'
     "Plug 'MattesGroeger/vim-bookmarks'
