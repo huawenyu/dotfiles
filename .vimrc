@@ -77,7 +77,7 @@
 "@mode: ['all', 'basic', 'theme', 'local', 'editor',
 "      \   'admin', 'QA', 'coder',
 "      \
-"      \   'vimscript', 'c', 'python', 'latex', 'perl', 'javascript', 'clojure', 'database',
+"      \   'plugin', 'c', 'python', 'latex', 'perl', 'javascript', 'clojure', 'database',
 "      \   'golang', 'tcl', 'haskell', 'rust',
 "      \   'note', 'script',
 "      \
@@ -88,9 +88,9 @@
 "     'mode': ['all', ],
 "     'mode': ['basic', 'theme', 'local', 'editor', ],
 "     'mode': ['basic', 'theme', 'local', 'editor', 'advance'],
-"     'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'c', 'vimscript', 'script'],
+"     'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'c', 'plugin', 'script', 'snippetX'],
 let g:vim_confi_option = {
-      \ 'mode': ['basic', 'theme', 'local', 'editor', 'advance', 'admin', 'coder', 'c', 'vimscript', 'script', 'tool'],
+      \ 'mode': ['basic', 'theme', 'local', 'editor', 'advance', 'admin', 'coder', 'c', 'script', 'tool'],
       \ 'change_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
@@ -211,7 +211,7 @@ endif
 
     " Debug {
         " This is old style debug, suggest using log style: @note:nvim (~Press 'K'~)
-        set verbose=0
+        "set verbose=0
         "set verbose=9
         "set verbosefile=/tmp/nvim.log
 
@@ -474,11 +474,11 @@ call plug#begin('~/.vim/bundle')
     "  - Command Line Tool: https://github.com/BenBrock/reple
         "Plug 'sillybun/vim-repl', Cond(Mode(['coder',]))  | " Not work :REPLToggle
         "Plug 'rhysd/reply.vim', Cond(Mode(['coder',]))
-        "Plug 'amiorin/vim-eval', Cond(Mode(['coder',]) && Mode(['vimscript',]))
+        "Plug 'amiorin/vim-eval', Cond(Mode(['coder',]) && Mode(['plugin',]))
         "Plug 'fboender/bexec', Cond(Mode(['admin',]))         | " :Bexec
         "Plug 'metakirby5/codi.vim', Cond(Mode(['coder',]))     | " :Codi [filetype]
         "Plug 'axvr/zepl.vim', Cond(Mode(['coder',]))     | " :Repl [filetype]
-        Plug 'thinca/vim-quickrun', Cond(Mode(['coder',]))     | " :QuickRun
+        "Plug 'thinca/vim-quickrun', Cond(Mode(['coder',]))     | " :QuickRun
     "}}}
 
     " Hex editor {{{3
@@ -492,10 +492,10 @@ call plug#begin('~/.vim/bundle')
     " https://github.com/koalaman/shellcheck
     "}}}
 
-    " VimScript {{{3
-        Plug 'junegunn/vader.vim', Cond(Mode(['coder',]) && Mode(['vimscript',]))     | " A simple Vimscript test framework
-        Plug 'tpope/vim-scriptease', Cond(Mode(['admin',]))   | " A Vim plugin for Vim plugins
-        Plug 'mhinz/vim-lookup', Cond(Mode(['coder',]) && Mode(['vimscript',]))
+    " plugin {{{3
+        Plug 'junegunn/vader.vim', Cond(Mode(['coder',]) && Mode(['plugin',]))     | " A simple Vimscript test framework
+        Plug 'tpope/vim-scriptease', Cond(Mode(['plugin',]))   | " A Vim plugin for Vim plugins
+        Plug 'mhinz/vim-lookup', Cond(Mode(['coder',]) && Mode(['plugin',]))
 
         " Execute eval script: using singlecompile
         Plug 'huawenyu/SingleCompile', Cond(Mode(['admin',]))                     | " :SingleCompile, SingleCompileRun
@@ -610,8 +610,9 @@ call plug#begin('~/.vim/bundle')
     " 1. `mdp`:  PPT-command-line-base, A command-line based markdown presentation tool.  https://github.com/visit1985/mdp
     " 2. `grip`: Render to HTML, But event render not better than vim.  https://github.com/joeyespo/grip
     "
-        Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})  | Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
-        Plug 'huawenyu/tpope-markdown', Cond(Mode(['editor',]), {'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
+        Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})
+        Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
+        "Plug 'huawenyu/tpope-markdown', Cond(Mode(['editor',]), {'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
         "
         " Set prefix=;
         "   prefix i        Insert/update TOC
@@ -659,8 +660,8 @@ call plug#begin('~/.vim/bundle')
 
             " Prerequirement: brew install task; sudo pip3 install tasklib; ln -s ~/.task, ~/.taskrc;
             "Plug 'tbabej/taskwiki', Cond(executable('task') && Mode(['editor',]))  | " Only handles *.wiki file contain check lists which beginwith asterisk '*'
-            Plug 'huawenyu/vim-notes', Cond(Mode(['editor',])) | Plug 'xolox/vim-misc', Cond(Mode(['editor',]))    | " Use as our plugins help
-            Plug 'pbrisbin/vim-mkdir', Cond(Mode(['editor',]))
+            "Plug 'huawenyu/vim-notes', Cond(Mode(['editor',])) | Plug 'xolox/vim-misc', Cond(Mode(['editor',]))    | " Use as our plugins help
+            "Plug 'pbrisbin/vim-mkdir', Cond(Mode(['editor',]))
 
             Plug 'michal-h21/vim-zettel', Cond(Mode(['editor',])) | " :Note indexer
 
@@ -706,17 +707,19 @@ call plug#begin('~/.vim/bundle')
 " Syntax/Language {{{2
     Plug 'vim-syntastic/syntastic', Cond(Mode(['editor',]))
     Plug 'Chiel92/vim-autoformat', Cond(Mode(['coder',]))
-    Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]) && Mode(['vimscript',]))
+    Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]) && Mode(['plugin',]))
     "Plug 'justinmk/vim-dirvish', Cond(Mode(['editor',]))   | " ?
     "Plug 'kovisoft/slimv', Cond(Mode(['editor',]))
+
     "Plug 'AnsiEsc.vim', Cond(Mode(['editor',]))
-    Plug 'powerman/vim-plugin-AnsiEsc', Cond(Mode(['editor',]))
+    "Plug 'powerman/vim-plugin-AnsiEsc', Cond(Mode(['editor',]))
+
     "Plug 'huawenyu/robotframework-vim', Cond(Mode(['QA',]))
     "Plug 'bpstahlman/txtfmt', Cond(Mode(['editor',]))
     Plug 'tmux-plugins/vim-tmux', Cond(Mode(['editor',]))  | " The syntax of .tmux.conf
 
     Plug 'vim-scripts/awk.vim', Cond(Mode(['admin',]) && Mode(['script',]))
-    "Plug 'WolfgangMehner/vim-support', Cond(Mode(['admin',]) && Mode(['vimscript',]))   | " The syntax of vimscript, but too many keymap
+    "Plug 'WolfgangMehner/vim-support', Cond(Mode(['admin',]) && Mode(['plugin',]))   | " The syntax of plugin, but too many keymap
     "Plug 'WolfgangMehner/awk-support', Cond(Mode(['admin',]) && Mode(['script',]))
 
     "
@@ -890,15 +893,16 @@ call plug#begin('~/.vim/bundle')
     "Plug 'vim-test/vim-test', Cond(Mode(['editor',]))            | " Help us running tests
 
     " Async {{{3
-        Plug 'tpope/vim-dispatch', Cond(Mode(['admin',]))
+        "Plug 'tpope/vim-dispatch', Cond(Mode(['admin',]))
         "Plug 'huawenyu/vim-dispatch', Cond(Mode(['admin',]))        | " Run every thing. :Dispatch :Make :Start man 3 printf
         "Plug 'radenling/vim-dispatch-neovim', Cond(has('nvim') && Mode(['admin',]))
 
         Plug 'Shougo/vimproc.vim', Cond(Mode(['admin',]), {'do' : 'make'})
         Plug 'skywind3000/asyncrun.vim', Cond(Mode(['admin',]))
         Plug 'skywind3000/asynctasks.vim', Cond(Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
-        Plug 'huawenyu/neomake', Cond(has('nvim') && Mode(['coder',]))
+        "Plug 'huawenyu/neomake', Cond(has('nvim') && Mode(['coder',]))  | " support lots errorformat
         "Plug 'neomake/neomake', Cond(has('nvim') && Mode(['coder',]))
+
         "Plug 'vhdirk/vim-cmake', Cond(has('nvim') && Mode(['coder',]))
         "Plug 'cdelledonne/vim-cmake', Cond(has('nvim') && Mode(['coder',]))
         Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
@@ -969,9 +973,9 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/vim-tabber', Cond(Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
 
     " Gen menu
-    Plug 'skywind3000/vim-quickui', Cond(Mode(['editor',]))      | " customize menu
-    "Plug 'skywind3000/quickmenu.vim', Cond(Mode(['editor',]))   | " customize menu from size pane
-    "Plug 'Timoses/vim-venu', Cond(Mode(['editor',]))            | " :VenuPrint, customize menu from command-line
+    "Plug 'skywind3000/vim-quickui', Cond(Mode(['editor',]))      | " Very fancy plugin, customize menu
+    "   Plug 'skywind3000/quickmenu.vim', Cond(Mode(['editor',]))   | " customize menu from size pane
+    "   Plug 'Timoses/vim-venu', Cond(Mode(['editor',]))            | " :VenuPrint, customize menu from command-line
 
 "}}}
 
@@ -1044,15 +1048,15 @@ call plug#begin('~/.vim/bundle')
     "Plug 'ycm-core/YouCompleteMe', Cond(Mode(['editor',]))
 
     Plug 'Shougo/deoplete.nvim', Cond(Mode(['editor',]) && has('nvim'))         | "{ 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/neosnippet.vim', Cond(Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
-    Plug 'Shougo/neosnippet-snippets', Cond(Mode(['editor',]) && has('nvim'))
-    Plug 'huawenyu/vim-snippets.local', Cond(Mode(['editor',]) && has('nvim'))
+    Plug 'Shougo/neosnippet.vim', Cond(Mode(['editor',]) && has('nvim') && CheckPlug('deoplete.nvim', 1))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
+    Plug 'Shougo/neosnippet-snippets', Cond(Mode(['editor',]) && has('nvim') && CheckPlug('deoplete.nvim', 1))
+    Plug 'huawenyu/vim-snippets.local', Cond(Mode(['editor',])  && Mode(['snippetX',]) && has('nvim') && CheckPlug('deoplete.nvim', 1))
 
     "Plug 'ncm2/ncm2', Cond(Mode(['editor',]) && has('nvim'))                   | " Compare to deoplete, it's slower
-    "Plug 'SirVer/ultisnips', Cond(Mode(['editor',]))
-    Plug 'honza/vim-snippets', Cond(Mode(['editor',]))
+    "Plug 'SirVer/ultisnips', Cond(Mode(['editor',]) && Mode(['snippetX',]))
+    Plug 'honza/vim-snippets', Cond(Mode(['editor',]) && Mode(['snippetX',]) && CheckPlug('deoplete.nvim', 1))
 
-    Plug 'reedes/vim-wordy', Cond(Mode(['editor',]))
+    Plug 'reedes/vim-wordy', Cond(Mode(['editor',]) && Mode(['snippetX',]))
     "Plug 'vim-scripts/CmdlineComplete', Cond(Mode(['admin',]) && has('nvim'))
     "Plug 'vim-scripts/AutoComplPop', Cond(Mode(['editor',]))  | " Looks already implement by deoplete or other plug
 
@@ -1102,7 +1106,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'vim-jp/vital.vim'
         " @note:promise
     "Plug 'google/vim-maktaba'
-    Plug 'tomtom/tlib_vim', Cond(Mode(['coder',]) && Mode(['vimscript',]))
+    Plug 'tomtom/tlib_vim', Cond(Mode(['coder',]) && Mode(['plugin',]))
 "}}}
 
 " Debug {{{2
@@ -1112,8 +1116,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/vimlogger', Cond(Mode(['admin',]))
     "Plug 'vim-scripts/TailMinusF', Cond(Mode(['admin',])) | " Too slow, :Tail <file>
     "Plug 'tyru/restart.vim', Cond(Mode(['editor',]))       | " Not work under terminal
-    "Plug 'huawenyu/Decho', Cond(Mode(['coder',]) && Mode(['vimscript',]))
-    "Plug 'c9s/vim-dev-plugin', Cond(Mode(['coder',]) && Mode(['vimscript',]))   | " gf: goto-function-define, but when edit vimrc will trigger error
+    "Plug 'huawenyu/Decho', Cond(Mode(['coder',]) && Mode(['plugin',]))
+    "Plug 'c9s/vim-dev-plugin', Cond(Mode(['coder',]) && Mode(['plugin',]))   | " gf: goto-function-define, but when edit vimrc will trigger error
 "}}}
 
 call plug#end()
