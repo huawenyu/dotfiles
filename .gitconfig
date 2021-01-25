@@ -10,7 +10,7 @@
 [github]
 	user = huawenyu
 [alias]
-	log0 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	log0 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
 	log1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --shortstat
 	log2 = log --graph --abbrev-commit --decorate --date=short --format=format:'%C(bold blue)%h%C(reset) %ad %C(white)%s%C(reset) %C(dim white)%C(cyan)(%an)%C(reset)%C(reset)%C(bold yellow)%d%C(reset)' --all
 	log3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all

@@ -583,6 +583,9 @@ call plug#begin('~/.vim/bundle')
         Plug 'maksimr/vim-jsbeautify', Cond(Mode(['coder',]) && Mode(['javascript',]))
         Plug 'elzr/vim-json', Cond(Mode(['coder',]) && Mode(['javascript',]))
 
+        " https://stedolan.github.io/jq/
+        Plug 'tpope/vim-jdaddy', Cond(Mode(['coder',]) && Mode(['javascript',]))    | " `:%!jq .` ;  `:%!jq --sort-keys .`
+
         " https://hackernoon.com/using-neovim-for-javascript-development-4f07c289d862
         Plug 'ternjs/tern_for_vim', Cond(Mode(['coder',]) && Mode(['javascript',]))      | " Tern-based JavaScript editing support.
         Plug 'carlitux/deoplete-ternjs', Cond(Mode(['coder',]) && Mode(['javascript',]))
@@ -931,7 +934,8 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'Shougo/vimproc.vim', Cond(Mode(['admin',]), {'do' : 'make'})
         Plug 'skywind3000/asyncrun.vim', Cond(Mode(['admin',]))
-        Plug 'skywind3000/asynctasks.vim', Cond(Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
+        " use <proj-root>/.tasks as local-tasks; use ~/.vim/tasks.ini as global-tasks
+        Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
         "Plug 'huawenyu/neomake', Cond(has('nvim') && Mode(['coder',]))  | " support lots errorformat
         "Plug 'neomake/neomake', Cond(has('nvim') && Mode(['coder',]))
 
@@ -1067,10 +1071,12 @@ call plug#begin('~/.vim/bundle')
     "Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
+
     Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " Gdiff, Gblame, or from shell 'git dt' to code view
+    Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
-        "Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))        | " Shows a git diff in the gutter (sign column)
-        "Plug 'rbong/vim-flog', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Almose same as plug-GV, git branch viewer
+        Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))        | " Shows a git diff in the gutter (sign column)
+        "Plug 'rbong/vim-flog', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Almost same as plug-GV, git branch viewer
 
     "Plug 'juneedahamed/svnj.vim', Cond(Mode(['editor',]))
     "Plug 'juneedahamed/vc.vim', Cond(Mode(['editor',]))        | " Bad performance: Support git, svn, ...

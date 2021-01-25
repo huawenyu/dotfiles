@@ -4,16 +4,16 @@
 //   This config file as global config for vim plugin-projectionist.vim,
 //     and auto loaded by my plugin vim.config.
 //   Commands
-//     :A	Edit alternate
-//     :A {file}	Edit file
-//     :AS	Edit in split
-//     :AV	Edit in vsplit
-//     :AT	Edit in tab
-//     :AD	Replace with template
-//     :Cd	cd to root
-//     :Cd {path}	cd to path in root
-//     :Lcd	cd to root using :lcd
-//     :ProjectDo {cmd}	run command in root
+//     :A    Edit alternate
+//     :A {file}    Edit file
+//     :AS    Edit in split
+//     :AV    Edit in vsplit
+//     :AT    Edit in tab
+//     :AD    Replace with template
+//     :Cd    cd to root
+//     :Cd {path}    cd to path in root
+//     :Lcd    cd to root using :lcd
+//     :ProjectDo {cmd}    run command in root
 //
 //   You can always see all the available transformations inside your vim session with
 //     :let g:projectionist_transformations.
@@ -35,53 +35,57 @@
 //     {close}
 //
 {
-	// Available options {{{1
-	"lib/*.rb": {
-		// :Elib
-		"type": "lib",
-		// :A
-		"alternate": "test/{}_spec.rb",
+    // Available options {{{1
+    "lib/*.rb": {
+        // :Elib
+        "type": "lib",
+        // :A
+        "alternate": "test/{}_spec.rb",
 
-		"template": [],
+        "template": [],
 
-		// :Console
-		"console": "node",
-		// :Dispatch (dispatch.vim)
-		"dispatch": "node",
-		// :Start (dispatch.vim)
-		"start": "rails server",
+        // :Console
+        "console": "node",
+        // :Dispatch (dispatch.vim)
+        "dispatch": "node",
+        // :Start (dispatch.vim)
+        "start": "rails server",
 
-		// makeprg
-		"make": "node",
-		// gf
-		"path": "include"
-	},
+        // makeprg
+        "make": "node",
+        // gf
+        "path": "include"
+    },
 
-	// Ruby project: {{{1
-	// If I'm on a file under spec and I run Dispatch, it'll run rspec on the current
-	//   file. If I'm on some production code under lib, it'll run the dispatch task on
-	//   the alternate file, which in this case will run rspec on the spec.
-	// You can also setup tasks that start when a file is opened, i.e. rails server if you
-	//   are working on a rails project.
-	"*": {"make": "rake"},
-	"spec/*_spec.rb": {
-		"dispatch": "rspec {file}",
-		"alternate": "lib/{}.rb"
-	},
-	"lib/*.rb": {
-		"alternate": "spec/{}_spec.rb"
-	},
+    // Ruby project: {{{1
+    // If I'm on a file under spec and I run Dispatch, it'll run rspec on the current
+    //   file. If I'm on some production code under lib, it'll run the dispatch task on
+    //   the alternate file, which in this case will run rspec on the spec.
+    // You can also setup tasks that start when a file is opened, i.e. rails server if you
+    //   are working on a rails project.
+    //"*": {"make": "rake"},
+    "spec/*_spec.rb": {
+        "dispatch": "rspec {file}",
+        "alternate": "lib/{}.rb"
+    },
 
-	// CMakefile: {{{1
-	// Vim-projectionist can detect your build directory automatically
-	//   and allows you to press `m to compile in this directory.
-	// You have to modify this to your personal preference.
-	// You can also define several heuristics.
-	"CMakeLists.txt&_builds/debug/Makefile": {
-		"*": {
-			"make": "make -C {project}/_builds/debug -j8",
-			"compiler": "gcc"
-		}
-	}
+    // CMakefile: {{{1
+    // Vim-projectionist can detect your build directory automatically
+    //   and allows you to press `m to compile in this directory.
+    // You have to modify this to your personal preference.
+    // You can also define several heuristics.
+    "CMakeLists.txt&_builds/debug/Makefile": {
+        "*": {
+            "make": "make -C {project}/_builds/debug -j8",
+            "compiler": "gcc"
+        }
+    },
+
+    // django
+    "*/urls.py": { "type": "urls", "alternate": "{}/views.py" },
+    "*/models.py": { "type": "models" },
+    "*/serializers.py": { "type": "serializers" },
+    "*/admin.py": { "type": "admin" },
+    "*/views.py": { "type": "view" }
 }
 
