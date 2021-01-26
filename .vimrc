@@ -63,6 +63,7 @@
 "       mode=basic vi <file>
 "       debugger=vimspector vi <file>
 "       debugger=vimdgb vi <file>
+"       debugger=1 vi <file>
 " 8. MACRO, suppose recorded the macro into register q by qq, then we can change the macro like:
 "       "qp    paste the contents of the register to the current cursor position
 "       I      enter insert mode at the begging of the pasted line
@@ -71,6 +72,9 @@
 "       "qyy   yank this new modified macro back into the q register
 "
 " 9. @note:troubleshooting
+"       some myself plugin support s:log.debug feature:
+"       - debug=1 vi <file>
+"       - tail -f /tmp/vim.log
 " 10. If two plugin is alternatives, choose the preceder one, like: AlterPlug('vista.vim')
 " 11. [Neovim 0.5 features and the switch to init.lua](https://oroques.dev/notes/neovim-init/)
 "     [Learn X in Y minutes](https://learnxinyminutes.com/docs/lua/)
@@ -95,7 +99,7 @@ let g:vim_confi_option = {
       \ 'change_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
-      \ 'debug': 1,
+      \ 'debug': 0,
       \ 'folding': 0,
       \ 'upper_keyfixes': 1,
       \ 'auto_install_vimplug': 1,
@@ -135,6 +139,9 @@ if !empty($mode)
     "echomsg "UserMode=". $mode
 endif
 
+if !empty($debug)
+    let g:vim_confi_option.debug = 1
+endif
 
 " Environment {{{1
     " Platform identification {
@@ -767,8 +774,38 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Search {{{3
+        Plug 'mhinz/vim-grepper', Cond(Mode(['editor',]))    | " :Grepper text
         " [Create float-windows](https://kassioborges.dev/2019/04/10/neovim-fzf-with-a-floating-window.html)
         Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && Mode(['advance',]))
+
+        " Indexer/Tags/cscope {{{4
+            " [Tags](https://zhuanlan.zhihu.com/p/36279445)
+            " [C++](https://www.zhihu.com/question/47691414/answer/373700711)
+            "
+            "Plug 'ludovicchabant/vim-gutentags', Cond(Mode(['coder',]))        | " autogen tags, bad performance
+                "Plug 'skywind3000/gutentags_plus', Cond(Mode(['coder',]))          | " <leader>c*: cs symbol, cc caller, ct text, ce egrep, ca assign, cz ctags
+                "Plug 'huawenyu/vim-autotag', Cond(Mode(['coder',])) | " First should exist tagfile which tell autotag auto-refresh: ctags -f .tags -R .
+                "Plug 'huawenyu/vim-preview', Cond(Mode(['coder',]))
+                "Plug 'whatot/gtags-cscope.vim', Cond(Mode(['coder',]))
+
+            "Plug 'lyuts/vim-rtags', Cond(Mode(['coder',]))         | " Bad performance
+            "Plug 'w0rp/ale', Cond(Mode(['coder',]))   | " 1. Not using clang's lint, 2. find references look not work
+
+            " Please install yarn (-- a node package manger) first.
+            " @note:ccls sometimes cause high cpu
+            "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
+                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
+                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
+                "Plug 'neoclide/coc-rls', Cond(Mode(['coder',]) && LINUX())
+                " :CocInstall coc-rust-analyzer
+
+            "Plug 'chengzeyi/fzf-preview.vim', Cond(Mode(['coder',]) && Mode(['advance',]))
+            Plug 'liuchengxu/vista.vim', Cond(RejectPlug('tagbar') && Mode(['coder',]))
+            Plug 'majutsushi/tagbar', Cond(RejectPlug('vista.vim') && Mode(['coder',]))
+            Plug 'vim-scripts/taglist.vim', Cond(RequirePlug('tagbar') && Mode(['coder',]) && LINUX())
+            "Plug 'tomtom/ttags_vim', Cond(Mode(['coder',]))
+        "}}}
+
 
         "Plug 'huawenyu/neovim-fuzzy', Cond(has('nvim') && Mode(['editor',]))
         "Plug 'Dkendal/fzy-vim', Cond(Mode(['editor',]))
@@ -778,7 +815,6 @@ call plug#begin('~/.vim/bundle')
             "Plug 'nixprime/cpsm', Cond(Mode(['editor',]), {'do': 'env PY3=ON ./install.sh'})
             "Plug 'ryanoasis/vim-devicons', Cond(Mode(['editor',]) && Mode(['morecool',]))
 
-        Plug 'mhinz/vim-grepper', Cond(Mode(['editor',]))    | " :Grepper text
     "}}}
 
     " Two_mode:
@@ -983,34 +1019,6 @@ call plug#begin('~/.vim/bundle')
         Plug 'huawenyu/VOoM', Cond(Mode(['editor',]))
         Plug 'vim-voom/VOoM_extras', Cond(Mode(['editor',]))
 
-
-        " Indexer/Tags/cscope {{{4
-            " [Tags](https://zhuanlan.zhihu.com/p/36279445)
-            " [C++](https://www.zhihu.com/question/47691414/answer/373700711)
-            "
-            "Plug 'ludovicchabant/vim-gutentags', Cond(Mode(['coder',]))        | " autogen tags, bad performance
-                "Plug 'skywind3000/gutentags_plus', Cond(Mode(['coder',]))          | " <leader>c*: cs symbol, cc caller, ct text, ce egrep, ca assign, cz ctags
-                "Plug 'huawenyu/vim-autotag', Cond(Mode(['coder',])) | " First should exist tagfile which tell autotag auto-refresh: ctags -f .tags -R .
-                "Plug 'huawenyu/vim-preview', Cond(Mode(['coder',]))
-                "Plug 'whatot/gtags-cscope.vim', Cond(Mode(['coder',]))
-
-            "Plug 'lyuts/vim-rtags', Cond(Mode(['coder',]))         | " Bad performance
-            "Plug 'w0rp/ale', Cond(Mode(['coder',]))   | " 1. Not using clang's lint, 2. find references look not work
-
-            " Please install yarn (-- a node package manger) first.
-            " @note:ccls sometimes cause high cpu
-            "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
-                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
-                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
-                "Plug 'neoclide/coc-rls', Cond(Mode(['coder',]) && LINUX())
-                " :CocInstall coc-rust-analyzer
-
-            Plug 'liuchengxu/vista.vim', Cond(RejectPlug('tagbar') && Mode(['coder',]))
-            Plug 'majutsushi/tagbar', Cond(RejectPlug('vista.vim') && Mode(['coder',]))
-            Plug 'vim-scripts/taglist.vim', Cond(RequirePlug('tagbar') && Mode(['coder',]) && LINUX())
-            "Plug 'tomtom/ttags_vim', Cond(Mode(['coder',]))
-        "}}}
-
         "Plug 'wellle/context.vim', Cond(Mode(['coder',]))  | " performance issue: show code function-name/while/for as context
     "}}}
 
@@ -1075,7 +1083,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " Gdiff, Gblame, or from shell 'git dt' to code view
     Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
-        Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))        | " Shows a git diff in the gutter (sign column)
+        Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]), { 'on':  ['GitGutterToggle'] })  | " Shows a git diff in the gutter (sign column)
         "Plug 'rbong/vim-flog', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Almost same as plug-GV, git branch viewer
 
     "Plug 'juneedahamed/svnj.vim', Cond(Mode(['editor',]))
