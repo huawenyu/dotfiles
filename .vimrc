@@ -336,12 +336,12 @@ endif
 
     " Check a plugin by order
     function! HasnoPlug(name)
-        return CheckPlug(a:name, 0, 0)
+        return CheckPlug(a:name, 1, 0)
     endfunction
 
     " Alias HasnoPlug
     function! RejectPlug(name)
-        return CheckPlug(a:name, 0, 0)
+        return CheckPlug(a:name, 1, 0)
     endfunction
 
 
