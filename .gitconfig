@@ -43,3 +43,5 @@
 	template = ~/.config/gitconf/gitmessage
 [pull]
 	ff = only
+[init]
+	defaultBranch = local

@@ -1204,7 +1204,7 @@ endif
 if g:vim_confi_option.debug
     silent! call logger#init('ALL', ['/dev/stdout', '/tmp/vim.log'])
 
-    " 1. Init: Put these in the header of your script file.
+    " 1. Init: Put these in the head-part of your script file.
     "if !exists("s:init")
     "    let s:init = 1
     "    silent! let s:log = logger#getLogger(expand('<sfile>:t'))
