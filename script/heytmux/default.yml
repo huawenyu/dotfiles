@@ -14,18 +14,18 @@ windows:
       layout: tiled         # Window layout, overrides root layout
       panes:                # List of panes
         - build:
-          - mkdir -p {{ $HOME }}/work/{{ $heyWindow }}
-          - cd {{ $HOME }}/work/{{ $heyWindow }}
+          - mkdir -p {{ $MYPATH_WORK }}/{{ $heyWindow }}
+          - cd {{ $MYPATH_WORK }}/{{ $heyWindow }}
         - model:
           - sleep 1
-          - cd {{ $HOME }}/work/{{ $heyWindow }}
+          - cd {{ $MYPATH_WORK }}/{{ $heyWindow }}
         - doc:
           - sleep 1
-          - cd {{ $HOME }}/work/{{ $heyWindow }}
+          - cd {{ $MYPATH_WORK }}/{{ $heyWindow }}
           - new-doc.sh {{ $heyBug }}
         - main:
           - sleep 1
-          - cd {{ $HOME }}/work/{{ $heyWindow }}
+          - cd {{ $MYPATH_WORK }}/{{ $heyWindow }}
           - df -hm
           - tmux select-pane -t 2
 

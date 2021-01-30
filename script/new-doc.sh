@@ -23,14 +23,14 @@ exit ${1:-0}
 }
 
 if [ $# -eq 0 ]; then
-	Help >&2
+    Help >&2
 fi
 
 mantis=$1
 curDir=$(pwd)
 realdocName="${mantis}-$(basename $curDir)"
 softdocDir="doc"
-realPDir="~/workref/doc"
+realPDir="${MYPATH_WORKREF}/doc"
 if [ ! -d "$softdocDir" ]; then
     eval "mkdir -p ${realPDir}/${realdocName}"
     eval "ln -s ${realPDir}/${realdocName} ${softdocDir}"

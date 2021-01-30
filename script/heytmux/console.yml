@@ -19,13 +19,13 @@ windows:
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
           - keys: Enter
-        - server':
+        - server:
           - ssh hyu@server
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
           - keys: Enter
           - cd www
-        - fgt-left:
+        - left-fgt:
           - ssh hyu@kvm
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
@@ -34,7 +34,7 @@ windows:
           - expect: '[Ll]ogin:'
           - admin
           - keys: Enter
-        - fgt-right:
+        - right-fgt:
           - ssh hyu@kvm
           - expect: '[Pp]assword:'
           - {{ $MY_SSH_PASSWORD }}
@@ -43,10 +43,10 @@ windows:
           - expect: '[Ll]ogin:'
           - admin
           - keys: Enter
-        - cmdssh-left:
+        - left-log:
           - cmdssh -d left.dut -u admin -p ''
           - keys: Enter
-        - cmdssh-right:
+        - right-log:
           - cmdssh -d right.dut -u admin -p ''
           - keys: Enter
 

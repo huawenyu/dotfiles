@@ -1,4 +1,6 @@
 "***************************************************************************************
+" TryIt by Press ';;'
+"
 " 0. Download this vimrc:
 "       $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
 " Install:
@@ -117,6 +119,25 @@ let g:vim_confi_option = {
       \ 'editor_number': 0,
       \}
 " =============================================================
+
+" Plugins {{{1
+" https://github.com/habamax/.vim/blob/e9312935fb915fd6bfc4436b70b300387445aef8/vimrc
+" Vim-Plug bootstrapping. {{{2
+" Don't forget to call :PlugInstall
+let g:vim_plug_installed = filereadable(expand('~/.vim/autoload/plug.vim'))
+if !g:vim_plug_installed
+    echomsg "Install vim-plug with 'InstallVimPlug' command and restart vim."
+    echomsg "'curl' should be installed first"
+    command InstallVimPlug !mkdir -p ~/.vim/autoload |
+                \ curl -fLo ~/.vim/autoload/plug.vim
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Do not load plugins if plugin manager is not installed.
+if !g:vim_plug_installed
+    finish
+endif
+
 
 if g:vim_confi_option.change_leader
     " Bother when termopen and input space cause a little pause-stop-wait
@@ -340,7 +361,7 @@ endif
     endfunction
 
     " Alias HasnoPlug
-    function! RejectPlug(name)
+    function! DenyPlug(name)
         return CheckPlug(a:name, 1, 0)
     endfunction
 
@@ -718,10 +739,12 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Facade {{{2
-    Plug 'Raimondi/delimitMate'
     Plug 'millermedeiros/vim-statline'      | " Simple, not annoy to distract our focus
-    Plug 'huawenyu/vim-linux-coding-style'
+    Plug 'Raimondi/delimitMate', Cond(DenyPlug('auto-pairs') && Mode(['editor',]))
+    Plug 'jiangmiao/auto-pairs', Cond(DenyPlug('delimitMate') && Mode(['editor',]))   | " Not work if `set paste`
+    Plug 'huawenyu/vim-linux-coding-style', Cond(Mode(['coder',]))
     Plug 'paroxayte/vwm.vim', Cond(Mode(['editor',]))    | " vim windows management
+    Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor',]))
     "Plug 'vim-airline/vim-airline'
     "Plug 'vim-airline/vim-airline-themes'
     "Plug 'MattesGroeger/vim-bookmarks'
@@ -800,8 +823,8 @@ call plug#begin('~/.vim/bundle')
                 " :CocInstall coc-rust-analyzer
 
             "Plug 'chengzeyi/fzf-preview.vim', Cond(Mode(['coder',]) && Mode(['advance',]))
-            Plug 'liuchengxu/vista.vim', Cond(RejectPlug('tagbar') && Mode(['coder',]))
-            Plug 'majutsushi/tagbar', Cond(RejectPlug('vista.vim') && Mode(['coder',]))
+            Plug 'liuchengxu/vista.vim', Cond(DenyPlug('tagbar') && Mode(['coder',]))
+            Plug 'majutsushi/tagbar', Cond(DenyPlug('vista.vim') && Mode(['coder',]))
             Plug 'vim-scripts/taglist.vim', Cond(RequirePlug('tagbar') && Mode(['coder',]) && LINUX())
             "Plug 'tomtom/ttags_vim', Cond(Mode(['coder',]))
         "}}}
@@ -836,6 +859,24 @@ call plug#begin('~/.vim/bundle')
 
     "Plug 'derekwyatt/vim-fswitch', Cond(Mode(['editor',]))
     Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))
+
+    " Mappings mostly fall into four categories
+    "   commands:
+    "     ]q is :cnext. [q is :cprevious
+    "   linewise:
+    "     [<Space> and ]<Space> add newlines before and after
+    "     [e and ]e exchange the current line with the one above or below it.
+    "   toggling options:
+    "     [os, ]os, and yos perform :set spell, :set nospell, and :set invspell, respectively.
+    "     There's also l (list), n (number), w (wrap), x (cursorline cursorcolumn)
+    "   encoding and decoding:
+    "     [x and ]x encode and decode XML
+    "     [u and ]u encode and decode URLs
+    "     [y and ]y do C String style escaping
+    "   miscellaneous:
+    "     [f and ]f to go to the next/previous file in the directory,
+    "     [n and ]n to jump between SCM conflict markers.
+    Plug 'tpope/vim-unimpaired', Cond(Mode(['editor',]))
     Plug 'terryma/vim-expand-region', Cond(Mode(['editor',]))   | "   W - select region expand; B - shrink
 
     " http://www.futurile.net/2016/03/19/vim-surround-plugin-tutorial/
@@ -1065,7 +1106,7 @@ call plug#begin('~/.vim/bundle')
         " Plug 'huawenyu/new-gdb.vim', Cond(RequirePlug('new.vim') && Mode(['coder',]) && has('nvim'))  | " New GUI gdb-frontend
         " version@4:
         "   vim <file>
-        Plug 'huawenyu/vimgdb', Cond(RejectPlug('vimspector') && Mode(['coder',]) && has('nvim'))   | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
+        Plug 'huawenyu/vimgdb', Cond(DenyPlug('vimspector') && Mode(['coder',]) && has('nvim'))   | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
 
         "Plug 'cpiger/NeoDebug', Cond(Mode(['coder',]) && has('nvim'), {'on': 'NeoDebug'})
         "Plug 'idanarye/vim-vebugger', Cond(Mode(['coder',]))
@@ -1201,8 +1242,11 @@ if HasPlug('vim-shortcut')
 endif
 
 
-if g:vim_confi_option.debug
-    silent! call logger#init('ALL', ['/dev/stdout', '/tmp/vim.log'])
+if g:vim_confi_option.debug && HasPlug('vimlogger')
+    echomsg "Enable debug mode, please try 'tail -f /tmp/vim.log'."
+
+    "silent! call logger#init('ALL', ['/dev/stdout', '/tmp/vim.log'])
+    silent! call logger#init('ALL', ['/tmp/vim.log'])
 
     " 1. Init: Put these in the head-part of your script file.
     "if !exists("s:init")
