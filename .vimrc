@@ -1121,7 +1121,8 @@ call plug#begin('~/.vim/bundle')
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
 
-    Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " Gdiff, Gblame, or from shell 'git dt' to code view
+    " https://www.davidchudzicki.com/posts/first-parent/
+    Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " Gblame: help-g?  close-gq  key: -,~,P
     Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
         Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]), { 'on':  ['GitGutterToggle'] })  | " Shows a git diff in the gutter (sign column)
