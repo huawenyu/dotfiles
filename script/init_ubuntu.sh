@@ -172,7 +172,8 @@ ln -s ~/dotfiles/tigrc ~/tigrc
 ## vim (+lua): apt-cache search libluajit
 #sudo apt-get install libluajit-5.1-2
 # indexer: ctags, cscope {{{2
-sudo apt-get install -y tree cscope ctags
+sudo apt-get install -y universal-ctags
+sudo apt-get install -y tree cscope
 
 ## network tools {{{2
 # wireshark {{{3
