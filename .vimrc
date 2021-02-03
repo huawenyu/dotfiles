@@ -1115,7 +1115,7 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     "Plug 'rhysd/conflict-marker.vim', Cond(Mode(['coder',]))            | " [x and ]x jump conflict, `ct` for themselves, `co` for ourselves, `cn` for none and `cb` for both.
-    "Plug 'ericcurtin/CurtineIncSw.vim', Cond(Mode(['coder',]))          | " Toggle source/header
+    Plug 'ericcurtin/CurtineIncSw.vim', Cond(Mode(['coder',]))          | " Toggle source/header
     "Plug 'junkblocker/patchreview-vim', Cond(Mode(['coder',]))          | " :PatchReview some.patch
     "Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk

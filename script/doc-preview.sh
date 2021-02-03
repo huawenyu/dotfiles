@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 USAGE=$(cat <<-END
+	  $0   <file>
+	  $0   <file:line>
 	  $0   num-of-context  <file:line>
 END
 )
@@ -14,7 +16,7 @@ unset nctx
 # @args:nctx
 if [ -z ${1} ]; then
     echo "${USAGE}"
-    return 1
+    exit 1
 else
     # is number
     if [ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null; then
@@ -49,11 +51,17 @@ do
     fi
 done
 
-fpos=$((fline-nctx))
-fpos_end=$((fline+nctx))
-foffset=$((fpos_end-fpos))
-# echo ${fname}
-# echo ${fline}
-# echo "done"
 
-sed -n "${fpos},+${foffset}p" $fname
+if [ -v fline ]; then
+    fpos=$((fline-nctx))
+    fpos_end=$((fline+nctx))
+    foffset=$((fpos_end-fpos))
+    # echo ${fname}
+    # echo ${fline}
+    # echo "done"
+
+    sed -n "${fpos},+${foffset}p" $fname
+else
+    head $fname
+fi
+
