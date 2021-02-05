@@ -1,3 +1,4 @@
+[hk6]>[caps]
 [caps]>[fnshf]
 fn [caps]>[fnshf]
 [pause]>[ins]
