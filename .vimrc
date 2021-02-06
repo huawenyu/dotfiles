@@ -1,5 +1,5 @@
 "***************************************************************************************
-" TryIt by Press ';;'
+" TryIt by Press ';;' display shortcuts
 "
 " 0. Download this vimrc:
 "       $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
@@ -60,7 +60,8 @@
 " 5. Displaying the current Vim environment
 "       @note:vim_runtime
 " 6. Remote-mode:
-"       NVIM_LISTEN_ADDRESS=/tmp/nvim.trace nvim
+"       NVIM_LISTEN_ADDRESS=/tmp/nvim.gdb vi
+"       mode=basic NVIM_LISTEN_ADDRESS=/tmp/nvim.trace nvim
 " 7. Options for .vimrc from env command-line:
 "       mode=basic vi <file>
 "       debugger=vimspector vi <file>
@@ -360,7 +361,7 @@ endif
         return CheckPlug(a:name, 1, 0)
     endfunction
 
-    " Alias HasnoPlug
+    " Alias HasnoPlug, only load the plugin in advance.
     function! DenyPlug(name)
         return CheckPlug(a:name, 1, 0)
     endfunction
@@ -520,9 +521,9 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " ColorTheme {{{2
-    Plug 'vim-scripts/holokai', Cond(Mode(['theme',]))
+    Plug 'vim-scripts/holokai', Cond(DenyPlug('seoul256.vim') && Mode(['theme',]))
+    Plug 'junegunn/seoul256.vim', Cond(DenyPlug('holokai') && Mode(['theme',]))
     Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme',]))  | " set background=light;colorscheme PaperColor
-    Plug 'junegunn/seoul256.vim', Cond(Mode(['theme',]))
     "Plug 'tomasr/molokai', Cond(Mode(['theme',]))
     "Plug 'darkspectrum', Cond(Mode(['theme',]))
     "Plug 'dracula/vim', Cond(Mode(['theme',]))
@@ -539,6 +540,8 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Mode {{{2
+    "Plug 'sheerun/vim-polyglot', Cond(Mode(['coder',]) && Mode(['c',]))     | "A collection of language packs for Vim.
+
     " REPL (Read, Eval, Print, Loop) {{{3
     "  - Command Line Tool: https://github.com/BenBrock/reple
         "Plug 'sillybun/vim-repl', Cond(Mode(['coder',]))  | " Not work :REPLToggle
@@ -579,7 +582,9 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'huawenyu/c-utils.vim', Cond(Mode(['coder',]) && Mode(['c',]))
         Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder',]) && Mode(['c',]))
+            Plug 'bfrg/vim-cpp-modern', Cond(RequirePlug('vim-cpp-enhanced-highlight') && Mode(['coder',]) && Mode(['c',]))
         Plug 'tenfyzhong/CompleteParameter.vim', Cond(Mode(['coder',]) && Mode(['c',]))
+
         "Plug 'WolfgangMehner/c-support', Cond(Mode(['coder',]) && Mode(['c',]))            | "[Start Slow]
         "Plug 'tyru/current-func-info.vim', Cond(Mode(['coder',]) && Mode(['c',]))          | "[Bad performance] Show current function name in statusline
         "Plug 'bbchung/Clamp', Cond(Mode(['coder',]) && Mode(['c',]))   | " support C-family code powered by libclang
@@ -1111,7 +1116,6 @@ call plug#begin('~/.vim/bundle')
         "Plug 'cpiger/NeoDebug', Cond(Mode(['coder',]) && has('nvim'), {'on': 'NeoDebug'})
         "Plug 'idanarye/vim-vebugger', Cond(Mode(['coder',]))
         "Plug 'LucHermitte/lh-vim-lib', Cond(Mode(['admin',]))
-        " NVIM_LISTEN_ADDRESS=/tmp/nvim.gdb vi
     "}}}
 
     "Plug 'rhysd/conflict-marker.vim', Cond(Mode(['coder',]))            | " [x and ]x jump conflict, `ct` for themselves, `co` for ourselves, `cn` for none and `cb` for both.
