@@ -1,0 +1,74 @@
+{
+    "createdBy": "Redirector v3.5.3",
+    "createdAt": "2021-02-06T08:12:28.305Z",
+    "redirects": [
+        {
+            "description": "Example redirect, try going to http://example.com/anywordhere",
+            "exampleUrl": "http://example.com/some-word-that-matches-wildcard",
+            "exampleResult": "https://google.com/search?q=some-word-that-matches-wildcard",
+            "error": null,
+            "includePattern": "http://example.com/*",
+            "excludePattern": "",
+            "patternDesc": "Any word after example.com leads to google search for that word.",
+            "redirectUrl": "https://google.com/search?q=$1",
+            "patternType": "W",
+            "processMatches": "noProcessing",
+            "disabled": false,
+            "grouped": false,
+            "appliesTo": [
+                "main_frame"
+            ]
+        },
+        {
+            "description": "Mantis",
+            "exampleUrl": "https://localtest/bf?dot=185784",
+            "exampleResult": "https://mantis.fortinet.com/bug_view_page.php?bug_id=185784",
+            "error": null,
+            "includePattern": "https://localtest/bf?dot=*",
+            "excludePattern": "",
+            "patternDesc": "Any word after example.com leads to google search for that word.",
+            "redirectUrl": "https://mantis.fortinet.com/bug_view_page.php?bug_id=$1",
+            "patternType": "W",
+            "processMatches": "noProcessing",
+            "disabled": false,
+            "grouped": false,
+            "appliesTo": [
+                "main_frame"
+            ]
+        },
+        {
+            "description": "ReviewBoard",
+            "exampleUrl": "https://localtest/bf?dot3=185784",
+            "exampleResult": "https://reviewboard.corp.fortinet.com/r/185784/",
+            "error": null,
+            "includePattern": "https://localtest/bf?dot3=*",
+            "excludePattern": "",
+            "patternDesc": "Any word after example.com leads to google search for that word.",
+            "redirectUrl": "https://reviewboard.corp.fortinet.com/r/$1/",
+            "patternType": "W",
+            "processMatches": "noProcessing",
+            "disabled": false,
+            "grouped": false,
+            "appliesTo": [
+                "main_frame"
+            ]
+        },
+        {
+            "description": "PMDB",
+            "exampleUrl": "https://localtest/bf?dot4=185784",
+            "exampleResult": "https://pmdb.fortinet.com/ProjectManagement/editprojects.php?id=185784",
+            "error": null,
+            "includePattern": "https://localtest/bf?dot4=*",
+            "excludePattern": "",
+            "patternDesc": "Any word after example.com leads to google search for that word.",
+            "redirectUrl": "https://pmdb.fortinet.com/ProjectManagement/editprojects.php?id=$1",
+            "patternType": "W",
+            "processMatches": "noProcessing",
+            "disabled": false,
+            "grouped": false,
+            "appliesTo": [
+                "main_frame"
+            ]
+        }
+    ]
+}
