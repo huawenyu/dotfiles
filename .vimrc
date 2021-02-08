@@ -939,6 +939,7 @@ call plug#begin('~/.vim/bundle')
     "Plug 'ervandew/maximize', Cond(Mode(['editor',]))          | " Cannot max the quickfix windows
     Plug 'dhruvasagar/vim-zoom', Cond(Mode(['editor',]))        | " nmap <a-w>    <Plug>(zoom-toggle)
 
+    "Plug 'inkarkat/vim-mark', Cond(Mode(['editor',]))  | " always trigger error
     Plug 'huawenyu/vim-mark', Cond(Mode(['editor',]))
     "Plug 'tomtom/tmarks_vim', Cond(Mode(['editor',]))
     "Plug 'tomtom/vimform_vim', Cond(Mode(['editor',]))
@@ -969,8 +970,11 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-repeat', Cond(Mode(['editor',]))
             " gA                   shows the four representations of the number under the cursor.
             " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
-            Plug 'glts/vim-radical', Cond(Mode(['editor',]))
-            Plug 'glts/vim-magnum', Cond(Mode(['editor',]))
+            Plug 'glts/vim-radical', Cond(RequirePlug('vim-repeat') && Mode(['editor',]))
+            Plug 'glts/vim-magnum', Cond(RequirePlug('vim-repeat') && Mode(['editor',]))
+            "Plug 'svermeulen/vim-macrobatics', Cond(RequirePlug('vim-repeat') && Mode(['editor',]))
+            Plug 'huawenyu/vim-macroscope', Cond(RequirePlug('vim-repeat') && Mode(['editor',]))
+
         "Plug 'vim-utils/vim-vertical-move', Cond(Mode(['editor',]))
         "Plug 'rhysd/accelerated-jk', Cond(Mode(['editor',]))   | " Cause h/j cannot move If sometimes not load the plug
         "Plug 'unblevable/quick-scope', Cond(Mode(['editor',]))
@@ -990,7 +994,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'kassio/neoterm', Cond(Mode(['admin',]) && has('nvim'))        | " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
         Plug 'vim-scripts/DrawIt', Cond(Mode(['editor',]))                       | " \di \ds: start/stop;  draw by direction-key
-        Plug 'reedes/vim-pencil', Cond(Mode(['editor',]))                        | "
+        Plug 'reedes/vim-pencil', Cond(Mode(['editor',]))                        | " :TogglePencil
         "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))                        | " Performance issue
         Plug 'sk1418/blockit', Cond(Mode(['editor',]))                           | " :Block -- Draw a Box around text region
         Plug 'chrisbra/NrrwRgn', Cond(Mode(['editor',]))                         | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
@@ -1121,7 +1125,9 @@ call plug#begin('~/.vim/bundle')
     "Plug 'rhysd/conflict-marker.vim', Cond(Mode(['coder',]))            | " [x and ]x jump conflict, `ct` for themselves, `co` for ourselves, `cn` for none and `cb` for both.
     Plug 'ericcurtin/CurtineIncSw.vim', Cond(Mode(['coder',]))          | " Toggle source/header
     "Plug 'junkblocker/patchreview-vim', Cond(Mode(['coder',]))          | " :PatchReview some.patch
-    "Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
+
+    Plug 'rbgrouleff/bclose.vim', Cond(Mode(['editor',]) && executable('tig'))
+    Plug 'iberianpig/tig-explorer.vim', Cond(RequirePlug('bclose.vim') && Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
 
