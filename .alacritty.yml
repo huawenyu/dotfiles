@@ -177,6 +177,7 @@ font:
 
 
 ##https://github.com/eendroroy/alacritty-theme
+# Ref color: https://www.w3schools.com/colors/colors_picker.asp
 ## GNOME Terminal Tango Dark
 #colors:
 #  primary:
@@ -209,7 +210,7 @@ colors:
   primary:
     #background: '0x000000'
     background: '0x212121'
-    foreground: '0xeaeaea'
+    foreground: '0xb3b3b3'
 
   # Normal colors
   normal:
