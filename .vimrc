@@ -1127,6 +1127,8 @@ call plug#begin('~/.vim/bundle')
     "Plug 'junkblocker/patchreview-vim', Cond(Mode(['coder',]))          | " :PatchReview some.patch
 
     Plug 'rbgrouleff/bclose.vim', Cond(Mode(['editor',]) && executable('tig'))
+    " ShortcutsRef https://devhints.io/tig
+    "   Tig-blame: back-history: <, i.e. shift + ,
     Plug 'iberianpig/tig-explorer.vim', Cond(RequirePlug('bclose.vim') && Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
