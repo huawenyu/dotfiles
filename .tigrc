@@ -92,17 +92,17 @@ bind generic <C-w><C-w> view-next
 # Visualization
 #######################################
 
-set author-width = 10
-set filename-width = 16
+#set author-width = 20
+#set filename-width = 16
 set id-width = 14
 #set blame-options = -C -C -C
 #set line-graphics = utf-8
-set line-number-interval = 5
+#set line-number-interval = 5
 # set horizontal-scroll = 33%
 #set read-git-colors = no
-set show-author = abbreviated
-set show-filename = always
-set show-date = relative
+#set show-author = abbreviated
+#set show-filename = always
+#set show-date = relative
 # set show-notes = yes
 # set show-refs = yes
 # set show-id = yes
@@ -118,7 +118,7 @@ set show-date = relative
 # set ignore-case = no
 set wrap-lines = no
 set focus-child = yes
-set show-line-numbers = yes
+#set show-line-numbers = yes
 
 
 #######################################

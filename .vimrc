@@ -75,9 +75,11 @@
 "       "qyy   yank this new modified macro back into the q register
 "
 " 9. @note:troubleshooting
-"       some myself plugin support s:log.debug feature:
-"       - debug=1 vi <file>
-"       - tail -f /tmp/vim.log
+"       1. some myself plugin support s:log.debug feature:
+"          - debug=1 vi <file>
+"          - tail -f /tmp/vim.log
+"       2. only load some plugin:
+"          - let g:vim_confi_option.mode = ['test']
 " 10. If two plugin is alternatives, choose the preceder one, like: AlterPlug('vista.vim')
 " 11. [Neovim 0.5 features and the switch to init.lua](https://oroques.dev/notes/neovim-init/)
 "     [Learn X in Y minutes](https://learnxinyminutes.com/docs/lua/)
@@ -138,7 +140,6 @@ endif
 if !g:vim_plug_installed
     finish
 endif
-
 
 if g:vim_confi_option.change_leader
     " Bother when termopen and input space cause a little pause-stop-wait
@@ -750,6 +751,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/vim-linux-coding-style', Cond(Mode(['coder',]))
     Plug 'paroxayte/vwm.vim', Cond(Mode(['editor',]))    | " vim windows management
     Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor',]))
+    "Plug 'jeffkreeftmeijer/vim-numbertoggle', Cond(Mode(['editor',]))
     "Plug 'vim-airline/vim-airline'
     "Plug 'vim-airline/vim-airline-themes'
     "Plug 'MattesGroeger/vim-bookmarks'
@@ -881,7 +883,7 @@ call plug#begin('~/.vim/bundle')
     "   miscellaneous:
     "     [f and ]f to go to the next/previous file in the directory,
     "     [n and ]n to jump between SCM conflict markers.
-    Plug 'tpope/vim-unimpaired', Cond(Mode(['editor',]))
+    Plug 'huawenyu/vim-unimpaired', Cond(Mode(['editor',]))        | "@tpope [os, ]os
     Plug 'terryma/vim-expand-region', Cond(Mode(['editor',]))   | "   W - select region expand; B - shrink
 
     " http://www.futurile.net/2016/03/19/vim-surround-plugin-tutorial/
@@ -1128,7 +1130,8 @@ call plug#begin('~/.vim/bundle')
 
     Plug 'rbgrouleff/bclose.vim', Cond(Mode(['editor',]) && executable('tig'))
     " ShortcutsRef https://devhints.io/tig
-    "   Tig-blame: back-history: <, i.e. shift + ,
+    "   m - main-window, Q - exit-all, q - back-last-window
+    "   Tig-blame: back-history: `<` and `,`
     Plug 'iberianpig/tig-explorer.vim', Cond(RequirePlug('bclose.vim') && Mode(['editor',]) && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
     "   Plug 'cohama/agit.vim', Cond(Mode(['editor',]))    | " :Agit show git log like gitk
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
@@ -1138,6 +1141,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
         Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]), { 'on':  ['GitGutterToggle'] })  | " Shows a git diff in the gutter (sign column)
+        Plug 'mhinz/vim-signify', Cond(Mode(['editor',]))
         "Plug 'rbong/vim-flog', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Almost same as plug-GV, git branch viewer
 
     "Plug 'juneedahamed/svnj.vim', Cond(Mode(['editor',]))
@@ -1200,16 +1204,16 @@ call plug#begin('~/.vim/bundle')
 "       at/it   Tags (e.g. <html>inner</html>)
 "
     " vimwiki                               vah
-    Plug 'wellle/targets.vim', Cond(Mode(['editor',]))           | " Support build-in obj number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
+    Plug 'wellle/targets.vim', Cond(Mode(['editor',]))           | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
 
     Plug 'kana/vim-textobj-user', Cond(Mode(['editor',]))
     "Plug 'kana/vim-repeat', Cond(Mode(['editor',]))
 
     "Plug 'kana/vim-textobj-indent', Cond(Mode(['editor',]))            | " vai, vaI
     Plug 'michaeljsmith/vim-indent-object', Cond(Mode(['editor',]))     | " <count>ai, aI, ii, iI
-    Plug 'glts/vim-textobj-indblock', Cond(Mode(['editor',]))           | " vao, Select a block of indentation whitespace before ascii
+    Plug 'glts/vim-textobj-indblock', Cond(Mode(['coder',]))           | " vao, Select a block of indentation whitespace before ascii
 
-    Plug 'kana/vim-textobj-entire', Cond(Mode(['editor',]))             | " vae, Select entire buffer
+    Plug 'kana/vim-textobj-entire', Cond(Mode(['coder',]))             | " vae, Select entire buffer
     Plug 'kana/vim-textobj-function', Cond(Mode(['coder',]))            | " vaf, Support: c, java, vimscript
     " Plug 'machakann/vim-textobj-functioncall', Cond(Mode(['coder',]))
 
@@ -1218,7 +1222,7 @@ call plug#begin('~/.vim/bundle')
     " Plug 'thalesmello/vim-textobj-methodcall', Cond(Mode(['coder',]))
     " Plug 'adriaanzon/vim-textobj-matchit', Cond(Mode(['editor',]))
     Plug 'glts/vim-textobj-comment', Cond(Mode(['coder',]))             | " vac, vic
-    Plug 'thinca/vim-textobj-between', Cond(Mode(['editor',]))          | " vaf
+    "Plug 'thinca/vim-textobj-between', Cond(Mode(['editor',]))          | " vaf, break the vim-textobj-function
     Plug 'Julian/vim-textobj-brace', Cond(Mode(['editor',]))            | " vaj
     Plug 'whatyouhide/vim-textobj-xmlattr', Cond(Mode(['coder',]))      | " vax
 "}}}

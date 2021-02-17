@@ -46,12 +46,12 @@
 
 #192.168.100.17	gerrit.fortinet.com
 #172.16.100.52   scm-yvr-mirror.fortinet.com
-172.16.11.12    scm-yvr-mirror.fortinet.com
+#172.16.11.12    scm-yvr-mirror.fortinet.com
 
 172.17.254.146   scm.van.corp.fortinet.com
 
 206.190.36.45	www.yahoo.com
-192.168.100.122 reviewboard.corp.fortinet.com
+#192.168.100.122 reviewboard.corp.fortinet.com
 #192.168.100.177 jenkins.corp.fortinet.com
 172.16.100.34   phab.corp.fortinet.com
 

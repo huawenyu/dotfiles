@@ -22,7 +22,8 @@
 	d = difftool
 	dt = "!f() { vim -p $(git diff --name-only) +\"tabdo Gvdiff $@\" +tabfirst; }; f"
 	vimdiff = "!f() { vim -p $(git diff --name-only) +\"tabdo Gvdiff $@\" +tabfirst; }; f"
-	parent = "!git show-branch 2>&1 | grep '*' | grep -v 'warning: ' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+	#parent = "!git show-branch 2>&1 | grep '*' | grep -v 'warning: ' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+	parent = "!git show-branch 2>/dev/null | grep '!' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | tail -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 [credential]
 	helper = cache --timeout 3600
 [pack]
