@@ -8,6 +8,7 @@
 "       Enter local bash
 "       $ apt-get install vim
 "       $ vim --version       <=== check version
+"       $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "       $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "          https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
