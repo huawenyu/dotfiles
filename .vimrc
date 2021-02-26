@@ -793,6 +793,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'rickhowe/diffchar.vim', Cond(Mode(['editor',]))
     Plug 'chrisbra/vim-diff-enhanced', Cond(Mode(['editor',])) | " vimdiff:  ]c - next;  [c - previous; do - diff obtain; dp - diff put; zo - unfold; zc - fold; :diffupdate - re-scan
     Plug 'huawenyu/vim-log-syntax', Cond(Mode(['editor',]))
+    "Plug 'lambdalisue/vim-unified-diff', Cond(Mode(['editor',]))
 "}}}
 
 " Improve {{{2
@@ -937,12 +938,8 @@ call plug#begin('~/.vim/bundle')
     "Plug 'tpope/vim-sleuth', Cond(Mode(['editor',]))            | " Behaviour wield
     Plug 'Chiel92/vim-autoformat', Cond(Mode(['editor',]))
 
-    "Plug 'szw/vim-maximizer', Cond(Mode(['editor',]))          | " Can't restore windows after complex operate
-    "Plug 'ervandew/maximize', Cond(Mode(['editor',]))          | " Cannot max the quickfix windows
-    Plug 'dhruvasagar/vim-zoom', Cond(Mode(['editor',]))        | " nmap <a-w>    <Plug>(zoom-toggle)
-
     "Plug 'inkarkat/vim-mark', Cond(Mode(['editor',]))  | " always trigger error
-    Plug 'huawenyu/vim-mark', Cond(Mode(['editor',]))
+        Plug 'huawenyu/vim-mark', Cond(Mode(['editor',]))
     "Plug 'tomtom/tmarks_vim', Cond(Mode(['editor',]))
     "Plug 'tomtom/vimform_vim', Cond(Mode(['editor',]))
     "Plug 'huawenyu/highlight.vim', Cond(Mode(['editor',]))
@@ -1126,7 +1123,7 @@ call plug#begin('~/.vim/bundle')
 
     "Plug 'rhysd/conflict-marker.vim', Cond(Mode(['coder',]))            | " [x and ]x jump conflict, `ct` for themselves, `co` for ourselves, `cn` for none and `cb` for both.
     Plug 'ericcurtin/CurtineIncSw.vim', Cond(Mode(['coder',]))          | " Toggle source/header
-    "Plug 'junkblocker/patchreview-vim', Cond(Mode(['coder',]))          | " :PatchReview some.patch
+    Plug 'junkblocker/patchreview-vim', Cond(Mode(['coder',]))          | " :PatchReview some.patch,  :DiffReview git show <SHA1>  :DiffReview git staged --no-color -U5
 
     Plug 'rbgrouleff/bclose.vim', Cond(Mode(['editor',]) && executable('tig'))
     " ShortcutsRef https://devhints.io/tig
