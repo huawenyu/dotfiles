@@ -700,6 +700,11 @@ call plug#begin('~/.vim/bundle')
 
             Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))       | " codeblock with 'todo', http://todotxt.org/
             "Plug 'dkarter/bullets.vim', Cond(Mode(['editor',]))       | " Implement by markdown
+
+            "Plug 'inkarkat/vim-GrepHere', Cond(RequirePlug('vim-ingo-library') && RequirePlug('vim-GrepCommands') && Mode(['editor',]))    | " last search or pattern to quickfix
+            "    Plug 'inkarkat/vim-ingo-library', Cond(Mode(['editor',]))    | " basic function
+            "    Plug 'inkarkat/vim-GrepCommands', Cond(RequirePlug('vim-ingo-library') && Mode(['editor',]))    | " basic function
+
         "}}}
 
         " Vimwiki {{{4
