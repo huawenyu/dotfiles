@@ -24,6 +24,24 @@
 	vimdiff = "!f() { vim -p $(git diff --name-only) +\"tabdo Gvdiff $@\" +tabfirst; }; f"
 	#parent = "!git show-branch 2>&1 | grep '*' | grep -v 'warning: ' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 	parent = "!git show-branch 2>/dev/null | grep '!' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | tail -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+
+	# git st-add <remote-repo> [<branch-name>]
+	st-add = "!f() { \
+		DEFAULT_BRANCH=master; \
+		DEFAULT_DIR=$(basename $1 | cut -d. -f1); \
+		git subtree add --prefix $DEFAULT_DIR $1 ${2:-$DEFAULT_BRANCH} --squash; \
+		}; f"
+	st-pull = "!f() { \
+		DEFAULT_BRANCH=master; \
+		DEFAULT_DIR=$(basename $1 | cut -d. -f1); \
+		git subtree pull --prefix $DEFAULT_DIR $1 ${2:-$DEFAULT_BRANCH} --squash; \
+		}; f"
+	st-push = "!f() { \
+		DEFAULT_BRANCH=master; \
+		DEFAULT_DIR=$(basename $1 | cut -d. -f1); \
+		git subtree push --prefix $DEFAULT_DIR $1 ${2:-$DEFAULT_BRANCH}; \
+		}; f"
+
 [credential]
 	helper = cache --timeout 3600
 [pack]
