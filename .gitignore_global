@@ -12,6 +12,7 @@ Default.vim
 default.vim
 log.*
 patch.*
+*.patch
 tage
 tags
 tagx
