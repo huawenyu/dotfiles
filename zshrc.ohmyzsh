@@ -52,7 +52,15 @@ COMPLETION_WAITING_DOTS="true"
 # git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 # git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # git clone https://github.com/huawenyu/zsh-local.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-local
+# git clone https://github.com/urbainvaes/fzf-marks.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/fzf-marks
+#    $ mark <mark>, to register a new mark to the current directory;
+#    $ fzm [<optional-initial-query>], to jump to or delete a mark using fzf.
+#      ctrl-g, to fzm.
+#      ctrl-y, to jump to a match;
+#      ctrl-t, to toggle a match for deletion;
+#      ctrl-d, to delete selected matches.
 #plugins=(lighthouse history-search-multi-word zsh-directory-history history-substring-search zsh-completions zsh-autosuggestions)
+#plugins=(history-substring-search zsh-completions zsh-local fzf-marks)
 plugins=(history-substring-search zsh-completions zsh-local)
 autoload -U compinit && compinit
 
