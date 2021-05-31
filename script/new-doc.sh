@@ -30,7 +30,7 @@ mantis=$1
 curDir=$(pwd)
 realdocName="${mantis}-$(basename $curDir)"
 softdocDir="doc"
-realPDir="${MYPATH_WORKREF}/doc"
+realPDir="$HOME/work-doc"
 if [ ! -d "$softdocDir" ]; then
     eval "mkdir -p ${realPDir}/${realdocName}"
     eval "ln -s ${realPDir}/${realdocName} ${softdocDir}"
