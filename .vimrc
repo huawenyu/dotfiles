@@ -828,13 +828,17 @@ call plug#begin('~/.vim/bundle')
             "Plug 'lyuts/vim-rtags', Cond(Mode(['coder',]))         | " Bad performance
             "Plug 'w0rp/ale', Cond(Mode(['coder',]))   | " 1. Not using clang's lint, 2. find references look not work
 
-            " Please install yarn (-- a node package manger) first.
-            " @note:ccls sometimes cause high cpu
+            " Prerequire:
+            "   - install yarn (-- a node package manger) first.
+            " AfterRequire:
+            "   - install yarn (-- a node package manger) first.
+            " Note:
+            "    - ccls sometimes cause high cpu
+            " :CocInstall coc-rust-analyzer
             "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
-                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
+                Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
                 "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
                 "Plug 'neoclide/coc-rls', Cond(Mode(['coder',]) && LINUX())
-                " :CocInstall coc-rust-analyzer
 
             "Plug 'chengzeyi/fzf-preview.vim', Cond(Mode(['coder',]) && Mode(['advance',]))
             Plug 'liuchengxu/vista.vim', Cond(DenyPlug('tagbar') && Mode(['coder',]))
