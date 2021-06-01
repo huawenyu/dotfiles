@@ -831,10 +831,9 @@ call plug#begin('~/.vim/bundle')
             " Prerequire:
             "   - install yarn (-- a node package manger) first.
             " AfterRequire:
-            "   - install yarn (-- a node package manger) first.
+            "   - :CocInstall coc-rust-analyzer
             " Note:
             "    - ccls sometimes cause high cpu
-            " :CocInstall coc-rust-analyzer
             "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
                 Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
                 "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
