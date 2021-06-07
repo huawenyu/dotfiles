@@ -78,6 +78,14 @@ ZSH_DISABLE_COMPFIX=true
 
 source $ZSH/oh-my-zsh.sh
 
+# Change prompt: 'user@hostname ~ '
+#PROMPT="%F{yellow}%n%f"  # Magenta user name
+#PROMPT+="@"
+#PROMPT+="%F{green}${${(%):-%m}#zoltan-}%f" # Blue host name, minus zoltan
+#PROMPT+=" "
+#PROMPT+="%F{yellow}%1~ %f" # Yellow working directory
+##PROMPT+=" %# "
+
 # speed git dir prompt
 function git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
