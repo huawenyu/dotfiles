@@ -7,6 +7,16 @@
 
 # Basic {{{1
 sudo apt-get update
+
+# remote: ssh/nomachine {{{2}}}
+sudo apt-get -y openssh-server
+# Download nomachine from it's web, install
+
+# KVM
+sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
+sudo usermod -aG libvirt ${whoami}
+sudo usermod -aG kvm ${whoami}
+
 sudo apt-get install -f
 sudo update-rc.d cron defaults
 
