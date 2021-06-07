@@ -667,7 +667,7 @@ call plug#begin('~/.vim/bundle')
     "
         Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})
         Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
-        "Plug 'huawenyu/tpope-markdown', Cond(Mode(['editor',]), {'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
+        Plug 'tpope/vim-markdown', Cond(Mode(['editor',]), {'as': 'tpope_vim-markdown', 'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
         "
         " Set prefix=;
         "   prefix i        Insert/update TOC
@@ -1124,7 +1124,7 @@ call plug#begin('~/.vim/bundle')
         " Plug 'huawenyu/new-gdb.vim', Cond(RequirePlug('new.vim') && Mode(['coder',]) && has('nvim'))  | " New GUI gdb-frontend
         " version@4:
         "   vim <file>
-        Plug 'huawenyu/vimgdb', Cond(DenyPlug('vimspector') && Mode(['coder',]) && has('nvim'))   | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
+        Plug 'huawenyu/vimgdb', Cond(DenyPlug('vimspector') && Mode(['coder',]) && has('nvim'), { 'rtp': 'vim' })    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
 
         "Plug 'cpiger/NeoDebug', Cond(Mode(['coder',]) && has('nvim'), {'on': 'NeoDebug'})
         "Plug 'idanarye/vim-vebugger', Cond(Mode(['coder',]))

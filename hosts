@@ -5,6 +5,7 @@
 
 # My evn
 ## the test used client/server
+172.16.80.120	address
 172.16.80.121	work
 10.1.1.122		client
 172.16.80.132	client2

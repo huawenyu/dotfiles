@@ -30,11 +30,6 @@
       "command": "lua-lsp",
       "filetypes": ["lua"]
     },
-    "efm": {
-      "command": "efm-langserver",
-      "args": ["-c", "~/dotfiles/efm-config.yaml"],
-      "filetypes": ["vim", "eruby", "markdown", "yaml"]
-    }
   },
   "python.jediEnabled": false
 }
