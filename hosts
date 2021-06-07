@@ -6,13 +6,15 @@
 # My evn
 ## the test used client/server
 172.16.80.120	address
-172.16.80.121	work
+172.16.80.121	work-host
+172.16.80.123	work
 10.1.1.122		client
 172.16.80.132	client2
 172.16.80.129	server
 172.16.80.139	server2
 ## the hyperviser server, here is virsh-manage
 172.16.80.130	kvm
+172.16.80.130	kvm-host
 172.16.80.125	left.dut
 172.16.80.127	right.dut
 172.16.80.133	fpx
