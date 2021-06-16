@@ -70,7 +70,7 @@
 	remote = origin
 	username = wilson_hyu
 [commit]
-	template = ~/.config/gitconf/gitmessage
+	template = ~/.gitmessage
 [pull]
 	ff = only
 [init]
