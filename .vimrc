@@ -102,12 +102,12 @@
 "     'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'c', 'plugin', 'script', 'morecool'],
 let g:vim_confi_option = {
       \ 'mode': ['basic', 'theme', 'local', 'editor', 'advance', 'admin', 'coder', 'c', 'script', 'tool'],
-      \ 'change_leader': 1,
+      \ 'remap_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
       \ 'debug': 0,
-      \ 'folding': 0,
       \ 'upper_keyfixes': 1,
+      \
       \ 'auto_install_vimplug': 1,
       \ 'auto_install_plugs': 1,
       \ 'auto_install_tools': 1,
@@ -115,12 +115,14 @@ let g:vim_confi_option = {
       \ 'plug_patch': 'vim.config',
       \
       \ 'auto_chdir': 0,
+      \ 'auto_save': 1,
       \ 'auto_restore_cursor': 1,
       \ 'auto_qf_height': 1,
       \
       \ 'keywordprg_filetype': 1,
       \
-      \ 'editor_number': 0,
+      \ 'view_folding': 0,
+      \ 'show_number': 0,
       \}
 " =============================================================
 
@@ -142,7 +144,7 @@ if !g:vim_plug_installed
     finish
 endif
 
-if g:vim_confi_option.change_leader
+if g:vim_confi_option.remap_leader
     " Bother when termopen and input space cause a little pause-stop-wait
     let mapleader = "\<Space>"
     let maplocalleader="\<Space>"
@@ -1001,19 +1003,22 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-dotenv', Cond(Mode(['admin',]))  | " Basic support for .env and Procfile
         Plug 'kassio/neoterm', Cond(Mode(['admin',]) && has('nvim'))        | " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
-        Plug 'vim-scripts/DrawIt', Cond(Mode(['editor',]))                       | " \di \ds: start/stop;  draw by direction-key
-        Plug 'reedes/vim-pencil', Cond(Mode(['editor',]))                        | " :TogglePencil
-        "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))                        | " Performance issue
-        Plug 'sk1418/blockit', Cond(Mode(['editor',]))                           | " :Block -- Draw a Box around text region
-        Plug 'chrisbra/NrrwRgn', Cond(Mode(['editor',]))                         | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
-        Plug 'junegunn/vim-easy-align', Cond(Mode(['editor',]))                  | " tablize selected and ga=
-        "Plug 'webdevel/tabulous', Cond(Mode(['editor',]))                       | " draw table
-        Plug 'dhruvasagar/vim-table-mode', Cond(Mode(['editor',]))               | " <leader>tm :TableModeToggle
-        Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))                        | " :Goyo 80
-        "Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))                  | " Unsupport colorscheme
-        Plug 'jamessan/vim-gnupg', Cond(Mode(['admin',]))                        | " implements transparent editing of gpg encrypted files.
-        Plug 'FooSoft/vim-argwrap', Cond(Mode(['coder',]))                       | " an argument wrapping and unwrapping
-        "Plug 'ggVGc/fzf_browser', Cond(Mode(['coder',]))                         | "
+        Plug 'vim-scripts/DrawIt', Cond(Mode(['editor',]))        | " \di \ds: start/stop;  draw by direction-key
+        Plug 'reedes/vim-pencil', Cond(Mode(['editor',]))         | " :TogglePencil
+        "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))         | " Performance issue
+        Plug 'sk1418/blockit', Cond(Mode(['editor',]))            | " :Block -- Draw a Box around text region
+        Plug 'chrisbra/NrrwRgn', Cond(Mode(['editor',]))          | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
+        Plug 'junegunn/vim-easy-align', Cond(Mode(['editor',]))   | " tablize selected and ga=
+        "Plug 'webdevel/tabulous', Cond(Mode(['editor',]))        | " draw table
+        "
+        " <leader>tm :TableModeToggle; <leader>tr: Align; <leader>tt: Format existed
+        Plug 'dhruvasagar/vim-table-mode', Cond(Mode(['editor',]))
+
+        Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
+        "Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))   | " Unsupport colorscheme
+        Plug 'jamessan/vim-gnupg', Cond(Mode(['admin',]))         | " implements transparent editing of gpg encrypted files.
+        Plug 'FooSoft/vim-argwrap', Cond(Mode(['coder',]))        | " an argument wrapping and unwrapping
+        "Plug 'ggVGc/fzf_browser', Cond(Mode(['coder',]))         | "
     "}}}
 "}}}
 
@@ -1149,7 +1154,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
         Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]), { 'on':  ['GitGutterToggle'] })  | " Shows a git diff in the gutter (sign column)
-        Plug 'mhinz/vim-signify', Cond(Mode(['editor',]))
+        Plug 'mhinz/vim-signify', Cond(Mode(['editor',]))   | " Quick show git diff
         "Plug 'rbong/vim-flog', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Almost same as plug-GV, git branch viewer
 
     "Plug 'juneedahamed/svnj.vim', Cond(Mode(['editor',]))
@@ -1164,6 +1169,8 @@ call plug#begin('~/.vim/bundle')
     "Plug 'svermeulen/vim-easyclip', Cond(Mode(['editor',]))  | " change to vim-yoink, similiar: nvim-miniyank, YankRing.vim, vim-yankstack
     "Plug 'bfredl/nvim-miniyank', Cond(Mode(['editor',]))
     "Plug 'svermeulen/vim-yoink', Cond(Mode(['editor',]) && has('nvim')) | " sometimes delete not copyinto paste's buffer
+    Plug 'ojroques/vim-oscyank', Cond(Mode(['editor',]))
+    "Plug 'fcpg/vim-osc52'
 
     "Plug 'huawenyu/vimux-script', Cond(Mode(['admin',]) && has('nvim'))
     "Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin',]) && has('nvim'))
@@ -1319,3 +1326,7 @@ endif
 let g:neobugger_local_backtrace = 1
 let g:neobugger_local_breakpoint = 1
 
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif
+    "autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | y:Oscyank | endif
+    let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
+    "let g:oscyank_silent = v:true  " or 1 for older versions of Vim
