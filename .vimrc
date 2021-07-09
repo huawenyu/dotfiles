@@ -1166,11 +1166,10 @@ call plug#begin('~/.vim/bundle')
     "Plug 'kkoomen/vim-doge', Cond(Mode(['editor',]), { 'do': { -> doge#install() } })   | " Looks not work, Document Generate
 
     " share copy/paste between vim(""p)/tmux
-    "Plug 'svermeulen/vim-easyclip', Cond(Mode(['editor',]))  | " change to vim-yoink, similiar: nvim-miniyank, YankRing.vim, vim-yankstack
+    "Plug 'svermeulen/vim-easyclip', Cond(Mode(['editor',]))    | " change to vim-yoink, similiar: nvim-miniyank, YankRing.vim, vim-yankstack
     "Plug 'bfredl/nvim-miniyank', Cond(Mode(['editor',]))
     "Plug 'svermeulen/vim-yoink', Cond(Mode(['editor',]) && has('nvim')) | " sometimes delete not copyinto paste's buffer
-    Plug 'ojroques/vim-oscyank', Cond(Mode(['editor',]))
-    "Plug 'fcpg/vim-osc52'
+    "Plug 'ojroques/vim-oscyank', Cond(Mode(['editor',]))       | " not work
 
     "Plug 'huawenyu/vimux-script', Cond(Mode(['admin',]) && has('nvim'))
     "Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin',]) && has('nvim'))
@@ -1326,7 +1325,3 @@ endif
 let g:neobugger_local_backtrace = 1
 let g:neobugger_local_breakpoint = 1
 
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif
-    "autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | y:Oscyank | endif
-    let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
-    "let g:oscyank_silent = v:true  " or 1 for older versions of Vim
