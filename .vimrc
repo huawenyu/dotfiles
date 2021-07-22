@@ -895,7 +895,17 @@ call plug#begin('~/.vim/bundle')
     "   miscellaneous:
     "     [f and ]f to go to the next/previous file in the directory,
     "     [n and ]n to jump between SCM conflict markers.
-    Plug 'huawenyu/vim-unimpaired', Cond(Mode(['editor',]))        | "@tpope [os, ]os
+    "
+    "   shortcuts-spell:  [os, ]os
+    "   shortcuts-sign:   [oS, ]oS
+    "   shortcuts-cursor: [oc, ]oc
+    "   shortcuts-copy:   [oC, ]oC
+    "   shortcuts-wrap:   [ow, ]ow
+    "   shortcuts-list:   [ol, ]ol
+    "   shortcuts-number: [on, ]on
+    "   shortcuts-number-relative: [or, ]or
+    "   shortcuts-virtual-edit:    [ov, ]ov
+    Plug 'huawenyu/vim-unimpaired', Cond(Mode(['editor',]))     | "@tpope
     Plug 'terryma/vim-expand-region', Cond(Mode(['editor',]))   | "   W - select region expand; B - shrink
 
     " http://www.futurile.net/2016/03/19/vim-surround-plugin-tutorial/
