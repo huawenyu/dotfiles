@@ -749,6 +749,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'xolox/vim-session'
         "Plug 'vim-ctrlspace/vim-ctrlspace', Cond(Mode(['editor',]))    | "[Bad performance], confuse
         "Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession' | "[Conflict: cause 'vi -t tag' fail]
+        "Plug 'rmagatti/auto-session', Cond(Mode(['editor',]))   | " Automatic session management, but still have command :SaveSession, :RestoreSession
 
 "}}}
 
@@ -831,6 +832,9 @@ call plug#begin('~/.vim/bundle')
             "Plug 'w0rp/ale', Cond(Mode(['coder',]))   | " 1. Not using clang's lint, 2. find references look not work
 
             " Prerequire:
+            "   - install nodejs
+            "     - curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+            "     - sudo apt-get install -y nodejs
             "   - install yarn (-- a node package manger) first.
             " AfterRequire:
             "   - :CocInstall coc-rust-analyzer
@@ -1160,7 +1164,7 @@ call plug#begin('~/.vim/bundle')
     "   Plug 'codeindulgence/vim-tig', Cond(Mode(['editor',]) && executable('tig')) | " Using tig in neovim
 
     " https://www.davidchudzicki.com/posts/first-parent/
-    Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " Gblame: help-g?  close-gq  key: -,~,P
+    Plug 'tpope/vim-fugitive', Cond(Mode(['editor',]))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
     Plug 'tpope/vim-rhubarb', Cond(Mode(['editor',]))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
         Plug 'junegunn/gv.vim', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]))  | " Awesome git wrapper
         Plug 'airblade/vim-gitgutter', Cond(RequirePlug('vim-fugitive') && Mode(['editor',]), { 'on':  ['GitGutterToggle'] })  | " Shows a git diff in the gutter (sign column)

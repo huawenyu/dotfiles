@@ -19,10 +19,10 @@
       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "initializationOptions": {
         "cache": {
-          "directory": ".ccls-cache"
+          "directory": "/tmp/ccls-cache"
         },
         "clang": {
-          "extraArgs": ["-Wmicrosoft"]
+          "extraArgs": ["-Wmicrosoft -I./include"]
         }
       }
     },

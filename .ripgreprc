@@ -26,7 +26,8 @@ wiki:wiki,md,sh
 --glob=!*.patch
 --glob=!log.*
 --glob=!*.log
---glob=!cscope.*
+--glob=!cscope.*.out
+#--glob=cscope.vim
 --glob=!tags
 --glob=!tagx
 --glob=!.tags
