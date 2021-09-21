@@ -766,6 +766,7 @@ call plug#begin('~/.vim/bundle')
     "Plug 'MattesGroeger/vim-bookmarks'
     "Plug 'hecal3/vim-leader-guide'
     "Plug 'megaannum/self'
+    Plug 'tjdevries/cyclist.vim', Cond(Mode(['coder',]))
     "Plug 'megaannum/forms'
     "Plug 'mhinz/vim-startify'
     "Plug 'pi314/ime.vim'    | " Chinese input in vim

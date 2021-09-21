@@ -36,6 +36,7 @@ wiki:wiki,md,sh
 --glob=!*.rej
 --glob=!.cscope.files
 --glob=!compile_commands.json
+--glob=!init.map
 
 # Python ignore
 --glob=!__pycache__/*

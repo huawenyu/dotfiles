@@ -17,6 +17,12 @@ sudo apt-get install -y linuxbrew-wrapper
 sudo apt-get install -y curl mutt ruby traceroute rlwrap smbclient sshpass openssh-server minicom lftp meld
 sudo apt-get install -y build-essential file
 
+# Simple editor
+sudo apt-get install -y geany geany-plugins
+
+# vim-fzf-cscope.vim preview use
+sudo apt install -y bat
+
 # shell: zsh {{{2
 sudo apt-get install -y zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
