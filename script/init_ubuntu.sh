@@ -20,9 +20,6 @@ sudo apt-get install -y build-essential file
 # Simple editor
 sudo apt-get install -y geany geany-plugins
 
-# vim-fzf-cscope.vim preview use
-sudo apt install -y bat
-
 # shell: zsh {{{2
 sudo apt-get install -y zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -32,11 +29,16 @@ git clone https://github.com/huawenyu/zsh-local.git ${ZSH_CUSTOM:=~/.oh-my-zsh/c
 # terminal: rxvt-unicode,alacritty {{{2
 sudo apt-get install -y rxvt-unicode alacritty
 
-# grep-like ripgrep {{{2
-#sudo apt-get install -y silversearcher-ag
-sudo add-apt-repository ppa:x4121/ripgrep
-sudo apt-get update
-sudo apt-get install -y ripgrep
+# https://askubuntu.com/questions/1290262/unable-to-install-bat-error-trying-to-overwrite-usr-crates2-json-which
+#    sudo apt install -o Dpkg::Options::="--force-overwrite" bat ripgrep
+  # grep-like ripgrep {{{2
+  #sudo apt-get install -y silversearcher-ag
+  sudo add-apt-repository ppa:x4121/ripgrep
+  sudo apt-get update
+  sudo apt-get install -y ripgrep
+
+  # vim-fzf-cscope.vim preview use
+  sudo apt install -y bat
 
 # os tools {{{1
 
@@ -100,6 +102,7 @@ sudo pip install pynvim
 sudo pip install pexpect
 sudo pip3 install neovim
 sudo pip3 install pynvim
+pip3 install --upgrade msgpack
 
 # ansi2txt (kbtin) {{{2
 sudo apt-get install -y w3m kbtin

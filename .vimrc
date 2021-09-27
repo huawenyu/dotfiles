@@ -18,6 +18,10 @@
 "
 "   - nvim
 "       $ sudo apt-get install neovim
+"       # If want to use latest version:
+"           sudo add-apt-repository ppa:neovim-ppa/unstable
+"           sudo apt-get update
+"           sudo apt-get install neovim
 "       $ nvim --version
 "       $ sudo update-alternatives --display vi
 "       $ sudo update-alternatives --config vi
@@ -835,8 +839,11 @@ call plug#begin('~/.vim/bundle')
             " Prerequire:
             "   - install nodejs
             "     - curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-            "     - sudo apt-get install -y nodejs
+            "     //- sudo apt-get install -y nodejs
             "   - install yarn (-- a node package manger) first.
+            "       cd ~/.vim/bundle/coc.nvim
+            "       yarn install
+            "       yarn build
             " AfterRequire:
             "   - :CocInstall coc-rust-analyzer
             " Note:
@@ -1137,13 +1144,16 @@ call plug#begin('~/.vim/bundle')
         "   https://puremourning.github.io/vimspector/configuration.html#remote-debugging-support
         "   https://www.cnblogs.com/kongj/p/12831690.html
         "   ###vim --cmd 'let vimgdb=0 | let vimspector=1'
-        Plug 'puremourning/vimspector', Cond(HasEnv($debugger) && Mode(['coder',]))   | " Best debugger for vim/neovim
         "Plug 'sakhnik/nvim-gdb', Cond(Mode(['coder',]) && has('nvim'))
         " " version@3
         " Plug 'huawenyu/new.vim', Cond(Mode(['coder',]) && has('nvim'))
         " Plug 'huawenyu/new-gdb.vim', Cond(RequirePlug('new.vim') && Mode(['coder',]) && has('nvim'))  | " New GUI gdb-frontend
         " version@4:
         "   vim <file>
+        "
+        " Depend
+        "    cargo install git-delta
+        "Plug 'puremourning/vimspector', Cond(HasEnv($debugger) && Mode(['coder',]))   | " Best debugger for vim/neovim
         "Plug 'huawenyu/vimgdb', Cond(DenyPlug('vimspector') && Mode(['coder',]) && has('nvim'), { 'rtp': 'nvim' })    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
         Plug 'huawenyu/vimgdb', Cond(DenyPlug('vimspector') && Mode(['coder',]) && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
 

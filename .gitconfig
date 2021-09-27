@@ -68,7 +68,7 @@
 	prompt = false
 [gitreview]
 	remote = origin
-	username = wilson_hyu
+	username = Yu,Huawen(Wilson)
 [commit]
 	template = ~/.gitmessage
 [pull]
