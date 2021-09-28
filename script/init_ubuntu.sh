@@ -14,7 +14,8 @@ sudo apt-get remove mono-runtime-common
 sudo apt-get install -y audacious gnome-mplayer xfce4-notes
 sudo apt-get install -y linuxbrew-wrapper
 
-sudo apt-get install -y curl mutt ruby traceroute rlwrap smbclient sshpass openssh-server minicom lftp meld
+sudo apt-get install -y openssh-server sshpass autossh
+sudo apt-get install -y curl mutt ruby traceroute rlwrap smbclient minicom lftp meld
 sudo apt-get install -y build-essential file
 
 # Simple editor
