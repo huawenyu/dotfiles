@@ -1194,7 +1194,7 @@ call plug#begin('~/.vim/bundle')
     "Plug 'svermeulen/vim-easyclip', Cond(Mode(['editor',]))    | " change to vim-yoink, similiar: nvim-miniyank, YankRing.vim, vim-yankstack
     "Plug 'bfredl/nvim-miniyank', Cond(Mode(['editor',]))
     "Plug 'svermeulen/vim-yoink', Cond(Mode(['editor',]) && has('nvim')) | " sometimes delete not copyinto paste's buffer
-    "Plug 'ojroques/vim-oscyank', Cond(Mode(['editor',]))       | " not work
+    Plug 'ojroques/vim-oscyank', Cond(Mode(['basic',]))       | " not work
 
     "Plug 'huawenyu/vimux-script', Cond(Mode(['admin',]) && has('nvim'))
     "Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin',]) && has('nvim'))
@@ -1349,4 +1349,3 @@ endif
 
 let g:neobugger_local_backtrace = 1
 let g:neobugger_local_breakpoint = 1
-
