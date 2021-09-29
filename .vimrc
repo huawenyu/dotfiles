@@ -714,7 +714,7 @@ call plug#begin('~/.vim/bundle')
         "}}}
 
         " Vimwiki {{{4
-            "Plug 'vimwiki/vimwiki', Cond(Mode(['editor',]), { 'branch': 'dev' })  | " Another choice is [Gollum](https://github.com/gollum/gollum)
+            Plug 'vimwiki/vimwiki', Cond(Mode(['editor',]), { 'branch': 'dev' })  | " Another choice is [Gollum](https://github.com/gollum/gollum)
             "Plug 'mattn/calendar-vim', Cond(Mode(['editor',])) | " :Calendar
 
             "Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))     | " Like todo.txt-cli command-line, but here really needed is the wrap of Todo.txt-cli.
