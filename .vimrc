@@ -570,7 +570,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'mhinz/vim-lookup', Cond(Mode(['coder',]) && Mode(['plugin',]))
 
         " Execute eval script: using singlecompile
-        Plug 'huawenyu/SingleCompile', Cond(Mode(['admin',]))                     | " :SingleCompile, SingleCompileRun
+        "   :SingleCompile/SingleCompileRun, useful and can be our compile reference
+        "Plug 'huawenyu/SingleCompile', Cond(Mode(['admin',])) | Current only compile c and run use floaterm directly
 
     "}}}
 
