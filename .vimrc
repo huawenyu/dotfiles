@@ -85,6 +85,7 @@
 "          - tail -f /tmp/vim.log
 "       2. only load some plugin:
 "          - let g:vim_confi_option.mode = ['test']
+"          - Example: $ mode=test vi file.txt
 " 10. If two plugin is alternatives, choose the preceder one, like: AlterPlug('vista.vim')
 " 11. [Neovim 0.5 features and the switch to init.lua](https://oroques.dev/notes/neovim-init/)
 "     [Learn X in Y minutes](https://learnxinyminutes.com/docs/lua/)
@@ -122,11 +123,13 @@ let g:vim_confi_option = {
       \ 'auto_save': 1,
       \ 'auto_restore_cursor': 1,
       \ 'auto_qf_height': 1,
+      \ 'auto_session': 'vim.session',
       \
       \ 'keywordprg_filetype': 1,
       \
       \ 'view_folding': 0,
       \ 'show_number': 0,
+      \ 'start_page': '$HOME/dotfiles/startpage.md',
       \}
 " =============================================================
 
@@ -550,17 +553,6 @@ call plug#begin('~/.vim/bundle')
 " Mode {{{2
     "Plug 'sheerun/vim-polyglot', Cond(Mode(['coder',]) && Mode(['c',]))     | "A collection of language packs for Vim.
 
-    " REPL (Read, Eval, Print, Loop) {{{3
-    "  - Command Line Tool: https://github.com/BenBrock/reple
-        "Plug 'sillybun/vim-repl', Cond(Mode(['coder',]))  | " Not work :REPLToggle
-        "Plug 'rhysd/reply.vim', Cond(Mode(['coder',]))
-        "Plug 'amiorin/vim-eval', Cond(Mode(['coder',]) && Mode(['plugin',]))
-        "Plug 'fboender/bexec', Cond(Mode(['admin',]))         | " :Bexec
-        "Plug 'metakirby5/codi.vim', Cond(Mode(['coder',]))     | " :Codi [filetype]
-        "Plug 'axvr/zepl.vim', Cond(Mode(['coder',]))     | " :Repl [filetype]
-        "Plug 'thinca/vim-quickrun', Cond(Mode(['coder',]))     | " :QuickRun
-    "}}}
-
     " Hex editor {{{3
         " sudo apt install wxHexEditor
         "Plug 'Shougo/vinarise.vim', Cond(Mode(['editor',])) | " Hex viewer, but cannot append to tail
@@ -672,8 +664,9 @@ call plug#begin('~/.vim/bundle')
     " 2. `grip`: Render to HTML, But event render not better than vim.  https://github.com/joeyespo/grip
     "
         Plug 'godlygeek/tabular', Cond(Mode(['editor',]), {'for': 'markdown'})
-        Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})
-        Plug 'tpope/vim-markdown', Cond(Mode(['editor',]), {'as': 'tpope_vim-markdown', 'for': 'markdown'} )     | " Fork for use two markdown-plugins together. no pretty code-fence/blocks
+        "Plug 'plasticboy/vim-markdown', Cond(Mode(['editor',]), {'for': 'markdown'})    | " Heavy
+        " Fold:  zR openAll, zM closeAll, zr +foldLevel, zm -foldLevel, zo opencurr,
+        Plug 'tpope/vim-markdown', Cond(Mode(['editor',]), {'as': 'tpope_vim-markdown', 'for': 'markdown'} )     | " Light but good enough
         "
         " Set prefix=;
         "   prefix i        Insert/update TOC
@@ -690,7 +683,6 @@ call plug#begin('~/.vim/bundle')
         "Plug 'vim-pandoc/vim-pandoc', Cond(Mode(['editor',]), {'for': 'markdown'})
         "Plug 'vim-pandoc/vim-pandoc-syntax', Cond(Mode(['editor',]), {'for': 'markdown'})
 
-        Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})
         "Plug 'tomtom/vikibase_vim', Cond(Mode(['editor',]), {'for': 'markdown'})
 
         "Plug 'iamcco/markdown-preview.nvim', Cond(Mode(['editor',]), { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']})
@@ -711,6 +703,11 @@ call plug#begin('~/.vim/bundle')
             "    Plug 'inkarkat/vim-ingo-library', Cond(Mode(['editor',]))    | " basic function
             "    Plug 'inkarkat/vim-GrepCommands', Cond(RequirePlug('vim-ingo-library') && Mode(['editor',]))    | " basic function
 
+            Plug 'wlemuel/vim-tldr', Cond(Mode(['editor',]))
+            "Plug 'wlemuel/dbeniamine/cheat.sh-vim', Cond(Mode(['editor',]))
+            "Plug 'cheat/vim-cheat', Cond(Mode(['editor',]))
+            Plug 'alok/notational-fzf-vim', Cond(Mode(['editor',]))
+
         "}}}
 
         " Vimwiki {{{4
@@ -729,7 +726,7 @@ call plug#begin('~/.vim/bundle')
             "Plug 'huawenyu/vim-notes', Cond(Mode(['editor',])) | Plug 'xolox/vim-misc', Cond(Mode(['editor',]))    | " Use as our plugins help
             "Plug 'pbrisbin/vim-mkdir', Cond(Mode(['editor',]))
 
-            Plug 'michal-h21/vim-zettel', Cond(Mode(['editor',])) | " :Note indexer
+            "Plug 'michal-h21/vim-zettel', Cond(Mode(['editor',])) | " :Note indexer
 
             "Plug 'asciidoc/asciidoc', Cond(Mode(['editor',])) | " :Notepad
             "Plug 'habamax/vim-asciidoctor', Cond(Mode(['editor',])) | " :Notepad
@@ -758,6 +755,7 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Facade {{{2
+    Plug 'huawenyu/startscreen.vim', Cond(Mode(['editor',]) && len(g:vim_confi_option.start_page))
     Plug 'millermedeiros/vim-statline'      | " Simple, not annoy to distract our focus
     Plug 'Raimondi/delimitMate', Cond(DenyPlug('auto-pairs') && Mode(['editor',]))
     Plug 'jiangmiao/auto-pairs', Cond(DenyPlug('delimitMate') && Mode(['editor',]))   | " Not work if `set paste`
@@ -1025,10 +1023,6 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-dotenv', Cond(Mode(['admin',]))  | " Basic support for .env and Procfile
         Plug 'kassio/neoterm', Cond(Mode(['admin',]) && has('nvim'))        | " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
-        Plug 'vim-scripts/DrawIt', Cond(Mode(['editor',]))        | " \di \ds: start/stop;  draw by direction-key
-        Plug 'reedes/vim-pencil', Cond(Mode(['editor',]))         | " :TogglePencil
-        "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))         | " Performance issue
-        Plug 'sk1418/blockit', Cond(Mode(['editor',]))            | " :Block -- Draw a Box around text region
         Plug 'chrisbra/NrrwRgn', Cond(Mode(['editor',]))          | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
         Plug 'junegunn/vim-easy-align', Cond(Mode(['editor',]))   | " tablize selected and ga=
         "Plug 'webdevel/tabulous', Cond(Mode(['editor',]))        | " draw table
@@ -1036,11 +1030,24 @@ call plug#begin('~/.vim/bundle')
         " <leader>tm :TableModeToggle; <leader>tr: Align; <leader>tt: Format existed
         Plug 'dhruvasagar/vim-table-mode', Cond(Mode(['editor',]))
 
-        Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
         "Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))   | " Unsupport colorscheme
         Plug 'jamessan/vim-gnupg', Cond(Mode(['admin',]))         | " implements transparent editing of gpg encrypted files.
         Plug 'FooSoft/vim-argwrap', Cond(Mode(['coder',]))        | " an argument wrapping and unwrapping
         "Plug 'ggVGc/fzf_browser', Cond(Mode(['coder',]))         | "
+    "}}}
+
+    " Tool: presentation, draw, pencil  {{{3
+        Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
+        "Plug 'vim-scripts/DrawIt', Cond(Mode(['editor',]))        | " \di \ds: start/stop;  draw by direction-key
+        "Plug 'preservim/vim-pencil', Cond(Mode(['editor',]))         | " :TogglePencil
+        "Plug 'gyim/vim-boxdraw', Cond(Mode(['editor',]))         | " Performance issue
+        Plug 'sk1418/blockit', Cond(Mode(['editor',]))            | " :Block -- Draw a Box around text region
+
+        " sudo apt install figlet   # artii headerline
+        Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
+        "Plug 'axvr/zepl.vim', Cond(Mode(['editor',]))             | "
+        Plug 'jbyuki/venn.nvim', Cond(Mode(['editor',]))           | "
+
     "}}}
 "}}}
 
@@ -1066,7 +1073,19 @@ call plug#begin('~/.vim/bundle')
         Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
 
         "Plug 'liuchengxu/vim-clap', Cond(has('nvim') && Mode(['coder',]))
-        "Plug 'voldikss/vim-floaterm', Cond(has('nvim') && Mode(['admin',]))
+        Plug 'voldikss/vim-floaterm', Cond(Mode(['editor',])) | "
+            Plug 'huawenyu/vim-floaterm-repl', Cond(RequirePlug('vim-floaterm') && Mode(['editor',]))  | "
+            " REPL (Read, Eval, Print, Loop) {{{3
+            "  - Command Line Tool: https://github.com/BenBrock/reple
+                "Plug 'sillybun/vim-repl', Cond(Mode(['coder',]))  | " Not work :REPLToggle
+                "Plug 'rhysd/reply.vim', Cond(Mode(['coder',]))
+                "Plug 'amiorin/vim-eval', Cond(Mode(['coder',]) && Mode(['plugin',]))
+                "Plug 'fboender/bexec', Cond(Mode(['admin',]))         | " :Bexec
+                "Plug 'metakirby5/codi.vim', Cond(Mode(['coder',]))     | " :Codi [filetype]
+                "Plug 'axvr/zepl.vim', Cond(Mode(['coder',]))     | " :Repl [filetype]
+                "Plug 'thinca/vim-quickrun', Cond(Mode(['coder',]))     | " :QuickRun
+            "}}}
+
     "}}}
 
     " File/Explore {{{3
@@ -1104,6 +1123,7 @@ call plug#begin('~/.vim/bundle')
         "   ^^, __, <<, >>     Move up/down, left, right the select nodes
         Plug 'huawenyu/VOoM', Cond(Mode(['editor',]))
         Plug 'vim-voom/VOoM_extras', Cond(Mode(['editor',]))
+        Plug 'roosta/fzf-folds.vim', Cond(Mode(['editor',]))
 
         "Plug 'wellle/context.vim', Cond(Mode(['coder',]))  | " performance issue: show code function-name/while/for as context
     "}}}

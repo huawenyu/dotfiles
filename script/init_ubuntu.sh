@@ -40,6 +40,8 @@ sudo apt-get install -y rxvt-unicode alacritty
 
   # vim-fzf-cscope.vim preview use
   sudo apt install -y bat
+  # better man with example directly
+  sudo apt install -y tldr
 
 # os tools {{{1
 
@@ -105,8 +107,28 @@ sudo pip3 install neovim
 sudo pip3 install pynvim
 pip3 install --upgrade msgpack
 
+# correct your previous console command
+#    $ fuck
+pip3 install --user thefuck
+
+# Our self + public command helper
+pip3 install --user cheat
+
+# Terminal browser
+sudo apt-get install -y w3m
 # ansi2txt (kbtin) {{{2
-sudo apt-get install -y w3m kbtin
+#sudo apt-get install -y kbtin
+
+# Terminal Draw {{{2
+# https://github.com/ironcamel/Graph-Easy
+# echo "[ DB-M1 ] - 4 -> [ DB-M2 ] [ DB-M2 ] - 4 -> [ DB-M1 ]" | graph-easy
+# echo "[ Bonn ] -- car --> [ Berlin ], [ Ulm ]" | graph-easy
+# 	[ Bonn ] -> [ Berlin ]
+# 	[ Berlin ] -> [ Frankfurt ]
+# 	[ Frankfurt ] -> [ Dresden ]
+# 	[ Berlin ] ..> [ Potsdam ]
+# 	[ Potsdam ] => [ Cottbus ]
+sudo cpan Graph:Easy
 
 # helper-ts: cmd outout timestamp {{{2
 # https://ostechnix.com/moreutils-collection-useful-unix-utilities/
