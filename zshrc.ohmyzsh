@@ -61,12 +61,6 @@ COMPLETION_WAITING_DOTS="true"
 #   git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 #   git clone https://github.com/huawenyu/zsh-local.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-local
 #
-#   git clone https://github.com/MikeDacre/tmux-zsh-environment.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/tmux-zsh-environment
-#       Share environmental variables more seamlessly between tmux and ZSH
-#       https://github.com/MikeDacre/tmux-zsh-environment
-#       Usage:
-#          Publish a var: $ tmux set-env name2 wilson2
-#          Check at another shell (<enter> to tigger hook-cmd): $ echo $name2
 # Disable plugin:
 #   git clone https://github.com/zdharma/history-search-multi-word ~/.oh-my-zsh/custom/plugins/history-search-multi-word
 #   git clone https://github.com/tymm/zsh-directory-history ~/.oh-my-zsh/custom/plugins/zsh-directory-history
@@ -81,7 +75,7 @@ COMPLETION_WAITING_DOTS="true"
 #      ctrl-d, to delete selected matches.
 #plugins=(lighthouse history-search-multi-word zsh-directory-history history-substring-search zsh-completions zsh-autosuggestions)
 #plugins=(history-substring-search zsh-completions zsh-local fzf-marks)
-plugins=(history-substring-search zsh-completions zsh-local tmux-zsh-environment)
+plugins=(history-substring-search zsh-completions zsh-local)
 autoload -U compinit && compinit
 
 # Folder permission "Insecure completion-dependent directories detected" #6835

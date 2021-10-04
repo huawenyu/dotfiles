@@ -3,7 +3,7 @@
 " TryIt:
 " - <Space>     Is the leader
 " - Press ';;'  display shortcuts
-" - Press 'H'   on topic word with ?
+" - Press 'H'   on topic word with the '?' sign (by cheat?)
 "
 " Install:  help 'H' on the topic
 " - Debian
@@ -206,23 +206,6 @@ endif
             inoremap <silent> <C-[>OC <RIGHT>
         endif
     " }
-
-
-    " Debug {
-        " This is old style debug, suggest using log style: @note:nvim (~Press 'K'~)
-        "set verbose=0
-        "set verbose=9
-        "set verbosefile=/tmp/nvim.log
-
-        let g:decho_enable = 0
-        let g:bg_color = 233 | " current background's color value, used by mylog.syntax
-
-        " Old echo type, abandon
-        function! Decho(...)
-            return
-        endfunction
-    " }
-
 
     " Setup python
     if LINUX()
@@ -470,7 +453,6 @@ if g:vim_confi_option.auto_install_tools
         endif
     endif
 endif
-
 
 
 " Plugins {{{1}}}
