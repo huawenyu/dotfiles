@@ -112,7 +112,8 @@ pip3 install --upgrade msgpack
 pip3 install --user thefuck
 
 # Our self + public command helper
-pip3 install --user cheat
+# [X-not work] python version: pip3 install --user cheat		# This python version not work good
+# [O] go version: Download the bin-file directly from https://github.com/cheat/cheat/releases
 
 # Terminal browser
 sudo apt-get install -y w3m
