@@ -96,6 +96,7 @@ let g:vim_confi_option = {
       \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
       \ 'fzf_files': ['~/dotwiki/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
+      \ 'fzf_notes': ['~/wiki', '~/dotwiki', '~/work-doc', ],
       \}
 " =============================================================
 
@@ -418,11 +419,11 @@ if g:vim_confi_option.auto_install_vimplug
             call system("ln -s ~/.vimrc ~/.config/nvim/init.vim")
 
             if UBUNTU()
-                call system("sudo apt install python3-pip")
-                call system("sudo apt install python3-distutils")
+                call system("sudo apt install -y python3-pip")
+                call system("sudo apt install -y python3-distutils")
             elseif CENTOS() || FEDORA()
-                call system("sudo yum install python3-pip")
-                call system("sudo yum install python3-distutils")
+                call system("sudo yum install -y python3-pip")
+                call system("sudo yum install -y python3-distutils")
             endif
 
             call system("pip3 install --user setuptools")
@@ -454,6 +455,7 @@ if g:vim_confi_option.auto_install_tools
             endif
             call system("go get github.com/mattn/efm-langserver")
         endif
+
     endif
 endif
 
@@ -463,162 +465,162 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Plug config: order-sensible {{{2
-    Plug 'tpope/vim-sensible',   Cond(Mode(['basic',]))
-    Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'conf-basic']))
-    Plug 'huawenyu/vim.config',  Cond(Mode(['local', 'conf-plug']))  | " config the plugs
-    Plug 'huawenyu/vim.command', Cond(Mode(['local', 'conf-extra'])) | " config the plugs
+Plug 'tpope/vim-sensible',   Cond(Mode(['basic',]))
+Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'conf-basic']))
+Plug 'huawenyu/vim.config',  Cond(Mode(['local', 'conf-plug']))  | " config the plugs
+Plug 'huawenyu/vim.command', Cond(Mode(['local', 'conf-extra'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
-    Plug 'vim-scripts/holokai',        Cond(DenyPlug('seoul256.vim') && Mode(['theme',]))
-    Plug 'junegunn/seoul256.vim',      Cond(DenyPlug('holokai')      && Mode(['theme',]))
-    Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme',]))        |  " set background=light;colorscheme PaperColor
+Plug 'vim-scripts/holokai',        Cond(DenyPlug('seoul256.vim') && Mode(['theme',]))
+Plug 'junegunn/seoul256.vim',      Cond(DenyPlug('holokai')      && Mode(['theme',]))
+Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme',]))        |  " set background=light;colorscheme PaperColor
 "}}}
 
 " Writer {{{2
-    Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
-    Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))    | "
+Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
+Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))    | "
 "}}}
 
 " Coder {{{2
-    " Basic {{{3
-        Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder']))
-        Plug 'tpope/vim-commentary',             Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
-        Plug 'Chiel92/vim-autoformat',           Cond(Mode(['coder']))
-        Plug 'vim-scripts/iptables',             Cond(Mode(['admin']) && Mode(['extra']))
-        Plug 'tenfyzhong/CompleteParameter.vim', Cond(Mode(['coder']) && Mode(['extra']))
-        Plug 'FooSoft/vim-argwrap',              Cond(Mode(['coder']) && Mode(['extra']))        | " an argument wrapping and unwrapping
-        Plug 'ericcurtin/CurtineIncSw.vim',      Cond(Mode(['coder',]))          | " Toggle source/header
-    "}}}
+" Basic {{{3
+Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder']))
+Plug 'tpope/vim-commentary',             Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
+Plug 'Chiel92/vim-autoformat',           Cond(Mode(['coder']))
+Plug 'vim-scripts/iptables',             Cond(Mode(['admin']) && Mode(['extra']))
+Plug 'tenfyzhong/CompleteParameter.vim', Cond(Mode(['coder']) && Mode(['extra']))
+Plug 'FooSoft/vim-argwrap',              Cond(Mode(['coder']) && Mode(['extra']))        | " an argument wrapping and unwrapping
+Plug 'ericcurtin/CurtineIncSw.vim',      Cond(Mode(['coder',]))          | " Toggle source/header
+"}}}
 
-    " Repl {{{3
-        Plug 'voldikss/vim-floaterm', Cond(Mode(['editor',])) | "
-            Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && Mode(['editor',]))  | "
-        Plug 'wsdjeg/notifications.vim', Cond(Mode(['editor',]))	| " :Echoerr xxxxx
-    "}}}
+" Repl {{{3
+Plug 'voldikss/vim-floaterm', Cond(Mode(['editor',])) | "
+Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && Mode(['editor',]))  | "
+Plug 'wsdjeg/notifications.vim', Cond(Mode(['editor',]))	| " :Echoerr xxxxx
+"}}}
 
-    " gdb front-end {{{3
-        Plug 'huawenyu/vimgdb', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
-    "}}}
+" gdb front-end {{{3
+Plug 'huawenyu/vimgdb', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
+"}}}
 
-    " Diff {{{3
-        Plug 'rickhowe/diffchar.vim',       Cond(Mode(['editor']))
-        Plug 'chrisbra/vim-diff-enhanced',  Cond(Mode(['editor'])) | " vimdiff:  ]c - next;  [c - previous; do - diff obtain; dp - diff put; zo - unfold; zc - fold; :diffupdate - re-scan
-        Plug 'junkblocker/patchreview-vim', Cond(Mode(['editor'])) | " :PatchReview some.patch,  :DiffReview git show <SHA1>  :DiffReview git staged --no-color -U5
-    "}}}
+" Diff {{{3
+Plug 'rickhowe/diffchar.vim',       Cond(Mode(['editor']))
+Plug 'chrisbra/vim-diff-enhanced',  Cond(Mode(['editor'])) | " vimdiff:  ]c - next;  [c - previous; do - diff obtain; dp - diff put; zo - unfold; zc - fold; :diffupdate - re-scan
+Plug 'junkblocker/patchreview-vim', Cond(Mode(['editor'])) | " :PatchReview some.patch,  :DiffReview git show <SHA1>  :DiffReview git staged --no-color -U5
+"}}}
 
-    " Hex editor {{{3
-        Plug 'fidian/hexmode', Cond(Mode(['editor',])) | " Hex viewer, wrap of xxd, it's good.
-    "}}}
+" Hex editor {{{3
+Plug 'fidian/hexmode', Cond(Mode(['editor',])) | " Hex viewer, wrap of xxd, it's good.
+"}}}
 
-    " plugin {{{3
-        Plug 'huawenyu/vim-scriptease', Cond(Mode(['coder'])) | " A Vim plugin for Vim plugins
-        Plug 'junegunn/vader.vim',      Cond(Mode(['coder']) && Mode(['plugin'])) | " A simple Vimscript test framework
-        Plug 'mhinz/vim-lookup',        Cond(Mode(['coder']) && Mode(['plugin']))
-    "}}}
+" plugin {{{3
+Plug 'huawenyu/vim-scriptease', Cond(Mode(['coder'])) | " A Vim plugin for Vim plugins
+Plug 'junegunn/vader.vim',      Cond(Mode(['coder']) && Mode(['plugin'])) | " A simple Vimscript test framework
+Plug 'mhinz/vim-lookup',        Cond(Mode(['coder']) && Mode(['plugin']))
+"}}}
 
-    " C/Cplus {{{3
-        Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && Mode(['c']))
-		Plug 'huawenyu/vim-linux-coding-style',  Cond(Mode(['coder']) && Mode(['c']))
-        Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c']))
-        Plug 'bfrg/vim-cpp-modern',              Cond(HasPlug('vim-cpp-enhanced-highlight'))
-    "}}}
+" C/Cplus {{{3
+Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && Mode(['c']))
+Plug 'huawenyu/vim-linux-coding-style',  Cond(Mode(['coder']) && Mode(['c']))
+Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c']))
+Plug 'bfrg/vim-cpp-modern',              Cond(HasPlug('vim-cpp-enhanced-highlight'))
+"}}}
 
-    " Python {{{3
-        Plug 'python-mode/python-mode', Cond(Mode(['coder']) && Mode(['python']), {'for': 'python'})
-        Plug 'davidhalter/jedi-vim',    Cond(Mode(['coder']) && Mode(['python']), {'for': 'python'}) | " K: doc-of-method; <leader>d: go-definition; n: usage-of-file; r: rename
-    "}}}
+" Python {{{3
+Plug 'python-mode/python-mode', Cond(Mode(['coder']) && Mode(['python']), {'for': 'python'})
+Plug 'davidhalter/jedi-vim',    Cond(Mode(['coder']) && Mode(['python']), {'for': 'python'}) | " K: doc-of-method; <leader>d: go-definition; n: usage-of-file; r: rename
+"}}}
 
-    " LaTeX {{{3
-        "Plug 'lervag/vimtex', Cond(Mode(['editor',]) && Mode(['latex',]))  | " A modern vim plugin for editing LaTeX files
-    "}}}
+" LaTeX {{{3
+"Plug 'lervag/vimtex', Cond(Mode(['editor',]) && Mode(['latex',]))  | " A modern vim plugin for editing LaTeX files
+"}}}
 
-    " Perl {{{3
-        Plug 'vim-perl/vim-perl',  Cond(Mode(['coder']) && Mode(['perl']), { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' })
-        Plug 'tpope/vim-cucumber', Cond(Mode(['coder']) && Mode(['perl'])) | "      Auto    test  framework                                                               base on Behaviour Drive Development(BDD)
-    "}}}
+" Perl {{{3
+Plug 'vim-perl/vim-perl',  Cond(Mode(['coder']) && Mode(['perl']), { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' })
+Plug 'tpope/vim-cucumber', Cond(Mode(['coder']) && Mode(['perl'])) | "      Auto    test  framework                                                               base on Behaviour Drive Development(BDD)
+"}}}
 
-    " Javascript {{{3
-        Plug 'pangloss/vim-javascript',  Cond(Mode(['coder']) && Mode(['javascript']))
-        Plug 'maksimr/vim-jsbeautify',   Cond(Mode(['coder']) && Mode(['javascript']))
-        Plug 'elzr/vim-json',            Cond(Mode(['coder']) && Mode(['javascript']))
-        Plug 'tpope/vim-jdaddy',         Cond(Mode(['coder']) && Mode(['javascript']))  | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
-        Plug 'ternjs/tern_for_vim',      Cond(Mode(['coder']) && Mode(['javascript'])) | " Tern-based JavaScript editing support.
-        Plug 'carlitux/deoplete-ternjs', Cond(Mode(['coder']) && Mode(['javascript']))
-    "}}}
+" Javascript {{{3
+Plug 'pangloss/vim-javascript',  Cond(Mode(['coder']) && Mode(['javascript']))
+Plug 'maksimr/vim-jsbeautify',   Cond(Mode(['coder']) && Mode(['javascript']))
+Plug 'elzr/vim-json',            Cond(Mode(['coder']) && Mode(['javascript']))
+Plug 'tpope/vim-jdaddy',         Cond(Mode(['coder']) && Mode(['javascript']))  | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
+Plug 'ternjs/tern_for_vim',      Cond(Mode(['coder']) && Mode(['javascript'])) | " Tern-based JavaScript editing support.
+Plug 'carlitux/deoplete-ternjs', Cond(Mode(['coder']) && Mode(['javascript']))
+"}}}
 
-    " TypeScript {{{3
-        Plug 'palantir/tslint', Cond(Mode(['coder']) && Mode(['typescript']), { 'for': 'typescript' })
-    "}}}
+" TypeScript {{{3
+Plug 'palantir/tslint', Cond(Mode(['coder']) && Mode(['typescript']), { 'for': 'typescript' })
+"}}}
 
-    " Clojure {{{3
-        Plug 'tpope/vim-fireplace', Cond(Mode(['coder']) && Mode(['clojure']), { 'for': 'clojure' })
-    "}}}
+" Clojure {{{3
+Plug 'tpope/vim-fireplace', Cond(Mode(['coder']) && Mode(['clojure']), { 'for': 'clojure' })
+"}}}
 
-    " Database {{{3
-        Plug 'tpope/vim-dadbod', Cond(Mode(['coder']) && Mode(['database']))       | " :DB mongodb:///test < big_query.js
-    "}}}
+" Database {{{3
+Plug 'tpope/vim-dadbod', Cond(Mode(['coder']) && Mode(['database']))       | " :DB mongodb:///test < big_query.js
+"}}}
 
-    " Golang {{{3
-        Plug 'fatih/vim-go', Cond(Mode(['coder']) && Mode(['golang']))
-        "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-    "}}}
+" Golang {{{3
+Plug 'fatih/vim-go', Cond(Mode(['coder']) && Mode(['golang']))
+"Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+"}}}
 
-    " Tcl {{{3
-        "Plug 'LStinson/TclShell-Vim', Cond(Mode(['coder',]) && Mode(['tcl',]))
-        "Plug 'vim-scripts/tcl.vim', Cond(Mode(['coder',]) && Mode(['tcl',]))
-    "}}}
+" Tcl {{{3
+"Plug 'LStinson/TclShell-Vim', Cond(Mode(['coder',]) && Mode(['tcl',]))
+"Plug 'vim-scripts/tcl.vim', Cond(Mode(['coder',]) && Mode(['tcl',]))
+"}}}
 
-    " Haskell {{{3
-        Plug 'lukerandall/haskellmode-vim', Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
-        Plug 'eagletmt/ghcmod-vim',         Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
-        Plug 'ujihisa/neco-ghc',            Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
-        Plug 'neovimhaskell/haskell-vim',   Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
-    "}}}
+" Haskell {{{3
+Plug 'lukerandall/haskellmode-vim', Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
+Plug 'eagletmt/ghcmod-vim',         Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
+Plug 'ujihisa/neco-ghc',            Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
+Plug 'neovimhaskell/haskell-vim',   Cond(Mode(['coder']) && Mode(['haskell']), {'for': 'haskell'})
+"}}}
 
-    " Rust {{{3
-        Plug 'racer-rust/vim-racer', Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
-        Plug 'rust-lang/rust.vim',   Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
-        Plug 'timonv/vim-cargo',     Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
-    "}}}
+" Rust {{{3
+Plug 'racer-rust/vim-racer', Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
+Plug 'rust-lang/rust.vim',   Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
+Plug 'timonv/vim-cargo',     Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
+"}}}
 
-    " Markdown/Writing/Wiki {{{3
-    " tool-render?
-        Plug  'vimwiki/vimwiki',    Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
-        Plug  'godlygeek/tabular',  Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug  'tpope/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
-        "Plug 'SidOfc/mkdx',        Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |      "           Heavy markdown enhance
-    "}}}
+" Markdown/Writing/Wiki {{{3
+" tool-render?
+Plug  'vimwiki/vimwiki',    Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
+Plug  'godlygeek/tabular',  Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+Plug  'tpope/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
+"Plug 'SidOfc/mkdx',        Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |      "           Heavy markdown enhance
+"}}}
 
 "}}}
 
 " Facade {{{2
-    Plug 'huawenyu/startscreen.vim',         Cond(Mode(['editor']) && len(g:vim_confi_option.start_page))
-    Plug 'millermedeiros/vim-statline',      Cond(Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
-    Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor']))
-    Plug 'tjdevries/cyclist.vim',            Cond(Mode(['coder']))	 | " vim list show
-    Plug 'huawenyu/vim-mark',                Cond(Mode(['editor'])) | " mm  colorize current word
-    Plug 'huawenyu/vim-signature',           Cond(Mode(['editor'])) | " place, toggle and display marks
+Plug 'huawenyu/startscreen.vim',         Cond(Mode(['editor']) && len(g:vim_confi_option.start_page))
+Plug 'millermedeiros/vim-statline',      Cond(Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
+Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor']))
+Plug 'tjdevries/cyclist.vim',            Cond(Mode(['coder']))	 | " vim list show
+Plug 'huawenyu/vim-mark',                Cond(Mode(['editor'])) | " mm  colorize current word
+Plug 'huawenyu/vim-signature',           Cond(Mode(['editor'])) | " place, toggle and display marks
 
 "}}}
 
 " Syntax/Language {{{2
-    Plug 'vim-syntastic/syntastic',   Cond(Mode(['editor',]))
-    Plug 'Chiel92/vim-autoformat',    Cond(Mode(['coder',]))
-    Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
-    Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
-    Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor',]), {'for': 'log'})
-    Plug 'tmux-plugins/vim-tmux',     Cond(Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
-    Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
+Plug 'vim-syntastic/syntastic',   Cond(Mode(['editor',]))
+Plug 'Chiel92/vim-autoformat',    Cond(Mode(['coder',]))
+Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
+Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
+Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor',]), {'for': 'log'})
+Plug 'tmux-plugins/vim-tmux',     Cond(Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
+Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
 "}}}
 
 " Improve {{{2
-    " Basic {{{3
-        Plug 'junegunn/fzf',        Cond(Mode(['editor',]), { 'dir': '~/.fzf', 'do': './install --all' })
-        Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
-        Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
+" Basic {{{3
+Plug 'junegunn/fzf',        Cond(Mode(['editor',]), { 'dir': '~/.fzf', 'do': './install --all' })
+Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
+Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-		Plug 'sunaku/vim-shortcut', Cond(Mode(['editor',]))         | " ';;' Popup shortcut help, but don't execute
+Plug 'sunaku/vim-shortcut', Cond(Mode(['editor',]))         | " ';;' Popup shortcut help, but don't execute
 		Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
 		Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
