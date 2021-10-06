@@ -73,6 +73,7 @@ let g:vim_confi_option = {
       \ 'remap_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
+      \ 'verbose': 0,
       \ 'debug': 0,
       \
       \ 'upper_keyfixes': 1,
