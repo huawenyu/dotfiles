@@ -1,6 +1,6 @@
 ## dotfiles
 
-linux config files: zsh, tmux, vim, script, ...
+linux config files: zsh, tmux, vim, script, ...sdfadsfadsfasdfaasdfasdfasdfasdffffasdfasdfasdfasdkfasdfasdfasfdaaaa
 
 ## Install
 

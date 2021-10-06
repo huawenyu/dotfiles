@@ -8,7 +8,6 @@ def zsh/fish		Better shell
 def tmux/alacritty	Better terminal
 def geany			Simple editor
 def direnv          Environment auto setup: python-venv
-def editorconfig    Vim auto setup
 
 # find
 def ripgrep			Better grep

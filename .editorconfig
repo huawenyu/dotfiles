@@ -42,11 +42,13 @@ insert_final_newline = true
 [*.{yml,yaml,md}]
 indent_style = space
 indent_size = 4
+tab_width = 4
 
 # CoffeeScript
 [*.coffee]
 indent_style = space
 indent_size = 4
+tab_width = 4
 
 # format:dosini
 

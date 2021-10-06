@@ -27,10 +27,11 @@
 " - windows-install?
 " - checkhealth?
 " - vim-more?
-" - vim-troubleshooting?
+" - troubleshooting?
 " - vim-config?
 " =============================================================
-"  mode, support set from env's variable, like: mode=basic vi ~/.vimrc
+"  Mode:
+"  Support set from env's variable, like: mode=basic vi ~/.vimrc
 "
 "  - config: conf-basic, conf-local, conf-extra,
 "  - addon:  snippet, tool, admin, theme, plugin, extra, library, git, hub
@@ -63,19 +64,24 @@
 "   │theme│  │tool │  │admin│  │snippet│  │plugin│
 "   └─────┘  └─────┘  └─────┘  └───────┘  └──────┘
 "
+"  Misc:
+"  - start_page:    startscreen
+"  - fzf_files:     current use as cheat search by filename
+"
 let g:vim_confi_option = {
       \ 'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'c', 'markdown', 'git', 'script', 'tool'],
       \ 'remap_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
       \ 'debug': 0,
+      \
       \ 'upper_keyfixes': 1,
+      \ 'enable_map_basic': 1,
+      \ 'enable_map_useful': 1,
       \
       \ 'auto_install_vimplug': 1,
       \ 'auto_install_plugs': 1,
       \ 'auto_install_tools': 1,
-      \ 'plug_note': 'vim.config',
-      \ 'plug_patch': 'vim.config',
       \
       \ 'auto_chdir': 0,
       \ 'auto_save': 1,
@@ -87,7 +93,9 @@ let g:vim_confi_option = {
       \
       \ 'view_folding': 0,
       \ 'show_number': 0,
+      \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
+      \ 'fzf_files': ['~/dotwiki/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
       \}
 " =============================================================
 
@@ -303,11 +311,6 @@ endif
         return CheckPlug(a:name, 1)
     endfunction
 
-    " Alias HasPlug
-    function! NeedPlug(name)
-        return CheckPlug(a:name, 1)
-    endfunction
-
     " Check a plugin by order
     function! HasnoPlug(name)
         return CheckPlug(a:name, 1, 0)
@@ -490,12 +493,12 @@ call plug#begin('~/.vim/bundle')
 
     " Repl {{{3
         Plug 'voldikss/vim-floaterm', Cond(Mode(['editor',])) | "
-            Plug 'huawenyu/vim-floaterm-repl', Cond(NeedPlug('vim-floaterm') && Mode(['editor',]))  | "
+            Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && Mode(['editor',]))  | "
         Plug 'wsdjeg/notifications.vim', Cond(Mode(['editor',]))	| " :Echoerr xxxxx
     "}}}
 
     " gdb front-end {{{3
-        Plug 'huawenyu/vimgdb', Cond(Mode(['coder']) && Mode(['extra']) && DenyPlug('vimspector') && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
+        Plug 'huawenyu/vimgdb', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
     "}}}
 
     " Diff {{{3
@@ -518,7 +521,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && Mode(['c']))
 		Plug 'huawenyu/vim-linux-coding-style',  Cond(Mode(['coder']) && Mode(['c']))
         Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c']))
-        Plug 'bfrg/vim-cpp-modern',              Cond(NeedPlug('vim-cpp-enhanced-highlight'))
+        Plug 'bfrg/vim-cpp-modern',              Cond(HasPlug('vim-cpp-enhanced-highlight'))
     "}}}
 
     " Python {{{3
@@ -612,7 +615,7 @@ call plug#begin('~/.vim/bundle')
 " Improve {{{2
     " Basic {{{3
         Plug 'junegunn/fzf',        Cond(Mode(['editor',]), { 'dir': '~/.fzf', 'do': './install --all' })
-        Plug 'junegunn/fzf.vim',    Cond(NeedPlug('fzf') && Mode(['editor',]))
+        Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
 		Plug 'sunaku/vim-shortcut', Cond(Mode(['editor',]))         | " ';;' Popup shortcut help, but don't execute
@@ -620,37 +623,36 @@ call plug#begin('~/.vim/bundle')
 		Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
         Plug 'ojroques/vim-oscyank',     Cond(Mode(['basic',]))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
-		Plug 'editorconfig/editorconfig-vim',   Cond(Mode(['editor']))      |  " vim windows management
+		"Plug 'editorconfig/editorconfig-vim',   Cond(Mode(['editor']))      |  " vim config auto set
         Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin']) && Mode(['extra']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
     "}}}
 
     " Async {{{3
-        Plug 'Shougo/vimproc.vim', Cond(Mode(['admin',]), {'do' : 'make'})
-        Plug 'skywind3000/asyncrun.vim', Cond(Mode(['admin',]))
+        Plug 'Shougo/vimproc.vim',         Cond(Mode(['admin',]), {'do' : 'make'})
+        Plug 'skywind3000/asyncrun.vim',   Cond(Mode(['admin',]))
         Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
     "}}}
 
     " Search {{{3
-        Plug 'mhinz/vim-grepper', Cond(Mode(['editor',]))    | " :Grepper text
-        Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]))
+        Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
+        Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
+            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim'))
 
         " Tags/cscope/indexer? {{{4
-            "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
-                Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
-                "Plug 'neoclide/coc.nvim', Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
-                "Plug 'neoclide/coc-rls', Cond(Mode(['coder',]) && LINUX())
+            "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
+                Plug 'neoclide/coc.nvim',   Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
+                "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
+                "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
 
-            Plug 'liuchengxu/vista.vim', Cond(DenyPlug('tagbar') && Mode(['coder',]))
-            Plug 'majutsushi/tagbar', Cond(DenyPlug('vista.vim') && Mode(['coder',]))
-            Plug 'vim-scripts/taglist.vim', Cond(NeedPlug('tagbar') && Mode(['coder',]) && LINUX())
+            Plug 'liuchengxu/vista.vim',    Cond(DenyPlug('tagbar')    && Mode(['coder',]))
+            Plug 'majutsushi/tagbar',       Cond(DenyPlug('vista.vim') && Mode(['coder',]))
+            Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
 
         " Todo list/quickfix {{{4
-            Plug 'romainl/vim-qf', Cond(Mode(['editor',]))              | " Tame the quickfix window
+            Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))              | " Tame the quickfix window
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'freitass/todo.txt-vim', Cond(Mode(['editor',]))       | " codeblock with 'todo', http://todotxt.org/
-            Plug 'wlemuel/vim-tldr', Cond(Mode(['editor',]))
-            Plug 'alok/notational-fzf-vim', Cond(Mode(['editor',]))
+            Plug 'freitass/todo.txt-vim',            Cond(Mode(['editor',]))       | " codeblock with 'todo', http://todotxt.org/
         "}}}
 
     "}}}
@@ -675,10 +677,10 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-repeat', Cond(Mode(['editor',]))
             " gA                   shows the four representations of the number under the cursor.
             " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
-            Plug  'glts/vim-radical',           Cond(NeedPlug('vim-repeat') && Mode(['editor',]))
-            Plug  'glts/vim-magnum',            Cond(NeedPlug('vim-repeat') && Mode(['editor',]))
-            "Plug 'svermeulen/vim-macrobatics', Cond(NeedPlug('vim-repeat') && Mode(['editor',]))
-            Plug  'huawenyu/vim-macroscope',    Cond(NeedPlug('vim-repeat') && Mode(['editor',]))
+            Plug  'glts/vim-radical',           Cond(HasPlug('vim-repeat') && Mode(['editor',]))
+            Plug  'glts/vim-magnum',            Cond(HasPlug('vim-repeat') && Mode(['editor',]))
+            "Plug 'svermeulen/vim-macrobatics', Cond(HasPlug('vim-repeat') && Mode(['editor',]))
+            Plug  'huawenyu/vim-macroscope',    Cond(HasPlug('vim-repeat') && Mode(['editor',]))
 
         Plug 'rhysd/clever-f.vim',  Cond(Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion', Cond(Mode(['editor',]))  | " Jump according indent
@@ -688,10 +690,10 @@ call plug#begin('~/.vim/bundle')
 
     " Auto completion {{{2
         Plug 'Shougo/deoplete.nvim', Cond(Mode(['editor',]) && has('nvim'))         | "{ 'do': ':UpdateRemotePlugins' }
-        Plug 'Shougo/neosnippet.vim', Cond(NeedPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
-        Plug 'Shougo/neosnippet-snippets', Cond(NeedPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
-        Plug 'huawenyu/vim-snippets.local', Cond(NeedPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]) && has('nvim'))
-        Plug 'honza/vim-snippets', Cond(NeedPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
+        Plug 'Shougo/neosnippet.vim', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
+        Plug 'Shougo/neosnippet-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
+        Plug 'huawenyu/vim-snippets.local', Cond(HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]) && has('nvim'))
+        Plug 'honza/vim-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
     "}}}
 
@@ -766,16 +768,19 @@ call plug#begin('~/.vim/bundle')
 " Integration {{{2
     " git {{{3
         Plug 'tpope/vim-fugitive',     Cond(Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
-        Plug 'airblade/vim-gitgutter', Cond(Mode(['editor']) && NeedPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
-        Plug 'junegunn/gv.vim',        Cond(Mode(['editor']) && NeedPlug('vim-fugitive'))  | " Awesome git wrapper
-        Plug 'mhinz/vim-signify', Cond(Mode(['editor',]))   | " Light/Quick show git diff
+        Plug 'airblade/vim-gitgutter', Cond(Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
+        Plug 'junegunn/gv.vim',        Cond(Mode(['editor']) && HasPlug('vim-fugitive'))  | " Awesome git wrapper
+        Plug 'mhinz/vim-signify',      Cond(Mode(['editor',]))   | " Light/Quick show git diff
 
         Plug 'rbgrouleff/bclose.vim',       Cond(Mode(['editor']) && Mode(['extra']) && executable('tig'))
-        Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor']) && Mode(['extra']) && NeedPlug('bclose.vim') && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
+        Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor']) && Mode(['extra']) && HasPlug('bclose.vim') && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
+
+        Plug 'tpope/vim-rhubarb', Cond(Mode(['editor']) && Mode(['extra']) && Mode(['hub']))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
+        Plug 'mattn/gist-vim',    Cond(Mode(['editor']) && Mode(['extra']))              | " :'<,'>Gist -e 'list-sample'
     "}}}
 
-    Plug 'tpope/vim-rhubarb', Cond(Mode(['editor']) && Mode(['extra']) && Mode(['hub']))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
-    Plug 'mattn/gist-vim',    Cond(Mode(['editor']) && Mode(['extra']))              | " :'<,'>Gist -e 'list-sample'
+    Plug 'wlemuel/vim-tldr',                 Cond(Mode(['editor',]))    | " :Tldr <linux-cmd>
+    Plug 'alok/notational-fzf-vim',          Cond(Mode(['editor',]))    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
 
     Plug 'yuratomo/w3m.vim', Cond(executable('w3m') && Mode(['admin',]) && Mode(['tool',]))
     Plug 'szw/vim-dict',     Cond(Mode(['editor',]) && Mode(['tool',]))
