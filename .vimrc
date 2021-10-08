@@ -1,9 +1,10 @@
 " vim: set expandtab: set tabstop=4: set shiftwidth=4: set softtabstop=4:
 " =============================================================
 " TryIt:
-" - <Space>     Is the leader
-" - Press ';;'  display shortcuts
-" - Press 'H'   on topic word with the '?' sign (by cheat?)
+" - vim --clean         Startup vim without any config/plug
+" - <Space>             Is the leader
+" - Press ';;'          display shortcuts
+" - Press 'H'           on topic word with the '?' sign (by cheat?)
 "
 " Install:  help 'H' on the topic
 " - Debian
@@ -98,6 +99,7 @@ let g:vim_confi_option = {
       \ 'start_page': '$HOME/dotfiles/startpage.md',
       \ 'fzf_files': ['~/dotwiki/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
       \ 'fzf_notes': ['~/wiki', '~/dotwiki', '~/work-doc', ],
+      \ 'tmp_file': '/tmp/vim.tmp',
       \}
 " =============================================================
 
@@ -479,8 +481,8 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Writer {{{2
-    Plug 'junegunn/goyo.vim', Cond(Mode(['editor',]))         | " :Goyo 80
-    Plug 'junegunn/limelight.vim', Cond(Mode(['editor',]))    | "
+    Plug 'junegunn/goyo.vim',      Cond(Mode(['writer',])) | " :Goyo 80
+    Plug 'junegunn/limelight.vim', Cond(Mode(['writer',])) | "
 "}}}
 
 " Coder {{{2
@@ -587,11 +589,10 @@ call plug#begin('~/.vim/bundle')
 
     " Markdown/Writing/Wiki {{{3
         " tool-render?
-        Plug  'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
-        Plug  'godlygeek/tabular',       Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug  'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
-        Plug  'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
-        "Plug 'SidOfc/mkdx',             Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |      "           Heavy markdown enhance
+        Plug 'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
+        Plug 'godlygeek/tabular',       Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
+        Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
 "}}}
@@ -603,7 +604,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'tjdevries/cyclist.vim',            Cond(Mode(['coder']))	 | " vim list show
     Plug 'huawenyu/vim-mark',                Cond(Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',           Cond(Mode(['editor'])) | " place, toggle and display marks
-
+    " prettier/vim-prettier
 "}}}
 
 " Syntax/Language {{{2
@@ -637,7 +638,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
     "}}}
 
-    " Search {{{3
+    " Search/Jump {{{3
         Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim'))
@@ -653,12 +654,15 @@ call plug#begin('~/.vim/bundle')
             Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
 
-        " Todo list/quickfix {{{4
+        " Quickfix/Todo list {{{4
             Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))              | " Tame the quickfix window
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'freitass/todo.txt-vim',            Cond(Mode(['editor',]))       | " codeblock with 'todo', http://todotxt.org/
+            Plug 'freitass/todo.txt-vim',            Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
         "}}}
 
+        " history {{{4
+            "Plug 'liuchengxu/vim-clap',              Cond(Mode(['editor',]))    | "
+        "}}}
     "}}}
 
     " Suggar {{{3

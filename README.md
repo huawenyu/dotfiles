@@ -22,6 +22,10 @@ $ ./update_dot.sh -a pull
   * the config files
 
 ```Shell
+echo "hello work"
+```
+
+```Shell
 $ cd ~/dotfiles/script
 $ ./update_dot.sh -a pull
 ```
