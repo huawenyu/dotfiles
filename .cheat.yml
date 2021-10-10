@@ -1,5 +1,10 @@
 # Cheat config file conf.yml:
 cheatpaths:
+  - name: vim
+    path: ~/.vim/bundle/vim.config/docs  # this is a separate directory and repository than above
+    tags: [ vim ]
+    readonly: false                   # new sheets may be written here
+
   - name: personal
     path: ~/dotwiki/cheat             # this is a separate directory and repository than above
     tags: [ personal ]
@@ -8,11 +13,6 @@ cheatpaths:
   - name: wiki
     path: ~/wiki/cheat                # this is a separate directory and repository than above
     tags: [ wiki ]
-    readonly: false                   # new sheets may be written here
-
-  - name: vim
-    path: ~/.vim/bundle/vim.config/docs  # this is a separate directory and repository than above
-    tags: [ vim ]
     readonly: false                   # new sheets may be written here
 
   - name: community                   # a name for the cheatpath

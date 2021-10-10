@@ -486,6 +486,31 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Coder {{{2
+    " Try/test {{{3
+        " Plug 'neovim/nvim-lspconfig'
+        " " setting with vim-lsp
+        " if executable('ccls')
+        "    au User lsp_setup call lsp#register_server({
+        "       \ 'name': 'ccls',
+        "       \ 'cmd': {server_info->['ccls']},
+        "       \ 'root_uri': {server_info->lsp#utils#path_to_uri(
+        "       \   lsp#utils#find_nearest_parent_file_directory(
+        "       \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
+        "       \ 'initialization_options': {
+        "       \   'highlight': { 'lsRanges' : v:true },
+        "       \   'cache': {'directory': stdpath('cache') . '/ccls' },
+        "       \ },
+        "       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+        "       \ })
+        " endif
+
+        " Plug 'nvim-treesitter/nvim-treesitter'
+        " Plug 'nvim-treesitter/nvim-treesitter-refactor'
+        " Plug 'nvim-treesitter/playground'
+        " Plug 'romgrk/nvim-treesitter-context'
+
+    "}}}
+
     " Basic {{{3
         Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder']))
         Plug 'tpope/vim-commentary',             Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
@@ -503,7 +528,8 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " gdb front-end {{{3
-        Plug 'huawenyu/vimgdb', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Base on Tmux + neovim, don't want struggle with neovim.terminal, layout by Tmux
+        "Plug 'huawenyu/vimgdb',        Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | "
+        Plug 'huawenyu/termdebug.nvim', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
     "}}}
 
     " Diff {{{3
@@ -610,6 +636,7 @@ call plug#begin('~/.vim/bundle')
 " Syntax/Language {{{2
     Plug 'vim-syntastic/syntastic',   Cond(Mode(['editor',]))
     Plug 'Chiel92/vim-autoformat',    Cond(Mode(['coder',]))
+
     Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
     Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
     Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor',]), {'for': 'log'})
