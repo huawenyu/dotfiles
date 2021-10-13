@@ -88,7 +88,7 @@ let g:vim_confi_option = {
       \ 'auto_chdir': 0,
       \ 'auto_save': 1,
       \ 'auto_restore_cursor': 1,
-      \ 'auto_qf_height': 1,
+      \ 'auto_qf_height': 0,
       \ 'auto_session': 'vim.session',
       \
       \ 'keywordprg_filetype': 1,
@@ -468,16 +468,16 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Plug config: order-sensible {{{2
-    Plug 'tpope/vim-sensible',   Cond(Mode(['basic',]))
-    Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'conf-basic']))
+    Plug 'tpope/vim-sensible',   Cond(Mode(['basic', 'floatview']))
+    Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'conf-basic', 'floatview']))
     Plug 'huawenyu/vim.config',  Cond(Mode(['local', 'conf-plug']))  | " config the plugs
     Plug 'huawenyu/vim.command', Cond(Mode(['local', 'conf-extra'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
-    Plug 'vim-scripts/holokai',        Cond(DenyPlug('seoul256.vim') && Mode(['theme',]))
-    Plug 'junegunn/seoul256.vim',      Cond(DenyPlug('holokai')      && Mode(['theme',]))
-    Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme',]))        |  " set background=light;colorscheme PaperColor
+    Plug 'vim-scripts/holokai',        Cond(DenyPlug('seoul256.vim') && Mode(['theme', 'floatview']))
+    Plug 'junegunn/seoul256.vim',      Cond(DenyPlug('holokai')      && Mode(['theme', 'floatview']))
+    Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme', 'floatview']))        |  " set background=light;colorscheme PaperColor
 "}}}
 
 " Writer {{{2
@@ -551,7 +551,7 @@ call plug#begin('~/.vim/bundle')
     " C/Cplus {{{3
         Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && Mode(['c']))
         Plug 'huawenyu/vim-linux-coding-style',  Cond(Mode(['coder']) && Mode(['c']))
-        Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c']))
+        Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c', 'floatview']))
         Plug 'bfrg/vim-cpp-modern',              Cond(HasPlug('vim-cpp-enhanced-highlight'))
     "}}}
 
@@ -634,8 +634,8 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Syntax/Language {{{2
-    Plug 'vim-syntastic/syntastic',   Cond(Mode(['editor',]))
-    Plug 'Chiel92/vim-autoformat',    Cond(Mode(['coder',]))
+    Plug 'vim-syntastic/syntastic',   Cond(Mode(['editor', 'floatview']))
+    "Plug 'Chiel92/vim-autoformat',   Cond(Mode(['coder',]))
 
     Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
     Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
@@ -650,11 +650,11 @@ call plug#begin('~/.vim/bundle')
         Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-        Plug 'sunaku/vim-shortcut', Cond(Mode(['editor',]))         | " ';;' Popup shortcut help, but don't execute
+        Plug 'sunaku/vim-shortcut', Cond(Mode(['editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
         Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
         Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
-        Plug 'ojroques/vim-oscyank',     Cond(Mode(['basic',]))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
+        Plug 'ojroques/vim-oscyank',     Cond(Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(Mode(['editor']))      |  " vim config auto set
         Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin']) && Mode(['extra']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
     "}}}
@@ -684,7 +684,10 @@ call plug#begin('~/.vim/bundle')
         " Quickfix/Todo list {{{4
             Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))              | " Tame the quickfix window
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'freitass/todo.txt-vim',            Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
+            "Plug 'kevinhwang91/nvim-bqf',           Cond(Mode(['editor',]))    | " Better quickfix:
+            "Plug 'freitass/todo.txt-vim',           Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
+            "Plug 'bfrg/vim-qf-preview'
+
         "}}}
 
         " history {{{4
@@ -704,7 +707,7 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Motion {{{3
-        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor']))
+        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor', 'floatview']))
         Plug 'easymotion/vim-easymotion',      Cond(Mode(['editor',]))
         Plug 'tpope/vim-abolish',              Cond(Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
 
