@@ -668,7 +668,7 @@ call plug#begin('~/.vim/bundle')
     " Search/Jump {{{3
         Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
-            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim'))
+            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
             "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
