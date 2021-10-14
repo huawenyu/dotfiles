@@ -22,7 +22,11 @@
 "
 "     $ vi -c 'PlugInstall'
 "
-" Help:
+" Customize:
+"   ~/.vimrc.before     " Set variable before plugin load
+"   ~/.vimrc.after      " Finally re-change keymap
+"
+" Help: require-plug(vim-floaterm/vim-basic/vim.config)
 " - latest-neovim?
 " - vi-to-neovim?
 " - windows-install?
@@ -30,6 +34,7 @@
 " - vim-more?
 " - troubleshooting?
 " - vim-config?
+" - vim-search?
 " =============================================================
 "  Mode:
 "  Support set from env's variable, like: mode=basic vi ~/.vimrc
@@ -549,7 +554,6 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " C/Cplus {{{3
-        Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && Mode(['c']))
         Plug 'huawenyu/vim-linux-coding-style',  Cond(Mode(['coder']) && Mode(['c']))
         Plug 'octol/vim-cpp-enhanced-highlight', Cond(Mode(['coder']) && Mode(['c', 'floatview']))
         Plug 'bfrg/vim-cpp-modern',              Cond(HasPlug('vim-cpp-enhanced-highlight'))
@@ -667,6 +671,7 @@ call plug#begin('~/.vim/bundle')
 
     " Search/Jump {{{3
         Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
+            Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && HasPlug('vim-grepper') )
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 

@@ -17,7 +17,7 @@ fn [lft]>[next]
 fn [dwn]>[F7]
 fn [rght]>[F8]
 {hk1}>{-lctrl}{a}{a}{+lctrl}
-{lctrl}{y}>{-lctrl}{a}{+lctrl}{-lshft}{-lalt}{p}{+lshft}{+lalt}
-{lctrl}{/}>{-lctrl}{a}{+lctrl}{obrk}{/}
+{lwin}{y}>{-lctrl}{a}{+lctrl}{-lshft}{-lalt}{p}{+lshft}{+lalt}
+{lwin}{/}>{-lctrl}{a}{+lctrl}{obrk}{/}
 {hk7}>{-lctrl}{a}{+lctrl}{-lshft}{lft}{+lshft}
 {hk8}>{-lctrl}{a}{+lctrl}{-lshft}{rght}{+lshft}
