@@ -32,7 +32,7 @@
 " - windows-install?
 " - checkhealth?
 " - vim-more?
-" - troubleshooting?
+" - troubleshooting? (who change the config, howto plugin runtime log)
 " - vim-config?
 " - vim-search?
 " =============================================================

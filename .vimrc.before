@@ -1,1 +1,4 @@
 " The vim config load before all plugins
+
+let g:c_utils_prefer_dir = 'daemon/wad'
+
