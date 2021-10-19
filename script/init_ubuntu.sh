@@ -31,6 +31,11 @@ sudo apt-get install -y build-essential file
 # Simple editor
 sudo apt-get install -y geany geany-plugins
 
+# Record to GIF
+#sudo add-apt-repository ppa:peek-developers/stable
+#sudo apt update
+#sudo apt install peek
+
 # shell: zsh {{{2
 sudo apt-get install -y zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
