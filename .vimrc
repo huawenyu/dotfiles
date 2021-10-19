@@ -678,7 +678,7 @@ call plug#begin('~/.vim/bundle')
 
         " Tags/cscope/indexer? {{{4
             "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
-                Plug 'neoclide/coc.nvim',   Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
+                "Plug 'neoclide/coc.nvim',   Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
                 "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
                 "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
 
@@ -767,15 +767,15 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-dotenv', Cond(Mode(['admin',]))  | " Basic support for .env and Procfile
         Plug 'kassio/neoterm',   Cond(Mode(['admin',]) && has('nvim'))        | " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
-        Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))          | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
+        Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))        | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
         Plug 'jamessan/vim-gnupg',  Cond(Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
         Plug 'huawenyu/vim-tabber', Cond(Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
     "}}}
 
     " Presentation? draw? pencil  {{{3
-        Plug 'sk1418/blockit', Cond(Mode(['editor',]))            | " :Block -- Draw a Box around text region
+        Plug 'sk1418/blockit',       Cond(Mode(['editor',]))       | " :Block -- Draw a Box around text region
         Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
-        Plug 'jbyuki/venn.nvim', Cond(Mode(['editor',]))          | " Draw pencil
+        Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil
     "}}}
 
     " Project {{{3
