@@ -621,7 +621,8 @@ call plug#begin('~/.vim/bundle')
         " tool-render?
         Plug 'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
         Plug 'godlygeek/tabular',       Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
+        Plug 'plasticboy/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        "Plug 'tpope/vim-markdown',     Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
         Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
