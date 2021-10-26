@@ -35,6 +35,7 @@
 " - troubleshooting? (who change the config, howto plugin runtime log)
 " - vim-config?
 " - vim-search?
+" - vimscript?
 " =============================================================
 "  Mode:
 "  Support set from env's variable, like: mode=basic vi ~/.vimrc
@@ -513,7 +514,7 @@ call plug#begin('~/.vim/bundle')
         " Plug 'nvim-treesitter/nvim-treesitter-refactor'
         " Plug 'nvim-treesitter/playground'
         " Plug 'romgrk/nvim-treesitter-context'
-
+        " Plug 'nelstrom/vimprint'
     "}}}
 
     " Basic {{{3
@@ -527,9 +528,11 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Repl {{{3
-        Plug 'voldikss/vim-floaterm', Cond(Mode(['editor',])) | "
-        Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && Mode(['editor',]))  | "
-        Plug 'wsdjeg/notifications.vim', Cond(Mode(['editor',]))	| " :Echoerr xxxxx
+        Plug 'voldikss/vim-floaterm',      Cond(Mode(['editor',])) | "
+        Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
+        Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
+        Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+        Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
     "}}}
 
     " gdb front-end {{{3
@@ -661,7 +664,6 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'ojroques/vim-oscyank',     Cond(Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(Mode(['editor']))      |  " vim config auto set
-        Plug 'huawenyu/vim-tmux-runner', Cond(Mode(['admin']) && Mode(['extra']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
     "}}}
 
     " Async {{{3
@@ -671,6 +673,7 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Search/Jump {{{3
+        Plug 'google/vim-searchindex',      Cond(Mode(['editor',]))  | " Show the times a search pattern occurs in the current buffer
         Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && HasPlug('vim-grepper') )
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
@@ -775,7 +778,7 @@ call plug#begin('~/.vim/bundle')
     " Presentation? draw? pencil  {{{3
         Plug 'sk1418/blockit',       Cond(Mode(['editor',]))       | " :Block -- Draw a Box around text region
         Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
-        Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil
+        Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil, seem require neovim version > 0.5
     "}}}
 
     " Project {{{3

@@ -98,33 +98,44 @@ sudo dpkg -i fzy_0.9-1_amd64.deb
 ##sudo update-alternatives --config editor
 ##sudo update-alternatives --config vimdiff		+=== choose /usr/bin/vimdiff.nvim
 
-# home brew {{{2
-# [brew](http://http://linuxbrew.sh/): substitute for apt-get install
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-brew install neovim
-# An kind of node package manager
-brew install yarn
-# Terminal Dashboard
-brew install wtfutil
-
-# Color command output:  https://github.com/garabik/grc
-brew install grc
-
-brew unlink python@2
-brew unlink python@3
+## home brew {{{2
+## [brew](http://http://linuxbrew.sh/): substitute for apt-get install
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+#brew install neovim
+## An kind of node package manager
+#brew install yarn
+## Terminal Dashboard
+#brew install wtfutil
+#
+## Color command output:  https://github.com/garabik/grc
+#brew install grc
+#
+#brew unlink python@2
+#brew unlink python@3
 
 # make sure we not using brew's python: sometimes it's misup our python depended env
 sudo apt-get install python-dev python-pip python3-dev python3-pip
-sudo pip install neovim
-sudo pip install pynvim
-sudo pip install pexpect
-sudo pip3 install neovim
-sudo pip3 install pynvim
+#sudo pip install neovim
+#sudo pip install pynvim
+#sudo pip install pexpect
+pip3 install --user neovim
+pip3 install --user pynvim
+pip3 install --user pexpect
 pip3 install --upgrade msgpack
 
 # correct your previous console command
 #    $ fuck
-pip3 install --user thefuck
+#pip3 install --user thefuck
+
+# vimdiff alternative
+pip3 install --user git+https://github.com/jeffkaufman/icdiff.git
+
+# less alternative
+## chmod a+x moar-*-*-*
+## sudo mv moar-*-*-* /usr/local/bin/moar
+## sudo mv /bin/less /bin/less.bak
+## sudo ln -s /usr/local/bin/moar /usr/local/bin/less
+https://github.com/walles/moar/releases/download/v1.8.3/moar-v1.8.3-linux-386
 
 # Our self + public command helper
 # [X-not work] python version: pip3 install --user cheat		# This python version not work good
