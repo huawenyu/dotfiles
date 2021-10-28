@@ -76,7 +76,7 @@
 "  - fzf_files:     current use as cheat search by filename
 "
 let g:vim_confi_option = {
-      \ 'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'c', 'markdown', 'git', 'script', 'tool'],
+      \ 'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'log', 'c', 'markdown', 'git', 'script', 'tool'],
       \ 'remap_leader': 1,
       \ 'theme': 1,
       \ 'conf': 1,
@@ -474,10 +474,10 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Plug config: order-sensible {{{2
-    Plug 'tpope/vim-sensible',   Cond(Mode(['basic', 'floatview']))
-    Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'conf-basic', 'floatview']))
-    Plug 'huawenyu/vim.config',  Cond(Mode(['local', 'conf-plug']))  | " config the plugs
-    Plug 'huawenyu/vim.command', Cond(Mode(['local', 'conf-extra'])) | " config the plugs
+    Plug 'tpope/vim-sensible',   Cond(Mode(['basic', 'log', 'floatview']))
+    Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'log', 'conf-basic', 'floatview']))
+    Plug 'huawenyu/vim.config',  Cond(Mode(['local', 'log', 'conf-plug']))  | " config the plugs
+    Plug 'huawenyu/vim.command', Cond(Mode(['local', 'log', 'conf-extra'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
@@ -532,7 +532,10 @@ call plug#begin('~/.vim/bundle')
         Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
         Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+
         Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
+        "Plug 'xolox/vim-misc',            Cond(Mode(['coder',]))	| " :
+
     "}}}
 
     " gdb front-end {{{3
@@ -647,7 +650,7 @@ call plug#begin('~/.vim/bundle')
 
     Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
     Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
-    Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor',]), {'for': 'log'})
+    Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor', 'log', ]), {'for': 'log'})
     Plug 'tmux-plugins/vim-tmux',     Cond(Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
     Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
 "}}}
@@ -658,7 +661,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-        Plug 'sunaku/vim-shortcut', Cond(Mode(['editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
+        Plug 'sunaku/vim-shortcut', Cond(Mode(['basic', 'editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
         Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
         Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
@@ -667,6 +670,7 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Async {{{3
+        "Plug 'tpope/vim-dispatch',        Cond(Mode(['admin',]))
         Plug 'Shougo/vimproc.vim',         Cond(Mode(['admin',]), {'do' : 'make'})
         Plug 'skywind3000/asyncrun.vim',   Cond(Mode(['admin',]))
         Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
@@ -716,7 +720,7 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Motion {{{3
-        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor', 'floatview']))
+        Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor', 'log', 'floatview']))
         Plug 'easymotion/vim-easymotion',      Cond(Mode(['editor',]))
         Plug 'tpope/vim-abolish',              Cond(Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
 
@@ -805,8 +809,8 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Outline/Context {{{3
-        Plug 'huawenyu/VOoM',        Cond(Mode(['editor']))
-        Plug 'vim-voom/VOoM_extras', Cond(Mode(['editor']))
+        Plug 'huawenyu/VOoM',        Cond(Mode(['editor', 'log', ]))
+        "Plug 'vim-voom/VOoM_extras',Cond(Mode(['editor']))  | " Seems no use at all, but slow/frozen when read large file (>100M)
         Plug 'roosta/fzf-folds.vim', Cond(Mode(['editor']))
     "}}}
 
