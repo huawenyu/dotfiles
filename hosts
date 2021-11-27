@@ -37,10 +37,16 @@
 172.16.100.80   imagesvr
 172.16.101.145  devqasvr
 
+William Wang
+10.59.36.44     ztna.client
+# ssh william@10.59.36.204 -p 10022
+10.59.36.204    ztna.fgt
+
 # My gdb remote
 
 # SimonZhang 1500D
 172.18.53.12	dut
+172.16.86.114   dut2
 
 #172.18.20.77    dut
 #172.18.29.2    dut

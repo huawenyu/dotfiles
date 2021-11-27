@@ -60,12 +60,6 @@
 	window = 0
 [http]
 	sslVerify = true
-[merge]
-	tool = meld
-[diff]
-	tool = vimdiff
-[difftool]
-	prompt = false
 [gitreview]
 	remote = origin
 	username = Yu,Huawen(Wilson)

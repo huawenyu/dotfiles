@@ -653,6 +653,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor', 'log', ]), {'for': 'log'})
     Plug 'tmux-plugins/vim-tmux',     Cond(Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
     Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
+    Plug 'xuhdev/syntax-dosini.vim',  Cond(has('nvim') && Mode(['coder',]))
 "}}}
 
 " Improve {{{2
@@ -684,11 +685,6 @@ call plug#begin('~/.vim/bundle')
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
-            "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
-                "Plug 'neoclide/coc.nvim',   Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
-                "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
-                "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
-
             Plug 'liuchengxu/vista.vim',    Cond(DenyPlug('tagbar')    && Mode(['coder',]))
             Plug 'majutsushi/tagbar',       Cond(DenyPlug('vista.vim') && Mode(['coder',]))
             Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
@@ -740,12 +736,30 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Auto completion {{{2
+        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['editor',]))
+        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['editor',]))
+        "Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
+
         Plug 'Shougo/deoplete.nvim', Cond(Mode(['editor',]) && has('nvim'))         | "{ 'do': ':UpdateRemotePlugins' }
-        Plug 'Shougo/neosnippet.vim', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
-        Plug 'Shougo/neosnippet-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
-        Plug 'huawenyu/vim-snippets.local', Cond(HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]) && has('nvim'))
-        Plug 'honza/vim-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
+        " Plug 'Shougo/neosnippet.vim', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
+        " Plug 'Shougo/neosnippet-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
+        " Plug 'huawenyu/vim-snippets.local', Cond(HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]) && has('nvim'))
+        " Plug 'honza/vim-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
+
+        "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
+            "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
+            "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
+            "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
+
+        Plug 'hrsh7th/nvim-cmp',                Cond(Mode(['editor',]))
+        Plug 'hrsh7th/cmp-nvim-lsp',            Cond(Mode(['editor',]))
+        " Plug 'hrsh7th/cmp-buffer',            Cond(Mode(['editor',]))
+        " Plug 'hrsh7th/cmp-path',              Cond(Mode(['editor',]))
+        " Plug 'hrsh7th/cmp-cmdline',           Cond(Mode(['editor',]))
+        Plug 'hrsh7th/cmp-vsnip',               Cond(Mode(['editor',]))
+        Plug 'hrsh7th/vim-vsnip',               Cond(Mode(['editor',]))
+        Plug 'lukas-reineke/cmp-rg',            Cond(Mode(['editor',]))
     "}}}
 
     " Text objects? {{{2
