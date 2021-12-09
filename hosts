@@ -29,8 +29,15 @@
 172.16.80.141	tek-kvm
 #  work
 172.16.80.142	tek
-172.16.80.134	evan-host
-172.16.80.139	evan
+
+#172.16.80.134	evan-host
+#172.16.80.139	evan
+172.17.219.9   evan
+
+172.17.219.4	henry-host
+172.17.219.19	henry
+#172.17.219.11	henry-host
+172.17.219.12	henry
 
 172.18.2.169	ftpsvr
 172.16.101.145  sftpsvr
@@ -40,7 +47,8 @@
 William Wang
 10.59.36.44     ztna.client
 # ssh william@10.59.36.204 -p 10022
-10.59.36.204    ztna.fgt
+#10.59.36.204    ztna.fgt
+10.59.36.203    ztna.fgt
 
 # My gdb remote
 
