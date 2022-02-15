@@ -625,10 +625,16 @@ call plug#begin('~/.vim/bundle')
 
     " Markdown/Writing/Wiki {{{3
         " tool-render?
-        Plug 'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})          |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
+        Plug 'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
         Plug 'godlygeek/tabular',       Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug 'plasticboy/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        "Plug 'tpope/vim-markdown',     Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
+
+        " ge: open link
+        " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
+        " [[, []: previous header/sibling
+        "Plug 'plasticboy/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+
+        Plug 'SidOfc/mkdx',             Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
         Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
@@ -681,6 +687,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'google/vim-searchindex',      Cond(Mode(['editor',]))  | " Show the times a search pattern occurs in the current buffer
         Plug 'mhinz/vim-grepper',           Cond(Mode(['editor',]))  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && HasPlug('vim-grepper') )
+        "Plug 'pechorin/any-jump.vim',       Cond(Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
@@ -821,6 +828,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'kristijanhusak/defx-icons',    Cond(Mode(['editor',]) && Mode(['extra']))
 
     "}}}
+    "
 
     " Outline/Context {{{3
         Plug 'huawenyu/VOoM',        Cond(Mode(['editor', 'log', ]))
@@ -835,7 +843,10 @@ call plug#begin('~/.vim/bundle')
         Plug 'tpope/vim-fugitive',     Cond(Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
         Plug 'airblade/vim-gitgutter', Cond(Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
         Plug 'junegunn/gv.vim',        Cond(Mode(['editor']) && HasPlug('vim-fugitive'))  | " Awesome git wrapper
-        Plug 'mhinz/vim-signify',      Cond(Mode(['editor',]))   | " Light/Quick show git diff
+
+        " Troubleshooting :SignifyDebug
+        " Diff by commit: export GitSHA=76748de92fa
+        Plug 'mhinz/vim-signify',      Cond(Mode(['editor',]))   | " Light/Quicker then vim-gitgutter to show git diff
 
         Plug 'rbgrouleff/bclose.vim',       Cond(Mode(['editor']) && Mode(['extra']) && executable('tig'))
         Plug 'iberianpig/tig-explorer.vim', Cond(Mode(['editor']) && Mode(['extra']) && HasPlug('bclose.vim') && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.

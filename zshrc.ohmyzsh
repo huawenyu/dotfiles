@@ -101,7 +101,6 @@ function git_prompt_info() {
 # Customize to your needs...
 #
 
-
 # Our local dir: data, tools, home
 #if [ ! -f "/tmp/zsh_init_flag" ]; then
 #  # remap caps to ESC
