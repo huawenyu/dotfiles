@@ -133,3 +133,5 @@ ff02::2 ip6-allrouters
 #::0       www.learncertification.com
 
 192.168.100.119    resume.corp.fortinet.com
+172.16.12.100      reviewboard.corp.fortinet.com
+
