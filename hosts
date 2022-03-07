@@ -91,7 +91,8 @@ William Wang
 206.190.36.45	www.yahoo.com
 #192.168.100.122 reviewboard.corp.fortinet.com
 #192.168.100.177 jenkins.corp.fortinet.com
-172.16.100.34   phab.corp.fortinet.com
+172.16.100.34    phab.corp.fortinet.com
+192.168.100.224  jenkins-robot.corp.fortinet.com
 
 # Hans Yin: autotest tool's database server
 172.18.7.215    hyin.pythonanywhere.com
@@ -134,4 +135,4 @@ ff02::2 ip6-allrouters
 
 192.168.100.119    resume.corp.fortinet.com
 172.16.12.100      reviewboard.corp.fortinet.com
-
+192.168.100.17     gerrit.fortinet.com

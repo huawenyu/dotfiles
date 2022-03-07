@@ -30,7 +30,7 @@
 [lctrl]>[bspace]
 [rctrl]>[enter]
 [home]>[lwin]
-[pup]>[rctrl]
+[pup]>[F5]
 [enter]>[=]
 
 {kp-up}>{-Lshift}{9}{+Lshift}
