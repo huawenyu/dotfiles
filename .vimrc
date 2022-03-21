@@ -658,6 +658,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'justinmk/vim-syntax-extra', Cond(Mode(['coder',]), {'for': 'vim'})
     Plug 'vim-scripts/awk.vim',       Cond(Mode(['admin',]) && Mode(['script']))
     Plug 'huawenyu/vim-log-syntax',   Cond(Mode(['editor', 'log', ]), {'for': 'log'})
+    Plug 'huawenyu/vim-autotest-syntax',   Cond(Mode(['editor', 'log', ]), {'for': 'log'})
     Plug 'tmux-plugins/vim-tmux',     Cond(Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
     Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && Mode(['coder',]))
     Plug 'xuhdev/syntax-dosini.vim',  Cond(has('nvim') && Mode(['coder',]))
