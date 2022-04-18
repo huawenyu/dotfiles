@@ -674,6 +674,11 @@ call plug#begin('~/.vim/bundle')
         Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
         Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
+        "Plug 'sudormrfbin/cheatsheet.nvim'
+        "Plug 'nvim-lua/popup.nvim'
+        "Plug 'nvim-lua/plenary.nvim'
+        "Plug 'nvim-telescope/telescope.nvim'
+
         Plug 'ojroques/vim-oscyank',     Cond(Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(Mode(['editor']))      |  " vim config auto set
     "}}}
@@ -799,7 +804,8 @@ call plug#begin('~/.vim/bundle')
     " Terminal/shell  {{{3
         Plug 'tpope/vim-eunuch', Cond(Mode(['admin',]))  | " Support unix shell cmd: Delete,Unlink,Move,Rename,Chmod,Mkdir,Cfind,Clocate,Lfind,Wall,SudoWrite,SudoEdit
         Plug 'tpope/vim-dotenv', Cond(Mode(['admin',]))  | " Basic support for .env and Procfile
-        Plug 'kassio/neoterm',   Cond(Mode(['admin',]) && has('nvim'))        | " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        "Plug 'kassio/neoterm',   Cond(Mode(['admin',]) && has('nvim'))        | " Not work after update, a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        Plug 'akinsho/toggleterm.nvim',   Cond(Mode(['admin',]) && has('nvim'))| " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
         Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))        | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
         Plug 'jamessan/vim-gnupg',  Cond(Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
