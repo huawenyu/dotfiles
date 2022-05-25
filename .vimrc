@@ -814,6 +814,8 @@ call plug#begin('~/.vim/bundle')
 
     " Presentation? draw? pencil  {{{3
         Plug 'sk1418/blockit',       Cond(Mode(['editor',]))       | " :Block -- Draw a Box around text region
+        Plug 'sk1418/HowMuch',       Cond(Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
+
         Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
         Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil, seem require neovim version > 0.5
     "}}}
