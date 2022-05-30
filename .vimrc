@@ -26,7 +26,9 @@
 "   ~/.vimrc.before     " Set variable before plugin load
 "   ~/.vimrc.after      " Finally re-change keymap
 "
-" Help: require-plug(vim-floaterm/vim-basic/vim.config)
+" Help:(press 'H' on the words, or list all wiki)
+" require-plug(vim-floaterm/vim-basic/vim.config
+"
 " - latest-neovim?
 " - vi-to-neovim?
 " - windows-install?
@@ -36,6 +38,7 @@
 " - vim-config?
 " - vim-search?
 " - vimscript?
+" - vim-fold?
 " =============================================================
 "  Mode:
 "  Support set from env's variable, like: mode=basic vi ~/.vimrc
@@ -631,10 +634,10 @@ call plug#begin('~/.vim/bundle')
         " ge: open link
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
         " [[, []: previous header/sibling
-        "Plug 'plasticboy/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'preservim/vim-markdown', Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
 
-        Plug 'SidOfc/mkdx',             Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
+        "Plug 'SidOfc/mkdx',             Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        "Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
         Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
