@@ -753,9 +753,15 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Auto completion {{{2
-        Plug 'Shougo/deoplete.nvim', Cond(Mode(['editor',]) && has('nvim'))         | "{ 'do': ':UpdateRemotePlugins' }
-        Plug 'Shougo/neosnippet.vim', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
-        Plug 'Shougo/neosnippet-snippets', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
+
+        " The autocomp fzf seems not works
+        "Plug 'ms-jpq/coq_nvim',         Cond(Mode(['coder',]) && LINUX(), {'branch': 'coq'})
+        "Plug 'ms-jpq/coq.artifacts',    Cond(Mode(['coder',]) && LINUX(), {'branch': 'artifacts'})
+        "Plug 'ms-jpq/coq.thirdparty',   Cond(Mode(['coder',]) && LINUX(), {'branch': '3p'})
+
+        Plug 'Shougo/deoplete.nvim',        Cond(Mode(['editor',]) && has('nvim'))         | "{ 'do': ':UpdateRemotePlugins' }
+        Plug 'Shougo/neosnippet.vim',       Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
+        Plug 'Shougo/neosnippet-snippets',  Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))
         Plug 'huawenyu/vim-snippets.local', Cond(HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]) && has('nvim'))
 
         "Plug 'SirVer/ultisnips', Cond(HasPlug('deoplete.nvim') && Mode(['editor',]) && has('nvim'))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
@@ -763,24 +769,26 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
 
+        " Backend using node.js and eat too much memory/CPU
         "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
             "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
             "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'on': ['<Plug>(coc-definition)', '<Plug>(coc-references)'], 'do': 'yarn install --frozen-lockfile'})  | " Increase stable by only load the plugin after the 1st command call.
             "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
 
         " Seem it's take too much CPU/memory, just comment out.
-        "Plug 'neovim/nvim-lspconfig',           Cond(Mode(['editor',]))
-        "Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['editor',]))
-        ""Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
+        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['editor',]))
+        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['editor',]))
+        "Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
 
-        "Plug 'hrsh7th/nvim-cmp',                Cond(Mode(['editor',]))
-        "Plug 'hrsh7th/cmp-nvim-lsp',            Cond(Mode(['editor',]))
+        Plug 'hrsh7th/nvim-cmp',                Cond(Mode(['editor',]))
+        Plug 'hrsh7th/cmp-nvim-lsp',            Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-buffer',            Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-path',              Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-cmdline',           Cond(Mode(['editor',]))
         "Plug 'hrsh7th/cmp-vsnip',               Cond(Mode(['editor',]))
         "Plug 'hrsh7th/vim-vsnip',               Cond(Mode(['editor',]))
         "Plug 'lukas-reineke/cmp-rg',            Cond(Mode(['editor',]))
+        Plug 'VonHeikemen/lsp-zero.nvim',        Cond(Mode(['editor',]))
     "}}}
 
     " Text objects? {{{2
