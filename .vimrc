@@ -34,11 +34,14 @@
 " - windows-install?
 " - checkhealth?
 " - vim-more?
-" - troubleshooting? (who change the config, howto plugin runtime log)
+" - troubleshooting? (Find which script change the config, howto enable debug log)
 " - vim-config?
 " - vim-search?
 " - vimscript?
 " - vim-fold?
+" - vim-fold?
+" - vim-lsp? (Nvim built-in supports the Language Server Protocol)
+" - quickfix?
 " =============================================================
 "  Mode:
 "  Support set from env's variable, like: mode=basic vi ~/.vimrc
@@ -708,9 +711,10 @@ call plug#begin('~/.vim/bundle')
         "}}}
 
         " Quickfix/Todo list {{{4
-            Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))              | " Tame the quickfix window
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            "Plug 'kevinhwang91/nvim-bqf',           Cond(Mode(['editor',]))    | " Better quickfix:
+            Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
+            "Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))    | " Tame the quickfix window
+
             "Plug 'freitass/todo.txt-vim',           Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
             "Plug 'bfrg/vim-qf-preview'
 
@@ -769,6 +773,15 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
 
+        " :LspInfo
+        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['coder',]))
+        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
+
+        "Plug 'glepnir/lspsaga.nvim',            Cond(Mode(['coder',]) && LINUX(), {'branch': 'main'})
+        "Plug 'ojroques/nvim-lspfuzzy',          Cond(Mode(['editor',]))  | " Publish the result into fzf-float-windows, but I prefer to quickfix for continue search
+        "Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
+        "Plug 'VonHeikemen/lsp-zero.nvim',      Cond(Mode(['editor',]))
+
         " Backend using node.js and eat too much memory/CPU
         "Plug 'neoclide/coc.nvim',      Cond(Mode(['coder',]) && LINUX(), {'branch': 'release'})
             "Plug 'neoclide/coc.nvim',  Cond(Mode(['coder',]) && LINUX(), {'do': 'yarn install --frozen-lockfile'})  | " sometimes find references fail
@@ -776,19 +789,14 @@ call plug#begin('~/.vim/bundle')
             "Plug 'neoclide/coc-rls',   Cond(Mode(['coder',]) && LINUX())
 
         " Seem it's take too much CPU/memory, just comment out.
-        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['editor',]))
-        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['editor',]))
-        "Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
-
-        Plug 'hrsh7th/nvim-cmp',                Cond(Mode(['editor',]))
-        Plug 'hrsh7th/cmp-nvim-lsp',            Cond(Mode(['editor',]))
+        "Plug 'hrsh7th/nvim-cmp',                Cond(Mode(['editor',]))
+        "Plug 'hrsh7th/cmp-nvim-lsp',            Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-buffer',            Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-path',              Cond(Mode(['editor',]))
         "" Plug 'hrsh7th/cmp-cmdline',           Cond(Mode(['editor',]))
         "Plug 'hrsh7th/cmp-vsnip',               Cond(Mode(['editor',]))
         "Plug 'hrsh7th/vim-vsnip',               Cond(Mode(['editor',]))
         "Plug 'lukas-reineke/cmp-rg',            Cond(Mode(['editor',]))
-        Plug 'VonHeikemen/lsp-zero.nvim',        Cond(Mode(['editor',]))
     "}}}
 
     " Text objects? {{{2
