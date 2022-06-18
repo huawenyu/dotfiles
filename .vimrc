@@ -39,7 +39,6 @@
 " - vim-search?
 " - vimscript?
 " - vim-fold?
-" - vim-fold?
 " - vim-lsp? (Nvim built-in supports the Language Server Protocol)
 " - quickfix?
 " =============================================================
@@ -109,7 +108,7 @@ let g:vim_confi_option = {
       \ 'show_number': 0,
       \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
-      \ 'fzf_files': ['~/dotwiki/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
+      \ 'fzf_files': ['~/dotwiki/fortios/doc', '~/dotwiki/cheat', '~/wiki/tool/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
       \ 'fzf_notes': ['~/wiki', '~/dotwiki', '~/work-doc', ],
       \ 'tmp_file': '/tmp/vim.tmp',
       \}
@@ -712,7 +711,7 @@ call plug#begin('~/.vim/bundle')
 
         " Quickfix/Todo list {{{4
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
+            "Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))    | " Tame the quickfix window
 
             "Plug 'freitass/todo.txt-vim',           Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
