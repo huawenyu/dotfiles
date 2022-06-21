@@ -26,6 +26,24 @@
 "   ~/.vimrc.before     " Set variable before plugin load
 "   ~/.vimrc.after      " Finally re-change keymap
 "
+"   For example,
+"   $ cat ~/.vimrc.before
+"       let mylocal_vim_confi = {
+"             \ 'debug': 1,
+"             \
+"             \ 'auto_chdir': 1,
+"             \
+"             \ 'view_folding': 1,
+"             \ 'show_number': 1,
+"             \ 'wrapline': 1,
+"             \ 'indentline': 1,
+"             \
+"             \ 'fzf_files': ['~/mywiki',],
+"             \ 'fzf_notes': ['~/mywiki',],
+"             \}
+"       let g:vim_confi_option = extend(g:vim_confi_option, mylocal_vim_confi)
+"
+"
 " Help:(press 'H' on the words, or list all wiki)
 " require-plug(vim-floaterm/vim-basic/vim.config
 "
@@ -106,6 +124,11 @@ let g:vim_confi_option = {
       \
       \ 'view_folding': 0,
       \ 'show_number': 0,
+      \ 'wrapline': 0,
+      \ 'indentline': 0,
+      \
+      \ 'help_keys': 1,
+      \ 'qf_preview': 0,
       \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
       \ 'fzf_files': ['~/dotwiki/fortios/doc', '~/dotwiki/cheat', '~/wiki/tool/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
@@ -327,12 +350,12 @@ endif
     endfunction
 
     " Check a plugin by order
-    function! HasnoPlug(name)
+    function! HasNoPlug(name)
         return CheckPlug(a:name, 1, 0)
     endfunction
 
-    " Alias HasnoPlug, only load the plugin in advance.
-    function! DenyPlug(name)
+    " Alias HasNoPlug, only load the plugin in advance.
+    function! IfNoPlug(name)
         return CheckPlug(a:name, 1, 0)
     endfunction
 
@@ -341,7 +364,7 @@ endif
         return !empty(a:name)
     endfunction
 
-    function! HasnoEnv(name)
+    function! HasNoEnv(name)
         return empty(a:name)
     endfunction
 
@@ -486,8 +509,8 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " ColorTheme {{{2
-    Plug 'vim-scripts/holokai',        Cond(DenyPlug('seoul256.vim') && Mode(['theme', 'floatview']))
-    Plug 'junegunn/seoul256.vim',      Cond(DenyPlug('holokai')      && Mode(['theme', 'floatview']))
+    Plug 'vim-scripts/holokai',        Cond(IfNoPlug('seoul256.vim') && Mode(['theme', 'floatview']))
+    Plug 'junegunn/seoul256.vim',      Cond(IfNoPlug('holokai')      && Mode(['theme', 'floatview']))
     Plug 'NLKNguyen/papercolor-theme', Cond(Mode(['theme', 'floatview']))        |  " set background=light;colorscheme PaperColor
 "}}}
 
@@ -544,8 +567,8 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " gdb front-end {{{3
-        "Plug 'huawenyu/vimgdb',        Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | "
-        Plug 'huawenyu/termdebug.nvim', Cond(Mode(['coder']) && DenyPlug('vimspector') && has('nvim'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
+        "Plug 'huawenyu/vimgdb',        Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | "
+        Plug 'huawenyu/termdebug.nvim', Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
     "}}}
 
     " Diff {{{3
@@ -649,10 +672,21 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/startscreen.vim',         Cond(Mode(['editor']) && len(g:vim_confi_option.start_page))
     Plug 'millermedeiros/vim-statline',      Cond(Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
     Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor']))
-    Plug 'tjdevries/cyclist.vim',            Cond(Mode(['coder']))	 | " vim list show
     Plug 'huawenyu/vim-mark',                Cond(Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',           Cond(Mode(['editor'])) | " place, toggle and display marks
+    Plug 'lukas-reineke/indent-blankline.nvim', Cond(Mode(['editor']) && g:vim_confi_option.indentline)
+
+    " Copy directly into vim.config/plugin/misc.vim
+    "Plug 'teto/vim-listchars',               Cond(IfNoPlug('cyclist.vim') && Mode(['coder']))	 | " cycle listchars
     " prettier/vim-prettier
+
+    " Windows related
+    Plug 'paroxayte/vwm.vim',                 Cond(Mode(['coder']))      |  " vim windows management
+    "Plug 'stevearc/stickybuf.nvim',           Cond(Mode(['coder']))      |  " Can't make it works; bind buffer with the window
+    Plug 'folke/which-key.nvim',              Cond(Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
+
+    " Preview
+    Plug 'skywind3000/vim-preview',           Cond(Mode(['coder'])) |  " Improve preview
 "}}}
 
 " Syntax/Language {{{2
@@ -677,7 +711,6 @@ call plug#begin('~/.vim/bundle')
 
         Plug 'sunaku/vim-shortcut', Cond(Mode(['basic', 'editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
         Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
-        Plug 'paroxayte/vwm.vim',   Cond(Mode(['extra']))      |  " vim windows management
 
         "Plug 'sudormrfbin/cheatsheet.nvim'
         "Plug 'nvim-lua/popup.nvim'
@@ -704,14 +737,14 @@ call plug#begin('~/.vim/bundle')
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
-            Plug 'liuchengxu/vista.vim',    Cond(DenyPlug('tagbar')    && Mode(['coder',]))
-            Plug 'majutsushi/tagbar',       Cond(DenyPlug('vista.vim') && Mode(['coder',]))
+            Plug 'liuchengxu/vista.vim',    Cond(IfNoPlug('tagbar')    && Mode(['coder',]))
+            Plug 'majutsushi/tagbar',       Cond(IfNoPlug('vista.vim') && Mode(['coder',]))
             Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
 
         " Quickfix/Todo list {{{4
             Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            "Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
+            Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))    | " Tame the quickfix window
 
             "Plug 'freitass/todo.txt-vim',           Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
@@ -725,13 +758,13 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Suggar {{{3
-		Plug 'Raimondi/delimitMate',      Cond(Mode(['editor']) && DenyPlug('auto-pairs'))
-		Plug 'jiangmiao/auto-pairs',      Cond(Mode(['editor']) && DenyPlug('delimitMate')) |  " Not work if  :set paste
-		Plug 'huawenyu/vim-unimpaired',   Cond(Mode(['editor']))     | "@tpope
-		Plug 'terryma/vim-expand-region', Cond(Mode(['editor']))     | " W - select region expand; B - shrink
-		Plug 'tpope/vim-surround',		  Cond(Mode(['editor']))     | " Help add/remove surround
-		Plug 'tpope/vim-endwise',         Cond(Mode(['editor']))     | " smart insert certain end structures automatically.
-		Plug 'tpope/vim-rsi',             Cond(Mode(['editor']))     | " Readline shortcut for vim
+        Plug 'Raimondi/delimitMate',      Cond(Mode(['editor']) && IfNoPlug('auto-pairs'))
+        Plug 'jiangmiao/auto-pairs',      Cond(Mode(['editor']) && IfNoPlug('delimitMate')) |  " Not work if  :set paste
+        Plug 'huawenyu/vim-unimpaired',   Cond(Mode(['editor']))     | "@tpope
+        Plug 'terryma/vim-expand-region', Cond(Mode(['editor']))     | " W - select region expand; B - shrink
+        Plug 'tpope/vim-surround',		  Cond(Mode(['editor']))     | " Help add/remove surround
+        Plug 'tpope/vim-endwise',         Cond(Mode(['editor']))     | " smart insert certain end structures automatically.
+        Plug 'tpope/vim-rsi',             Cond(Mode(['editor']))     | " Readline shortcut for vim
         Plug 'houtsnip/vim-emacscommandline', Cond(Mode(['editor',]))| " Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
     "}}}
 
