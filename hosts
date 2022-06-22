@@ -33,7 +33,10 @@
 
 #172.16.80.134	evan-host
 #172.16.80.139	evan
-172.17.219.9   evan
+172.17.219.9    evan
+
+172.17.219.7    whao
+172.17.219.11   whao-host
 
 172.17.219.4	henry-host
 172.17.219.19	henry
@@ -140,3 +143,8 @@ ff02::2 ip6-allrouters
 192.168.100.119    resume.corp.fortinet.com
 172.16.12.100      reviewboard.corp.fortinet.com
 192.168.100.17     gerrit.fortinet.com
+172.16.12.100      gitlab-van.corp.fortinet.com
+192.168.100.177    jenkins.corp.fortinet.com
+172.16.100.157     phos.corp.fortinet.com
+172.16.100.117     oriole.fortinet.com
+

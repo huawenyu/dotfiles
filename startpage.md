@@ -1,5 +1,5 @@
 // vim: noai:ts=4:sw=4:filetype=python:
-// Plug:    startscreen.vim
+// Plug:      startscreen.vim
 // Current: ~/dotfiles/startpage.md
 
 # Command {{{1

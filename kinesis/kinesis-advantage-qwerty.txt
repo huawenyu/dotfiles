@@ -41,12 +41,16 @@
 {kp8}>{hyphen}{-Lshift}{.}{+Lshift}
 {kp9}>{z}{-Lshift}{r}{+Lshift}
 
-{lwin}{h}>{F4}
-{lwin}{j}>{F5}
-{lwin}{k}>{F6}
-{lwin}{l}>{F7}
-{lwin}{;}>{F8}
-{lwin}{'}>{F9}
+{lwin}{h}>{-lshift}{left}{+lshift}
+{lwin}{j}>{-lshift}{-lalt}{.}{+lshift}{+lalt}
+{lwin}{k}>{-lshift}{-lalt}{,}{+lshift}{+lalt}
+{lwin}{l}>{-lshift}{right}{+lshift}
+
+{lwin}{n}>{F4}
+{lwin}{m}>{F6}
+{lwin}{,}>{F7}
+{lwin}{.}>{F8}
+{lwin}{/}>{F9}
 
 {kp-s}>{s}{t}{r}{u}{c}{t}
 {kp-r}>{r}{e}{t}{u}{r}{n}
