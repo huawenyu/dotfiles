@@ -1,1 +1,2 @@
 " The config keymap after all plugins
+set wildmode=longest:full,full
