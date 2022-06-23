@@ -568,6 +568,7 @@ call plug#begin('~/.vim/bundle')
 
     " gdb front-end {{{3
         "Plug 'huawenyu/vimgdb',        Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | "
+        Plug 'huawenyu/vwm.vim',        Cond(Mode(['coder']))      |  " Clone from fireflowerr/vwm.vim, vim windows management
         Plug 'huawenyu/termdebug.nvim', Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
     "}}}
 
@@ -681,7 +682,6 @@ call plug#begin('~/.vim/bundle')
     " prettier/vim-prettier
 
     " Windows related
-    Plug 'paroxayte/vwm.vim',                 Cond(Mode(['coder']))      |  " vim windows management
     "Plug 'stevearc/stickybuf.nvim',           Cond(Mode(['coder']))      |  " Can't make it works; bind buffer with the window
     Plug 'folke/which-key.nvim',              Cond(Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
 
@@ -806,8 +806,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
 
         " :LspInfo
-        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['coder',]))
-        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
+        "Plug 'neovim/nvim-lspconfig',           Cond(Mode(['coder',]))
+        "Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
 
         "Plug 'glepnir/lspsaga.nvim',            Cond(Mode(['coder',]) && LINUX(), {'branch': 'main'})
         "Plug 'ojroques/nvim-lspfuzzy',          Cond(Mode(['editor',]))  | " Publish the result into fzf-float-windows, but I prefer to quickfix for continue search
