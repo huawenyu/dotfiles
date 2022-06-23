@@ -6,6 +6,11 @@
 " - Press ';;'          display shortcuts
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
 "
+" - Enable Log:
+" -------------
+"   - set g:vim_confi_option.debug = 1
+"   - tail -f /tmp/vim.log
+"
 " Install:  help 'H' on the topic
 " - Debian
 "     $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
@@ -806,8 +811,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'reedes/vim-wordy', Cond(Mode(['writer',]) && Mode(['snippet',]))
 
         " :LspInfo
-        "Plug 'neovim/nvim-lspconfig',           Cond(Mode(['coder',]))
-        "Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
+        Plug 'neovim/nvim-lspconfig',           Cond(Mode(['coder',]))
+        Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
 
         "Plug 'glepnir/lspsaga.nvim',            Cond(Mode(['coder',]) && LINUX(), {'branch': 'main'})
         "Plug 'ojroques/nvim-lspfuzzy',          Cond(Mode(['editor',]))  | " Publish the result into fzf-float-windows, but I prefer to quickfix for continue search
