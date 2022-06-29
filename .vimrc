@@ -742,9 +742,9 @@ call plug#begin('~/.vim/bundle')
             Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
-            Plug 'liuchengxu/vista.vim',    Cond(IfNoPlug('tagbar')    && Mode(['coder',]))
-            Plug 'majutsushi/tagbar',       Cond(IfNoPlug('vista.vim') && Mode(['coder',]))
-            Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
+            Plug 'preservim/tagbar',       Cond(IfNoPlug('vista.vim') && Mode(['coder',]))
+            "Plug 'liuchengxu/vista.vim',    Cond(IfNoPlug('tagbar')    && Mode(['coder',]))
+            "Plug 'vim-scripts/taglist.vim', Cond(HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
 
         " Quickfix/Todo list {{{4
