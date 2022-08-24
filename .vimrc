@@ -49,9 +49,10 @@
 "       let g:vim_confi_option = extend(g:vim_confi_option, mylocal_vim_confi)
 "
 "
-" Help:(press 'H' on the words, or list all wiki)
+" Help:(press 'H' on the words, or list all wiki, and builtin tutor commands ":vimtutor" for vim, ":Tutor" for neovim)
 " require-plug(vim-floaterm/vim-basic/vim.config
 "
+" - vim-tutor?
 " - latest-neovim?
 " - vi-to-neovim?
 " - windows-install?
