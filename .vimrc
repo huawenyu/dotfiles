@@ -8,7 +8,7 @@
 "
 " - Enable Log:
 " -------------
-"   - set g:vim_confi_option.debug = 1
+"   - let g:vim_confi_option.debug = 1
 "   - tail -f /tmp/vim.log
 "
 " Install:  help 'H' on the topic
@@ -16,7 +16,11 @@
 "     $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
 "     $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"     #$ sudo add-apt-repository ppa:neovim-ppa/unstable -y
+"     $ sudo add-apt-repository ppa:neovim-ppa/stable -y
 "     $ sudo apt-get install neovim
+"     $ sudo update-alternatives --config vi
+"     $ sudo update-alternatives --config vim
 "
 "     ### .vimrc as Config
 "         from vi -c 'help nvim-from-vim'
@@ -567,7 +571,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
 
-        Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
+        "Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
         "Plug 'xolox/vim-misc',            Cond(Mode(['coder',]))	| " :
 
     "}}}
@@ -656,6 +660,10 @@ call plug#begin('~/.vim/bundle')
         Plug 'racer-rust/vim-racer', Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
         Plug 'rust-lang/rust.vim',   Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
         Plug 'timonv/vim-cargo',     Cond(Mode(['coder']) && Mode(['rust']), {'for': 'rust'})
+    "}}}
+
+    " Meson build system: meson.build {{{3
+        "Plug 'igankevich/mesonic', Cond(Mode(['coder']))
     "}}}
 
     " Markdown/Writing/Wiki {{{3
