@@ -5,6 +5,7 @@
 " - <Space>             Is the leader
 " - Press ';;'          display shortcuts
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
+" - Search '<c-U>'      maps desc for which-key.nvim
 "
 " - Enable Log:
 " -------------
@@ -141,7 +142,7 @@ let g:vim_confi_option = {
       \ 'qf_preview': 0,
       \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
-      \ 'fzf_files': ['~/dotwiki/fortios/doc', '~/dotwiki/cheat', '~/wiki/tool/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
+      \ 'fzf_files': ['~/dotwiki/fortinet/doc', '~/dotwiki/cheat', '~/wiki/tool/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
       \ 'fzf_notes': ['~/wiki', '~/dotwiki', '~/work-doc', ],
       \ 'tmp_file': '/tmp/vim.tmp',
       \}
@@ -583,9 +584,9 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Diff {{{3
-        Plug 'rickhowe/diffchar.vim',       Cond(Mode(['editor']))
+        "Plug 'rickhowe/diffchar.vim',       Cond(Mode(['editor']))
         Plug 'chrisbra/vim-diff-enhanced',  Cond(Mode(['editor'])) | " vimdiff:  ]c - next;  [c - previous; do - diff obtain; dp - diff put; zo - unfold; zc - fold; :diffupdate - re-scan
-        Plug 'junkblocker/patchreview-vim', Cond(Mode(['editor'])) | " :PatchReview some.patch,  :DiffReview git show <SHA1>  :DiffReview git staged --no-color -U5
+        "Plug 'junkblocker/patchreview-vim', Cond(Mode(['editor'])) | " :PatchReview some.patch,  :DiffReview git show <SHA1>  :DiffReview git staged --no-color -U5
     "}}}
 
     " Hex editor {{{3
@@ -793,8 +794,9 @@ call plug#begin('~/.vim/bundle')
             " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
             Plug  'glts/vim-radical',           Cond(HasPlug('vim-repeat') && Mode(['editor',]))
             Plug  'glts/vim-magnum',            Cond(HasPlug('vim-repeat') && Mode(['editor',]))
+
             "Plug 'svermeulen/vim-macrobatics', Cond(HasPlug('vim-repeat') && Mode(['editor',]))
-            Plug  'huawenyu/vim-macroscope',    Cond(HasPlug('vim-repeat') && Mode(['editor',]))
+            "Plug  'huawenyu/vim-macroscope',    Cond(HasPlug('vim-repeat') && Mode(['editor',]))
 
         Plug 'rhysd/clever-f.vim',  Cond(Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion', Cond(Mode(['editor',]))  | " Jump according indent
@@ -824,7 +826,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'williamboman/nvim-lsp-installer', Cond(Mode(['coder',]))
 
         "Plug 'glepnir/lspsaga.nvim',            Cond(Mode(['coder',]) && LINUX(), {'branch': 'main'})
-        "Plug 'ojroques/nvim-lspfuzzy',          Cond(Mode(['editor',]))  | " Publish the result into fzf-float-windows, but I prefer to quickfix for continue search
+        Plug 'ojroques/nvim-lspfuzzy',          Cond(Mode(['editor',]))  | " Sink lsp-result to fzf-float-windows, Select-All<c-aa> sink again to quickfix(<enter>)
         "Plug 'gfanto/fzf-lsp.nvim',            Cond(Mode(['editor',]))
         "Plug 'VonHeikemen/lsp-zero.nvim',      Cond(Mode(['editor',]))
 
@@ -961,7 +963,7 @@ if HasPlug('vim-shortcut')
     let thedir = PlugGetDir('vim-shortcut')
     exec "source ". thedir. "plugin/shortcut.vim"
 
-    Shortcut! ;;    Show Shortcuts
+    silent! Shortcut! ;;    [.vimrc] Show this Shortcuts-list
 endif
 
 
