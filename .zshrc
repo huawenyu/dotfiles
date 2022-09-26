@@ -2,8 +2,8 @@
 #
 # $ sudo apt install -y zsh
 # $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-# $ git clone https://github.com/huawenyu/zsh-local.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-local
-# $ git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+# $ git clone https://github.com/huawenyu/zsh-local.git     ~/.oh-my-zsh/custom/plugins/zsh-local
+# $ git clone https://github.com/zsh-users/zsh-completions  ~/.oh-my-zsh/custom/plugins/zsh-completions
 #
 ######################################################################################################
 # Path to your oh-my-zsh installation.
@@ -59,7 +59,7 @@ COMPLETION_WAITING_DOTS="true"
 #   https://jichu4n.com/posts/debug-trap-and-prompt_command-in-bash/
 # Enable plugin:
 #   git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
-#   git clone https://github.com/huawenyu/zsh-local.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-local
+#   git clone https://github.com/huawenyu/zsh-local.git    ~/.oh-my-zsh/custom/plugins/zsh-local
 #
 # Disable plugin:
 #   git clone https://github.com/zdharma/history-search-multi-word ~/.oh-my-zsh/custom/plugins/history-search-multi-word
