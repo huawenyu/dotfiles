@@ -44,6 +44,7 @@
 "     tagme -- Create special tags/cscope-db/compile_commands.json from cscope.files
 "       $ mkdir -p ~/bin
 "       $ wget --no-check-certificate -O ~/bin/tagme https://raw.githubusercontent.com/huawenyu/dotfiles/master/script/tagme
+"       $ chmod a+x ~/bin/tagme
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
