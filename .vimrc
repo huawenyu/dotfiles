@@ -3,17 +3,17 @@
 " TryIt:
 " - vim --clean         Startup vim without any config/plug
 " - <Space>             Is the leader
-" - Press ';;'          display shortcuts
+" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in dir ~/.vim/bundle
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
 " - Search '<c-U>'      maps desc for which-key.nvim
 "
-" - Enable Log:
+" - Troubleshooting:
 " -------------
-"   - let g:vim_confi_option.debug = 1
-"   - tail -f /tmp/vim.log
+"   - Enable log:   let g:vim_confi_option.debug = 1
+"   - Check log:    (LinuxPC) $ tail -f /tmp/vim.log
 "
 " Install:  help 'H' on the topic
-" - Debian
+" - [Debian]
 "     $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
 "     $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -23,14 +23,27 @@
 "     $ sudo update-alternatives --config vi
 "     $ sudo update-alternatives --config vim
 "
-"     ### .vimrc as Config
-"         from vi -c 'help nvim-from-vim'
+"     ### .vimrc as Config [Reference: vi -c 'help nvim-from-vim']
+"         ### oneline version
+"         $ mkdir -p ~/.vim && rm -fr ~/.vim/init.vim && ln -s ~/.vimrc ~/.vim/init.vim && mkdir -p ~/.config && rm -fr ~/.config/nvim && ln -s ~/.vim ~/.config/nvim
+"
+"         ### Split into multiple lines
 "         $ mkdir ~/.vim
 "         $ ln -s ~/.vimrc ~/.vim/init.vim
 "         $ mkdir ~/.config
 "         $ ln -s ~/.vim ~/.config/nvim
 "
 "     $ vi -c 'PlugInstall'
+"
+" - [Optional] - other config/tool
+"     zshrc -- Simpler zshrc for oh-my-zsh
+"       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+"       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
+"     tmux.conf -- Simpler zshrc for oh-my-zsh
+"       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
+"     tagme -- Create special tags/cscope-db/compile_commands.json from cscope.files
+"       $ mkdir -p ~/bin
+"       $ wget --no-check-certificate -O ~/bin/tagme https://raw.githubusercontent.com/huawenyu/dotfiles/master/script/tagme
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
@@ -775,7 +788,7 @@ call plug#begin('~/.vim/bundle')
     " Suggar {{{3
         Plug 'Raimondi/delimitMate',      Cond(Mode(['editor']) && IfNoPlug('auto-pairs'))
         Plug 'jiangmiao/auto-pairs',      Cond(Mode(['editor']) && IfNoPlug('delimitMate')) |  " Not work if  :set paste
-        Plug 'huawenyu/vim-unimpaired',   Cond(Mode(['editor']))     | "@tpope
+        Plug 'huawenyu/vim-unimpaired',   Cond(Mode(['editor']))     | "Clone from @tpope
         Plug 'terryma/vim-expand-region', Cond(Mode(['editor']))     | " W - select region expand; B - shrink
         Plug 'tpope/vim-surround',		  Cond(Mode(['editor']))     | " Help add/remove surround
         Plug 'tpope/vim-endwise',         Cond(Mode(['editor']))     | " smart insert certain end structures automatically.
