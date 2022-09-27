@@ -3,9 +3,9 @@
 " TryIt:
 " - vim --clean         Startup vim without any config/plug
 " - <Space>             Is the leader
-" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in dir ~/.vim/bundle
+" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
-" - Search '<c-U>'      maps desc for which-key.nvim
+" - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
 "
 " - Troubleshooting:
 " -------------
@@ -570,9 +570,13 @@ call plug#begin('~/.vim/bundle')
         " Plug 'nelstrom/vimprint'
     "}}}
 
-    " Basic {{{3
-        Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder']))
-        Plug 'tpope/vim-commentary',             Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
+    " Comment,Extra {{{3
+        Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder'])) | " report by command ':SourceCounter'
+
+        "Plug 'tpope/vim-commentary',            Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
+        "Plug 'numToStr/Comment.nvim',           Cond(Mode(['coder'])) | " gcc, gbc, gcw; not works good
+        Plug 'huawenyu/nerdcommenter',           Cond(Mode(['coder'])) | " remap to <C-/>
+
         Plug 'Chiel92/vim-autoformat',           Cond(Mode(['coder']))
         Plug 'vim-scripts/iptables',             Cond(Mode(['admin']) && Mode(['extra']))
         Plug 'tenfyzhong/CompleteParameter.vim', Cond(Mode(['coder']) && Mode(['extra']))
@@ -586,6 +590,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
 
+        "Plug 'michaelb/sniprun',           Cond(Mode(['admin']) && has('nvim'), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
+        "Plug 'arjunmahishi/flow.nvim',     Cond(Mode(['coder',]))   | " runcode.nvim
         "Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
         "Plug 'xolox/vim-misc',            Cond(Mode(['coder',]))	| " :
 

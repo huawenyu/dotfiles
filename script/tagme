@@ -44,6 +44,7 @@ Help()
    echo "$ tagme"
    echo "$ tagme -a link"
    echo "$ tagme -a save"
+   echo "$ tagme -a clean"
    echo
    echo "Syntax: [-a|f|s|v|h]"
    echo "options:"
