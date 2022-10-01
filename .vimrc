@@ -130,7 +130,7 @@ let g:vim_confi_option = {
       \ 'theme': 1,
       \ 'conf': 1,
       \ 'verbose': 0,
-      \ 'debug': 1,
+      \ 'debug': 0,
       \
       \ 'upper_keyfixes': 1,
       \ 'enable_map_basic': 1,
