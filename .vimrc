@@ -11,6 +11,7 @@
 " -------------
 "   - Enable log:   let g:vim_confi_option.debug = 1
 "   - Check log:    (LinuxPC) $ tail -f /tmp/vim.log
+"   - Reload a plugin:    :PlugUpdate deoplete.nvim
 "
 " Install:  help 'H' on the topic
 " - [Debian]
@@ -129,7 +130,7 @@ let g:vim_confi_option = {
       \ 'theme': 1,
       \ 'conf': 1,
       \ 'verbose': 0,
-      \ 'debug': 0,
+      \ 'debug': 1,
       \
       \ 'upper_keyfixes': 1,
       \ 'enable_map_basic': 1,
@@ -758,7 +759,7 @@ call plug#begin('~/.vim/bundle')
 
     " Async {{{3
         "Plug 'tpope/vim-dispatch',        Cond(Mode(['admin',]))
-        Plug 'Shougo/vimproc.vim',         Cond(Mode(['admin',]), {'do' : 'make'})
+        "Plug 'Shougo/vimproc.vim',         Cond(Mode(['admin',]), {'do' : 'make'})
         Plug 'skywind3000/asyncrun.vim',   Cond(Mode(['admin',]))
         Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
     "}}}
@@ -778,9 +779,9 @@ call plug#begin('~/.vim/bundle')
         "}}}
 
         " Quickfix/Todo list {{{4
-            Plug 'stefandtw/quickfix-reflector.vim', Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
+            Plug 'huawenyu/quickfix-reflector.vim',  Cond(Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
             Plug 'kevinhwang91/nvim-bqf',            Cond(Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
-            "Plug 'romainl/vim-qf',                   Cond(Mode(['editor',]))    | " Tame the quickfix window
+            "Plug 'romainl/vim-qf',                  Cond(Mode(['editor',]))    | " Tame the quickfix window
 
             "Plug 'freitass/todo.txt-vim',           Cond(Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
             "Plug 'bfrg/vim-qf-preview'
