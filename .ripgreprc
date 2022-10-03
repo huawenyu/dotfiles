@@ -27,6 +27,8 @@ wiki:wiki,md,sh
 --glob=!log.*
 --glob=!*.log
 --glob=!cscope.*.out
+--glob=!cscope.out
+--glob=!.cscope.files
 #--glob=cscope.vim
 --glob=!tags
 --glob=!tagx
@@ -34,7 +36,6 @@ wiki:wiki,md,sh
 --glob=!.tagx
 --glob=!*.orig
 --glob=!*.rej
---glob=!.cscope.files
 --glob=!compile_commands.json
 --glob=!init.map
 

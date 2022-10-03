@@ -574,7 +574,7 @@ call plug#begin('~/.vim/bundle')
     " Comment,Extra {{{3
         Plug 'wsdjeg/SourceCounter.vim',         Cond(Mode(['coder'])) | " report by command ':SourceCounter'
 
-        "Plug 'tpope/vim-commentary',            Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
+        Plug 'tpope/vim-commentary',            Cond(Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
         "Plug 'numToStr/Comment.nvim',           Cond(Mode(['coder'])) | " gcc, gbc, gcw; not works good
         Plug 'huawenyu/nerdcommenter',           Cond(Mode(['coder'])) | " remap to <C-/>
 
