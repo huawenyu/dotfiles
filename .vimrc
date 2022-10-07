@@ -40,12 +40,9 @@
 "     zshrc -- Simpler zshrc for oh-my-zsh
 "       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 "       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
+"       $ git clone https://github.com/huawenyu/zsh-local.git     ~/.oh-my-zsh/custom/plugins/zsh-local
 "     tmux.conf -- Simpler zshrc for oh-my-zsh
 "       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
-"     tagme -- Create special tags/cscope-db/compile_commands.json from cscope.files
-"       $ mkdir -p ~/bin
-"       $ wget --no-check-certificate -O ~/bin/tagme https://raw.githubusercontent.com/huawenyu/dotfiles/master/script/tagme
-"       $ chmod a+x ~/bin/tagme
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
