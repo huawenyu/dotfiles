@@ -527,7 +527,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/dotfiles',         {'dir': '~/dotfiles', 'do': './script/up-dot.sh', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
     Plug 'huawenyu/zsh-local',        {'dir': '~/.oh-my-zsh/custom/plugins/zsh-local', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}  | " [oh-my-zsh plugin] my zsh env/alias/commands
     Plug 'zsh-users/zsh-completions', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-completions', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'} | "[oh-my-zsh plugin]
-    Plug 'dooblem/bsync',             {'dir': '~/bin/bsync', 'do': 'chmod +x bsync && ln -s ./bsync ../bsync || true', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'} | " Tool: sync two dirs base-on rsync
+    Plug 'dooblem/bsync',             {'dir': '~/bin/bsync', 'do': 'chmod +x bsync && ln -s ./bsync ../bsync \|\| true', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'} | " Tool: sync two dirs base-on rsync
 "}}}
 
 " Plug config: order-sensible {{{2
