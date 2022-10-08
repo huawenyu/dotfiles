@@ -524,6 +524,11 @@ endif
 " more-plugins?
 call plug#begin('~/.vim/bundle')
 
+" Using vimplug as multiple repo manager: other not vim-plugins repos {{{2
+    Plug 'huawenyu/zsh-local', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-local', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
+    Plug 'zsh-users/zsh-completions', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-completions', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
+"}}}
+
 " Plug config: order-sensible {{{2
     Plug 'tpope/vim-sensible',   Cond(Mode(['basic', 'log', 'floatview']))
     Plug 'huawenyu/vim-basic',   Cond(Mode(['local', 'log', 'conf-basic', 'floatview']))
