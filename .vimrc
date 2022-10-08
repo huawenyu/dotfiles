@@ -40,7 +40,6 @@
 "     zshrc -- Simpler zshrc for oh-my-zsh
 "       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 "       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
-"       $ git clone https://github.com/huawenyu/zsh-local.git     ~/.oh-my-zsh/custom/plugins/zsh-local
 "     tmux.conf -- Simpler zshrc for oh-my-zsh
 "       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
 "
@@ -525,8 +524,10 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Using vimplug as multiple repo manager: other not vim-plugins repos {{{2
-    Plug 'huawenyu/zsh-local', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-local', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
-    Plug 'zsh-users/zsh-completions', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-completions', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
+    Plug 'huawenyu/dotfiles',         {'dir': '~/dotfiles', 'do': './script/up-dot.sh', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
+    Plug 'huawenyu/zsh-local',        {'dir': '~/.oh-my-zsh/custom/plugins/zsh-local', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}  | " [oh-my-zsh plugin] my zsh env/alias/commands
+    Plug 'zsh-users/zsh-completions', {'dir': '~/.oh-my-zsh/custom/plugins/zsh-completions', 'do': './install --all', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'} | "[oh-my-zsh plugin]
+    Plug 'dooblem/bsync',             {'dir': '~/bin/bsync', 'do': 'chmod +x bsync && ln -s ./bsync ../bsync || true', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'} | " Tool: sync two dirs base-on rsync
 "}}}
 
 " Plug config: order-sensible {{{2
