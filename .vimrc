@@ -15,7 +15,12 @@
 "
 " Install:  help 'H' on the topic
 " - [Debian]
-"     $ wget --no-check-certificate -O ~/.vimrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+"     ### Auto setup/install env
+"     $ wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
+"     $ chmod +x ~/chk-ubuntu
+"     $ ~/chk-ubuntu
+"     $
+"     $ wget --no-check-certificate -O ~/.vimrc  https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
 "     $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "     #$ sudo add-apt-repository ppa:neovim-ppa/unstable -y
