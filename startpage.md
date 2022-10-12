@@ -1,31 +1,35 @@
-// vim: noai:ts=4:sw=4:filetype=python:
-// Plug:      startscreen.vim
-// Current: ~/dotfiles/startpage.md
+# [Plug-startscreen.vim] config: ~/dotfiles/startpage.md
+- Vim:
+  - ~/.vimrc        # config-file, and the plugins dir: ~/.vim/bundle
+  - howto           # Check ~/.vimrc
+  - update          # wget --no-check-certificate -O ~/.vimrc  https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+  - vim --clean     # Startup vim without any config/plug
+  - <Space>         # Remap-As <leader>
+  - Press ';;'      # Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle
+  - Press 'H'       # on topic word with the '?' sign (by cheat?)
 
-# Command {{{1
-# Tool {{{1
-def zsh/fish		Better shell
-def tmux/alacritty	Better terminal
-def geany			Simple editor
-def direnv          Environment auto setup: python-venv
+- Tool:
+  - zsh/fish		# Better shell
+  - tmux/alacritty	# Better terminal
+  - geany			# Simple editor
+  - tig				# Terminal GUI of git
+  - pee				# Tee standard input to pipes
+  - ts				# Timestamp standard input
+  - grc				# Colorize grep/pipe
+  - direnv          # Environment auto setup: python-venv
 
-# find
-def ripgrep			Better grep
-def batcat			Better cat
-def fuzzy/fzf		Fuzzy filter
-def grc				Color pipe
+- find:
+  - ripgrep			# Better grep
+  - batcat			# Better cat, used vim-fzf
+  - fuzzy/fzf		# Fuzzy filter
 
-# Man
-def tldr			Better man
-def cheat			Command helper: ~/wiki/cheat
-def fuck			Auto correct command
+- Man:
+  - tldr			# Simple man
+  - cheat			# Command helper: ~/wiki/cheat
 
-def pee				Tee standard input to pipes
-def ts				Timestamp standard input
+- Misc:
+  - graph-easy		# Ascii-text base dot-graph
+  - taskwarrior		# Tasklist
+  - tshark tcpdump	# Network sniffer
 
-# Misc
-def graph-easy		Ascii-text base dot-graph
-def tig				Another git
-def taskwarrior		Tasklist
-def tshark/tcpdump	Network sniffer
-
+# vim: noai:ts=4:sw=4:ft=yaml:
