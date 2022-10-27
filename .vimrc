@@ -1011,7 +1011,9 @@ endif
     if Mode(['coder',])
         augroup ugly_set
             autocmd!
-            autocmd BufEnter * call cscope#LoadCscope()
+            if has('cscope')
+                autocmd BufEnter * call cscope#LoadCscope()
+            endif
             autocmd BufEnter * set nolazyredraw lazyredraw
             autocmd BufEnter * redraw!
 
