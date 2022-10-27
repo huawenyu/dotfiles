@@ -11,7 +11,7 @@
 - Tool:
   - zsh/fish		# Better shell
   - tmux/alacritty	# Better terminal
-  - geany			# Simple editor
+  - geany			# Simple editor: sudo apt install geany geany-plugins
   - tig				# Terminal GUI of git
   - pee				# Tee standard input to pipes
   - ts				# Timestamp standard input
@@ -20,11 +20,11 @@
 
 - find:
   - ripgrep			# Better grep
-  - batcat			# Better cat, used vim-fzf
+  - batcat			# Better cat, used vim-fzf: sudo apt install bat
   - fuzzy/fzf		# Fuzzy filter
 
 - Man:
-  - tldr			# Simple man
+  - tldr			# Better man: pip3 install tldr
   - cheat			# Command helper: ~/wiki/cheat
 
 - Misc:

@@ -47,6 +47,8 @@
 "       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
 "     tmux.conf -- Simpler zshrc for oh-my-zsh
 "       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
+" - [Issue]
+"     cscope was removed -- :help cscope or :help nvim-features-removed, [ref](https://github.com/neovim/neovim/pull/20545)
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
@@ -778,7 +780,7 @@ call plug#begin('~/.vim/bundle')
             Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',       Cond(Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
-            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
+            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && has('cscope') && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
             Plug 'preservim/tagbar',       Cond(IfNoPlug('vista.vim') && Mode(['coder',]))
