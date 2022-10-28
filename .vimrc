@@ -933,7 +933,7 @@ call plug#begin('~/.vim/bundle')
         else
             Plug 'Shougo/defx.nvim',         Cond(Mode(['editor']) && Mode(['extra']))
             Plug 'roxma/nvim-yarp',          Cond(Mode(['editor']) && Mode(['extra']))
-            Plug 'roxma/vim-hug-neovim-rpc', Cond(Mode(['editor']  && Mode(['extra'])))
+            Plug 'roxma/vim-hug-neovim-rpc', Cond(Mode(['editor']) && Mode(['extra']))
         endif
 
         Plug 'kristijanhusak/defx-git',      Cond(Mode(['editor',]) && Mode(['extra']))

@@ -1,28 +1,26 @@
 # GUI editor geany
 
 > A better gedit/xedit: support open-file-in-vim/vim-mode
-> More information: <https://url-to-upstream.tld>.
-> hello
+> More information: <https://www.geany.org/>.
 
 - Install:
 
-`sudo apt install geany geany-plugins`
+	sudo apt install geany geany-plugins
 
 - Open file in vim:
 
-`exo-open --launch TerminalEmulator bash -c 'vim "%f"'`
+* 1. GUI>>Tools>>Plugin Manager, Enable the File Browser.
+* 2. GUI>>Tools>>Plugin Manager, mouse-select `File Browser`, click `Plugin Preferences`,
+*    you should see a field titled External Open Command which defaults to
 
-> 1. GUI>>Tools>>Plugin Manager, Enable the File Browser.
-> 2. GUI>>Tools>>Plugin Manager, mouse-select `File Browser`, click `Plugin Preferences`,
->    you should see a field titled External Open Command which defaults to
+	nautilus "%d"
 
-	`nautilus "%d"`
-
-> Ubuntu, change the line to:
+* Ubuntu, change the line to:
 
 	gnome-terminal --working-directory="%d"
 
-## Xubuntu, change the line to: [ref](https://askubuntu.com/questions/1215533/how-to-write-commands-with-default-variables-for-terminal-or-default-app-browse)
+* Xubuntu, change the line to:
+. [ref](https://askubuntu.com/questions/1215533/how-to-write-commands-with-default-variables-for-terminal-or-default-app-browse)
 
 	exo-open --launch TerminalEmulator bash -c 'vim "%f"'
 

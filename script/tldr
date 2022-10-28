@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # PYTHON_ARGCOMPLETE_OK
+# Clone from https://raw.githubusercontent.com/tldr-pages/tldr-python-client/main/tldr.py
+"""
+ New:
+ - support multiple dirs like: (put *.md into dotfiles/tldr/linux if-os-is-linux)
+   export TLDR_PAGES_SOURCE_LOCATION="https://raw.githubusercontent.com/tldr-pages/tldr/master/pages; file://$HOME/dotfiles/tldr"
+"""
 
 import sys
 import os
@@ -47,9 +53,21 @@ OS_DIRECTORIES = {
     "win32": "windows"
 }
 
+src_dirs = []
+options = None
 
 class CacheNotExist(Exception):
     pass
+
+class TextState:
+   Null = 0
+   Name = 1
+   Desc = 2
+   Example = 3
+   Command = 4
+   Parameter = 5
+   Block = 6
+   List = 7
 
 
 def get_language_code(language: str) -> str:
@@ -147,6 +165,10 @@ def get_page_for_platform(
     language: str,
     only_use_cache: bool = False
 ) -> str:
+    global options
+
+    data = None
+    page_url = ''
     data_downloaded = False
     if USE_CACHE and have_recent_cache(command, platform, language):
         data = load_page_from_cache(command, platform, language)
@@ -157,20 +179,38 @@ def get_page_for_platform(
         ))
     else:
         page_url = get_page_url(command, platform, remote, language)
-        try:
-            data = urlopen(
-                Request(page_url, headers=REQUEST_HEADERS),
-                context=URLOPEN_CONTEXT
-            ).read()
-            data_downloaded = True
-        except Exception:
-            if not USE_CACHE:
-                raise
-            data = load_page_from_cache(command, platform, language)
-            if data is None:
-                raise
-    if data_downloaded and USE_CACHE:
+
+        # Only show the file fullpath for editor
+        if options.file:
+            return page_url
+        else:
+            try:
+                data = urlopen(
+                    Request(page_url, headers=REQUEST_HEADERS),
+                    context=URLOPEN_CONTEXT
+                ).read()
+                data_downloaded = True
+            except Exception:
+                # local file no cache needed
+                if remote.startswith('file://'):
+                    # only remember the 1st local os-related file path
+                    if options.page_url == '':
+                        options.page_url = page_url
+                    if not options.has_remote:
+                        return page_url
+                    # try next remote location
+                    raise
+                elif USE_CACHE:
+                    data = load_page_from_cache(command, platform, language)
+                    if data is None:
+                        raise
+                else:
+                    raise
+    if data_downloaded and USE_CACHE and not page_url.startswith('file://'):
         store_page_to_cache(data, command, platform, language)
+
+    if data is None:
+        raise
     return data.splitlines()
 
 
@@ -180,6 +220,9 @@ def update_page_for_platform(
     remote: str,
     language: str
 ) -> None:
+    if remote.startswith('file://'):
+        return
+
     page_url = get_page_url(platform, command, remote, language)
     data = urlopen(
         Request(page_url, headers=REQUEST_HEADERS),
@@ -231,43 +274,55 @@ def get_language_list() -> List[str]:
 
 def get_page(
     command: str,
-    remote: Optional[str] = None,
+    remotes: List[str],
     platforms: Optional[List[str]] = None,
     languages: Optional[List[str]] = None
 ) -> Union[str, bool]:
+    global options
+
+    options.page_url = ''
     if platforms is None:
         platforms = get_platform_list()
     if languages is None:
         languages = get_language_list()
-    # only use cache
+    # only use cache for remote source-location
     if USE_CACHE:
         for platform in platforms:
             for language in languages:
                 if platform is None:
                     continue
-                try:
-                    return get_page_for_platform(
-                        command,
-                        platform,
-                        remote,
-                        language,
-                        only_use_cache=True,
-                    )
-                except CacheNotExist:
-                    continue
+                for remote in remotes:
+                    if remote.startswith('file://'):
+                        continue
+
+                    try:
+                        return get_page_for_platform(
+                            command,
+                            platform,
+                            remote,
+                            language,
+                            only_use_cache=True,
+                        )
+                    except CacheNotExist:
+                        continue
+
+    # Get from remote if cache missed
     for platform in platforms:
         for language in languages:
             if platform is None:
                 continue
-            try:
-                return get_page_for_platform(command, platform, remote, language)
-            except HTTPError as err:
-                if err.code != 404:
-                    raise
-            except URLError:
-                if not PAGES_SOURCE_LOCATION.startswith('file://'):
-                    raise
+            for remote in remotes:
+                try:
+                    return get_page_for_platform(command, platform, remote, language)
+                except HTTPError as err:
+                    if err.code != 404:
+                        raise
+                except URLError:
+                    if not remote.startswith('file://'):
+                        raise
 
+    if options.page_url:
+        return options.page_url
     return False
 
 
@@ -276,7 +331,10 @@ DEFAULT_COLORS = {
     'description': '',
     'example': 'green',
     'command': 'red',
-    'parameter': ''
+    'parameter': '',
+    'block': 'yellow',
+    'list': 'blue',
+    'comment': 'grey',
 }
 
 # See more details in the README:
@@ -301,16 +359,26 @@ PARAM_REGEX = re.compile(r'(?:{{)(?P<param>.+?)(?:}})')
 
 
 def get_commands(platforms: Optional[List[str]] = None) -> List[str]:
+    global options
+
     if platforms is None:
         platforms = get_platform_list()
 
     commands = []
-    if os.path.exists(get_cache_dir()):
-        for platform in platforms:
-            path = os.path.join(get_cache_dir(), 'pages', platform)
-            if not os.path.exists(path):
-                continue
-            commands += [file[:-3] for file in os.listdir(path) if file.endswith(".md")]
+    local_dirs = options.src_local
+    local_dirs.append(get_cache_dir())
+    for one_dir in local_dirs:
+        if os.path.exists(one_dir):
+            for platform in platforms:
+                # Include the dir-style: ~/dotfiles/tldr/pages/linux/test1.md
+                path = os.path.join(one_dir, 'pages', platform)
+                if os.path.exists(path):
+                    commands += [file[:-3] for file in os.listdir(path) if file.endswith(".md")]
+
+                # Also include the dir-style: ~/dotfiles/tldr/linux/test1.md
+                path = os.path.join(one_dir, platform)
+                if os.path.exists(path):
+                    commands += [file[:-3] for file in os.listdir(path) if file.endswith(".md")]
     return commands
 
 
@@ -329,10 +397,16 @@ def colors_of(key: str) -> Tuple[str, str, List[str]]:
             attrs.append(value)
     return (color, on_color, attrs)
 
-
 def output(page: str, plain: bool = False) -> None:
     if not plain:
         print()
+
+    # the local full path, used for editor
+    if isinstance(page, str) and page.startswith('file://'):
+        os.system("{editor} {fname}".format(editor = "vi", fname = page[len('file://'):]))
+        return
+
+    state = TextState.Null
     for line in page:
         line = line.rstrip().decode('utf-8')
 
@@ -341,11 +415,16 @@ def output(page: str, plain: bool = False) -> None:
             continue
         elif len(line) == 0:
             continue
+        elif line[0] == '.':
+            # comment
+            continue
         elif line[0] == '#':
+            state = TextState.Name
             line = ' ' * LEADING_SPACES_NUM + \
                 colored(line.replace('# ', ''), *colors_of('name')) + '\n'
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '>':
+            state = TextState.Desc
             line = ' ' * (LEADING_SPACES_NUM - 1) + \
                 colored(
                     line.replace('>', '').replace('<', ''),
@@ -353,10 +432,12 @@ def output(page: str, plain: bool = False) -> None:
             )
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '-':
+            state = TextState.Example
             line = '\n' + ' ' * LEADING_SPACES_NUM + \
                 colored(line, *colors_of('example'))
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '`':
+            state = TextState.Parameter
             line = line[1:-1]  # need to actually parse ``
             elements = [' ' * 2 * LEADING_SPACES_NUM]
             for item in COMMAND_SPLIT_REGEX.split(line):
@@ -368,6 +449,33 @@ def output(page: str, plain: bool = False) -> None:
                     item = colored(item, *colors_of('command'))
                 elements.append(item)
             sys.stdout.buffer.write(''.join(elements).encode('utf-8'))
+        elif line[0] == '\t':
+            if state == TextState.Block:
+                if line.startswith('\t#'):
+                    line = ' ' * LEADING_SPACES_NUM * 2 + \
+                            colored(line[1:], *colors_of('comment'))
+                else:
+                    line = ' ' * LEADING_SPACES_NUM * 2 + \
+                            colored(line[1:], *colors_of('block'))
+            else:
+                if line.startswith('\t#'):
+                    line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
+                            colored(line[1:], *colors_of('comment'))
+                else:
+                    line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
+                            colored(line[1:], *colors_of('block'))
+            state = TextState.Block
+            sys.stdout.buffer.write(line.encode('utf-8'))
+        elif line[0] == '*':
+            if state == TextState.List:
+                line = ' ' * LEADING_SPACES_NUM + \
+                        colored(line[1:], *colors_of('list'))
+            else:
+                line = '\n' + ' ' * LEADING_SPACES_NUM + \
+                        colored(line[1:], *colors_of('list'))
+            state = TextState.List
+            sys.stdout.buffer.write(line.encode('utf-8'))
+
         print()
     print()
 
@@ -448,6 +556,11 @@ def create_parser() -> ArgumentParser:
                         type=str,
                         help="Override the default page source")
 
+    parser.add_argument('-f', '--file',
+                        default=False,
+                        action='store_true',
+                        help="Show full path if it's local, used by editor")
+
     parser.add_argument('-c', '--color',
                         default=None,
                         action='store_const',
@@ -488,11 +601,44 @@ def create_parser() -> ArgumentParser:
 
 
 def main() -> None:
+    global src_dirs
+    global options
+
     parser = create_parser()
 
     options = parser.parse_args()
 
     colorama.init(strip=options.color)
+
+    src_dirs = options.source
+    if src_dirs.find('; '):
+        src_dirs = src_dirs.split("; ")
+    elif src_dirs.find(', '):
+        src_dirs = src_dirs.split(", ")
+    elif src_dirs.find(';'):
+        src_dirs = src_dirs.split(";")
+    elif src_dirs.find(','):
+        src_dirs = src_dirs.split(",")
+    else:
+        src_dirs = src_dirs.split(" ")
+    # change from str to List[str]
+    options.source = []
+    options.src_local = []
+    src_file_idx = 0
+    options.has_local = False
+    options.has_remote = False
+    for src_location in src_dirs:
+        if src_location.startswith('file://'):
+            the_dir = src_location[len('file://'):]
+            if os.path.exists(the_dir):
+                options.has_local = True
+                options.src_local.append(the_dir)
+                options.source.insert(src_file_idx, src_location)
+                src_file_idx += 1
+        else:
+            options.has_remote = True
+            options.source.append(src_location)
+    #print(options.source)
 
     if options.update_cache:
         update_cache(language=options.language)
@@ -501,7 +647,7 @@ def main() -> None:
         parser.print_help(sys.stderr)
         sys.exit(1)
     if options.list:
-        print(get_commands(options.platform))
+        print(*get_commands(options.platform), sep='\n')
     elif options.render:
         for command in options.command:
             if os.path.exists(command):
@@ -542,7 +688,7 @@ def main() -> None:
                         page = i
 
         if page:
-            result = get_page(page, None, options.platform, options.language)
+            result = get_page(page, options.source, options.platform, options.language)
             output(result, plain=options.markdown)
         else:
             print("No results found")
