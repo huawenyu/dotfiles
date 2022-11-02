@@ -176,13 +176,22 @@ def get_page_for_platform(
     data = None
     page_url = ''
     data_downloaded = False
-    if USE_CACHE and have_recent_cache(command, platform, language):
-        data = load_page_from_cache(command, platform, language)
-    elif only_use_cache:
-        raise CacheNotExist("Cache for {} in {} not Found".format(
-            command,
-            platform,
-        ))
+
+    # Ignore cache for local file
+    if not remote.startswith('file://'):
+        if only_use_cache:
+            raise CacheNotExist("Cache for {} in {} not Found".format(
+                command,
+                platform,
+            ))
+
+        if USE_CACHE and have_recent_cache(command, platform, language):
+            data = load_page_from_cache(command, platform, language)
+        elif only_use_cache:
+            raise CacheNotExist("Cache for {} in {} not Found".format(
+                command,
+                platform,
+            ))
     else:
         page_url,page_wildcard = get_page_url(command, platform, remote, language)
 
@@ -196,7 +205,10 @@ def get_page_for_platform(
                     context=URLOPEN_CONTEXT
                 ).read()
                 data_downloaded = True
+                #print("wilson get succ %s" % (page_url))
             except Exception:
+                #print("wilson get fail %s" % (page_url))
+
                 # local file no cache needed
                 if remote.startswith('file://'):
                     # only remember the 1st local os-related file path
