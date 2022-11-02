@@ -60,6 +60,9 @@ options = None
 class CacheNotExist(Exception):
     pass
 
+class EntryNotExist(Exception):
+    pass
+
 class TextState:
    Null = 0
    Name = 1
@@ -180,7 +183,7 @@ def get_page_for_platform(
     # Ignore cache for local file
     if not remote.startswith('file://'):
         if only_use_cache:
-            raise CacheNotExist("Cache for {} in {} not Found".format(
+            raise CacheNotExist("Disable Cache for local file {} in {} not Found".format(
                 command,
                 platform,
             ))
@@ -205,7 +208,7 @@ def get_page_for_platform(
                     context=URLOPEN_CONTEXT
                 ).read()
                 data_downloaded = True
-                #print("wilson get succ %s" % (page_url))
+                print("wilson get succ %s" % (page_url))
             except Exception:
                 #print("wilson get fail %s" % (page_url))
 
@@ -215,7 +218,7 @@ def get_page_for_platform(
                     if options.page_url == '':
                         options.page_url = page_url
 
-                    #print("wilson wild %s" % (page_wildcard[len('file://'):]))
+                    print("wilson wild %s" % (page_wildcard[len('file://'):]))
                     if len(glob.glob(page_wildcard[len('file://'):])) > 0:
                         options.page_url = page_wildcard
 
@@ -233,7 +236,10 @@ def get_page_for_platform(
         store_page_to_cache(data, command, platform, language)
 
     if data is None:
-        raise
+        raise EntryNotExist("Entry for {} in {} not Found".format(
+            command,
+            platform,
+            ))
     return data.splitlines()
 
 
@@ -328,6 +334,8 @@ def get_page(
                         )
                     except CacheNotExist:
                         continue
+                    except EntryNotExist:
+                        continue
 
     # Get from remote if cache missed
     for platform in platforms:
@@ -337,6 +345,8 @@ def get_page(
             for remote in remotes:
                 try:
                     return get_page_for_platform(command, platform, remote, language)
+                except EntryNotExist:
+                    continue
                 except HTTPError as err:
                     if err.code != 404:
                         raise
