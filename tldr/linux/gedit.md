@@ -1,11 +1,11 @@
-# GUI editor geany (better alter: gedit)
+# GUI editor gedit
 
 > A better gedit/xedit: support open-file-in-vim/vim-mode
-> More information: <https://www.geany.org/>.
+> [More information](https://wiki.gnome.org/Apps/Gedit).
 
 - Install:
 
-	sudo apt install geany geany-plugins
+	sudo apt install gedit
 
 - Open file in vim:
 

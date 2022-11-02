@@ -700,7 +700,8 @@ call plug#begin('~/.vim/bundle')
 
     " Markdown/Writing/Wiki {{{3
         " tool-render?
-        Plug 'vimwiki/vimwiki',         Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  |     "        Another choice is  [Gollum](https://github.com/gollum/gollum)
+        "Plug 'vimwiki/vimwiki',        Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Another choice is  [Gollum](https://github.com/gollum/gollum)
+        Plug 'lervag/wiki.vim',         Cond(IfNoPlug('vimwiki') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Better vimwiki the philosophy of 'do one thing and do it well'
         Plug 'godlygeek/tabular',       Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
 
         " ge: open link

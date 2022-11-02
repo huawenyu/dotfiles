@@ -10,6 +10,7 @@
 import sys
 import os
 import re
+import glob
 from argparse import ArgumentParser
 from zipfile import ZipFile
 from datetime import datetime
@@ -155,7 +156,12 @@ def get_page_url(command: str, platform: str, remote: str, language: str) -> str
     else:
         language = '.' + language
 
-    return remote + language + "/" + platform + "/" + quote(command) + ".md"
+    if command.endswith('-'):
+        return remote + language + "/" + platform + "/" + quote(command) + ".md", \
+                remote + language + "/" + platform + "/" + quote(command) + "*.md"
+    else:
+        return remote + language + "/" + platform + "/" + quote(command) + ".md", \
+                remote + language + "/" + platform + "/" + quote(command) + "-*.md"
 
 
 def get_page_for_platform(
@@ -178,7 +184,7 @@ def get_page_for_platform(
             platform,
         ))
     else:
-        page_url = get_page_url(command, platform, remote, language)
+        page_url,page_wildcard = get_page_url(command, platform, remote, language)
 
         # Only show the file fullpath for editor
         if options.file:
@@ -196,6 +202,11 @@ def get_page_for_platform(
                     # only remember the 1st local os-related file path
                     if options.page_url == '':
                         options.page_url = page_url
+
+                    #print("wilson wild %s" % (page_wildcard[len('file://'):]))
+                    if len(glob.glob(page_wildcard[len('file://'):])) > 0:
+                        options.page_url = page_wildcard
+
                     if not options.has_remote:
                         return page_url
                     # try next remote location
@@ -223,7 +234,7 @@ def update_page_for_platform(
     if remote.startswith('file://'):
         return
 
-    page_url = get_page_url(platform, command, remote, language)
+    page_url,page_wildcard = get_page_url(platform, command, remote, language)
     data = urlopen(
         Request(page_url, headers=REQUEST_HEADERS),
         context=URLOPEN_CONTEXT
@@ -403,7 +414,7 @@ def output(page: str, plain: bool = False) -> None:
 
     # the local full path, used for editor
     if isinstance(page, str) and page.startswith('file://'):
-        os.system("{editor} {fname}".format(editor = "vi", fname = page[len('file://'):]))
+        os.system("{editor} -p {fname}".format(editor = "vi", fname = page[len('file://'):]))
         return
 
     state = TextState.Null
