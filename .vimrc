@@ -994,8 +994,6 @@ if HasPlug('vim-shortcut')
     " Shortcut! keys description
     let thedir = PlugGetDir('vim-shortcut')
     exec "source ". thedir. "plugin/shortcut.vim"
-
-    silent! Shortcut! ;;    [.vimrc] Show this Shortcuts-list
 endif
 
 
