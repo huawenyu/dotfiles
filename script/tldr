@@ -248,12 +248,12 @@ def get_page_for_platform(
     if page_url.startswith('file://'):
         show_url = page_url[len('file://'):]
         if show_url.startswith(home_dir):
-            options.data.append("---'~{}'---".format(show_url[len(home_dir):]))
+            options.data.append("--- '~{}' ---".format(show_url[len(home_dir):]))
         else:
-            options.data.append("---'{}'---".format(show_url))
+            options.data.append("--- '{}' ---".format(show_url))
         show_url = ''
     if show_url != '':
-        options.data.append("---{}---".format(show_url))
+        options.data.append("--- '{}' ---".format(show_url))
 
     options.data.extend(lines)
     return
