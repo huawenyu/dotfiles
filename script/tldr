@@ -502,7 +502,7 @@ def output(page: str, plain: bool = False) -> None:
         elif line.startswith('---'):
             state = TextState.NewEntry
             line = '\n' + ' ' * LEADING_SPACES_NUM + \
-                    colored(line[1:], *colors_of('page')) + '\n'
+                    colored(line[0:], *colors_of('page')) + '\n'
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '#':
             state = TextState.Name
