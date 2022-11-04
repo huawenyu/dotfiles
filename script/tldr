@@ -322,6 +322,9 @@ def get_page(
             if platform is None:
                 continue
             for remote in remotes:
+                if options.include and options.include not in remote:
+                    continue
+
                 try:
                     get_page_for_platform(command, platform, remote, language)
                     if options.file and options.page_url_exist:
@@ -577,6 +580,11 @@ def create_parser() -> ArgumentParser:
                         default=PAGES_SOURCE_LOCATION,
                         type=str,
                         help="Override the default page source")
+
+    parser.add_argument('-i', '--include',
+                        default='',
+                        type=str,
+                        help="Only include page source contain <text>")
 
     parser.add_argument('-f', '--file',
                         default=False,
