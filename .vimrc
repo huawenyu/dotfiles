@@ -830,6 +830,9 @@ call plug#begin('~/.vim/bundle')
             "Plug 'svermeulen/vim-macrobatics', Cond(HasPlug('vim-repeat') && Mode(['editor',]))
             "Plug  'huawenyu/vim-macroscope',    Cond(HasPlug('vim-repeat') && Mode(['editor',]))
 
+        Plug 'vim-scripts/nextval',  Cond(Mode(['editor',]))   | " Visual-Sel: C-a increment-number, C-x descrease
+        Plug 'triglav/vim-visual-increment',  Cond(Mode(['editor',]))   | " Visual-Sel: C-a increment-number, C-x descrease
+
         Plug 'rhysd/clever-f.vim',  Cond(Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion', Cond(Mode(['editor',]))  | " Jump according indent
         Plug 'junegunn/vim-easy-align', Cond(Mode(['editor',]))   | " tablize selected and ga=

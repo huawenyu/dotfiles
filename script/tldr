@@ -66,16 +66,20 @@ class CacheNotExist(Exception):
 class EntryNotExist(Exception):
     pass
 
+class EntryDone(Exception):
+    pass
+
 
 class TextState:
-   Null = 0
-   Name = 1
-   Desc = 2
-   Example = 3
-   Command = 4
-   Parameter = 5
-   Block = 6
-   List = 7
+   Null      = 0
+   NewEntry  = 1
+   Name      = 2
+   Desc      = 3
+   Example   = 4
+   Command   = 5
+   Parameter = 6
+   Block     = 7
+   List      = 8
 
 
 def get_language_code(language: str) -> str:
@@ -180,8 +184,8 @@ def get_page_for_platform(
     global options
 
     data = None
-    page_url = ''
     data_downloaded = False
+    page_url,page_wildcard = get_page_url(command, platform, remote, language)
 
     # Ignore cache for local file
     if USE_CACHE and not remote.startswith('file://') and have_recent_cache(command, platform, language) :
@@ -190,7 +194,6 @@ def get_page_for_platform(
             print("wilson get cache succ %s" % (page_url))
     else:
         #print("wilson urlopen {}-{}: {}".format(platform, language, remote))
-        page_url,page_wildcard = get_page_url(command, platform, remote, language)
         try:
             data = urlopen(
                 Request(page_url, headers=REQUEST_HEADERS),
@@ -206,6 +209,7 @@ def get_page_for_platform(
                 # only remember the 1st local os-related file path
                 if options.page_url_exist == '':
                     options.page_url_exist = page_url
+                    raise EntryDone("Entry for {} in {} done: {}".format(command, platform, page_url))
 
         except Exception:
             if EN_DEBUG:
@@ -340,6 +344,7 @@ def get_page(
 
                 try:
                     get_page_for_platform(command, platform, remote, language)
+                except EntryDone:
                     if options.file and options.page_url_exist:
                         return options.page_url_exist
                 except CacheNotExist:
@@ -371,6 +376,7 @@ DEFAULT_COLORS = {
     'block': 'yellow',
     'list': 'blue',
     'comment': 'grey',
+    'page': 'magenta',
 }
 
 # See more details in the README:
@@ -493,6 +499,11 @@ def output(page: str, plain: bool = False) -> None:
         elif line[0] == '.':
             # comment
             continue
+        elif line.startswith('---'):
+            state = TextState.NewEntry
+            line = '\n' + ' ' * LEADING_SPACES_NUM + \
+                    colored(line[1:], *colors_of('page')) + '\n'
+            sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '#':
             state = TextState.Name
             line = ' ' * LEADING_SPACES_NUM + \
@@ -720,7 +731,7 @@ def main() -> None:
                 options.src_local.append(the_dir)
                 options.source.insert(src_file_idx, src_location)
                 src_file_idx += 1
-        else:
+        elif not options.file:
             options.has_remote = True
             options.source.append(src_location)
 
