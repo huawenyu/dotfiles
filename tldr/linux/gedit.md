@@ -7,4 +7,3 @@
 - Install:
 
 	sudo apt install gedit
-

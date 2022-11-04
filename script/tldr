@@ -27,6 +27,8 @@ import shtab
 __version__ = "3.1.0"
 __client_specification__ = "1.5"
 
+EN_DEBUG = False
+
 REQUEST_HEADERS = {'User-Agent': 'tldr-python-client'}
 PAGES_SOURCE_LOCATION = os.environ.get(
     'TLDR_PAGES_SOURCE_LOCATION',
@@ -62,6 +64,7 @@ class CacheNotExist(Exception):
 
 class EntryNotExist(Exception):
     pass
+
 
 class TextState:
    Null = 0
@@ -172,8 +175,7 @@ def get_page_for_platform(
     platform: str,
     remote: str,
     language: str,
-    only_use_cache: bool = False
-) -> str:
+) -> None:
     global options
 
     data = None
@@ -181,66 +183,63 @@ def get_page_for_platform(
     data_downloaded = False
 
     # Ignore cache for local file
-    if not remote.startswith('file://'):
-        if only_use_cache:
-            raise CacheNotExist("Disable Cache for local file {} in {} not Found".format(
-                command,
-                platform,
-            ))
-
-        if USE_CACHE and have_recent_cache(command, platform, language):
-            data = load_page_from_cache(command, platform, language)
-        elif only_use_cache:
-            raise CacheNotExist("Cache for {} in {} not Found".format(
-                command,
-                platform,
-            ))
+    if USE_CACHE and not remote.startswith('file://') and have_recent_cache(command, platform, language) :
+        data = load_page_from_cache(command, platform, language)
+        if EN_DEBUG:
+            print("wilson get cache succ %s" % (page_url))
     else:
+        #print("wilson urlopen {}-{}: {}".format(platform, language, remote))
         page_url,page_wildcard = get_page_url(command, platform, remote, language)
+        try:
+            data = urlopen(
+                Request(page_url, headers=REQUEST_HEADERS),
+                context=URLOPEN_CONTEXT
+            ).read()
 
-        # Only show the file fullpath for editor
-        if options.file:
-            return page_url
-        else:
-            try:
-                data = urlopen(
-                    Request(page_url, headers=REQUEST_HEADERS),
-                    context=URLOPEN_CONTEXT
-                ).read()
-                data_downloaded = True
-                #print("wilson get succ %s" % (page_url))
-            except Exception:
-                #print("wilson get fail %s" % (page_url))
+            if EN_DEBUG:
+                print("wilson get succ %s" % (page_url))
+            data_downloaded = True
 
-                # local file no cache needed
-                if remote.startswith('file://'):
-                    # only remember the 1st local os-related file path
-                    if options.page_url == '':
-                        options.page_url = page_url
+            # Require show the file fullpath for editor
+            if options.file and remote.startswith('file://'):
+                # only remember the 1st local os-related file path
+                if options.page_url_exist == '':
+                    options.page_url_exist = page_url
 
-                    #print("wilson wild %s" % (page_wildcard[len('file://'):]))
-                    if len(glob.glob(page_wildcard[len('file://'):])) > 0:
-                        options.page_url = page_wildcard
+        except Exception:
+            if EN_DEBUG:
+                print("wilson get fail %s" % (page_url))
 
-                    if not options.has_remote:
-                        return page_url
-                    # try next remote location
+            # local file no cache needed
+            if remote.startswith('file://'):
+                # only remember the 1st local os-related file path
+                if options.page_url_empty == '':
+                    options.page_url_empty = page_url
+
+                if EN_DEBUG:
+                    print("wilson wild %s" % (page_wildcard[len('file://'):]))
+                if len(glob.glob(page_wildcard[len('file://'):])) > 0:
+                    options.page_url_empty = page_wildcard
+
+                # try next remote location
+                raise
+            elif USE_CACHE:
+                data = load_page_from_cache(command, platform, language)
+                if data is None:
                     raise
-                elif USE_CACHE:
-                    data = load_page_from_cache(command, platform, language)
-                    if data is None:
-                        raise
-                else:
-                    raise
+            else:
+                raise
+
     if data_downloaded and USE_CACHE and not page_url.startswith('file://'):
         store_page_to_cache(data, command, platform, language)
 
     if data is None:
-        raise EntryNotExist("Entry for {} in {} not Found".format(
-            command,
-            platform,
-            ))
-    return data.splitlines()
+        raise EntryNotExist("Entry for {} in {} can't find: {}".format(command, platform, page_url))
+
+    lines = data.splitlines()
+    options.data.append("---{}---".format(remote))
+    options.data.extend(lines)
+    return
 
 
 def update_page_for_platform(
@@ -309,42 +308,26 @@ def get_page(
 ) -> Union[str, bool]:
     global options
 
-    options.page_url = ''
+    options.data = []
+    options.page_url_empty = ''
+    options.page_url_exist = ''
+
     if platforms is None:
         platforms = get_platform_list()
     if languages is None:
         languages = get_language_list()
-    # only use cache for remote source-location
-    if USE_CACHE:
-        for platform in platforms:
-            for language in languages:
-                if platform is None:
-                    continue
-                for remote in remotes:
-                    if remote.startswith('file://'):
-                        continue
 
-                    try:
-                        return get_page_for_platform(
-                            command,
-                            platform,
-                            remote,
-                            language,
-                            only_use_cache=True,
-                        )
-                    except CacheNotExist:
-                        continue
-                    except EntryNotExist:
-                        continue
-
-    # Get from remote if cache missed
     for platform in platforms:
         for language in languages:
             if platform is None:
                 continue
             for remote in remotes:
                 try:
-                    return get_page_for_platform(command, platform, remote, language)
+                    get_page_for_platform(command, platform, remote, language)
+                    if options.file and options.page_url_exist:
+                        return options.page_url_exist
+                except CacheNotExist:
+                    continue
                 except EntryNotExist:
                     continue
                 except HTTPError as err:
@@ -354,8 +337,12 @@ def get_page(
                     if not remote.startswith('file://'):
                         raise
 
-    if options.page_url:
-        return options.page_url
+    if EN_DEBUG:
+        print("wilson final data.len=".format(len(options.data)))
+    if len(options.data) > 1:
+        return options.data
+    if options.page_url_empty:
+        return options.page_url_empty
     return False
 
 
@@ -430,9 +417,10 @@ def colors_of(key: str) -> Tuple[str, str, List[str]]:
             attrs.append(value)
     return (color, on_color, attrs)
 
+
 def output(page: str, plain: bool = False) -> None:
-    if not plain:
-        print()
+    #if not plain:
+    #    print()
 
     # the local full path, used for editor
     if isinstance(page, str) and page.startswith('file://'):
@@ -441,7 +429,8 @@ def output(page: str, plain: bool = False) -> None:
 
     state = TextState.Null
     for line in page:
-        line = line.rstrip().decode('utf-8')
+        if not isinstance(line, str):
+            line = line.rstrip().decode('utf-8')
 
         if plain:
             print(line)
@@ -571,7 +560,7 @@ def create_parser() -> ArgumentParser:
 
     parser.add_argument(
         '-p', '--platform',
-        nargs=1,
+        nargs='+',
         default=None,
         type=str,
         choices=['linux', 'osx', 'sunos', 'windows', 'common'],
