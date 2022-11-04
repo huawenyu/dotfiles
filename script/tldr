@@ -427,7 +427,44 @@ def output(page: str, plain: bool = False) -> None:
 
     # the local full path, used for editor
     if isinstance(page, str) and page.startswith('file://'):
-        os.system("{editor} -p {fname}".format(editor = "vi", fname = page[len('file://'):]))
+        is_temp_file = False
+        fname = page[len('file://'):]
+        if not os.path.exists(fname) and not '*' in fname:
+            is_temp_file = True
+            if EN_DEBUG:
+                print("wilson create template {}".format(fname))
+
+            cmdName = os.path.basename(fname)
+            cmdName = os.path.splitext(cmdName)[0]
+            with open(fname, 'w') as f:
+                f.write(""                                                          \
+                    "# {command}: will-delete-if-no-change\n"                         \
+                    "\n"                                                            \
+                    "> Short, snappy description.\n"                                \
+                    "> Preferably one line; two are acceptable if necessary.\n"     \
+                    "> More information: <https://url-to-upstream.tld>.\n"          \
+                    "\n"                                                            \
+                    "- Example description:\n"                                      \
+                    "\n"                                                            \
+                    "	# The `$_` is a special parameter that holds the last argument of the previous command.\n" \
+                    "	command --option1 --option2 {{arg_value}}\n"                \
+                    "\n"                                                            \
+                    "- Features:\n"                                                 \
+                    ". [ref](https://github.com/huawenyu/dotfiles/script/tldr)\n"   \
+                    "\n"                                                            \
+                    "* 1. support block beginwith '<tab>'\n"                        \
+                    "* 2. support block-comment beginwith '<tab>#'\n"               \
+                    "* 3. support comment beginwith '.'\n"                          \
+                    "\n".format(command = cmdName)                                  \
+                    )
+
+        os.system("{editor} -p {fname}".format(editor = "vi", fname=fname))
+        if is_temp_file:
+            theFirstLine = os.popen("head -n 1 {fname}".format(fname=fname)).read()
+            if "will-delete-if-no-change" in theFirstLine:
+                if EN_DEBUG:
+                    print("wilson delete the template {}".format(fname))
+                os.system("rm -f {fname}".format(fname=fname))
         return
 
     state = TextState.Null
@@ -576,6 +613,11 @@ def create_parser() -> ArgumentParser:
                         action='store_true',
                         help="List all available commands for operating system")
 
+    parser.add_argument('-a', '--urls',
+                        default=False,
+                        action='store_true',
+                        help="List all available page source")
+
     parser.add_argument('-s', '--source',
                         default=PAGES_SOURCE_LOCATION,
                         type=str,
@@ -668,8 +710,11 @@ def main() -> None:
         else:
             options.has_remote = True
             options.source.append(src_location)
-    #print(options.source)
 
+    if options.urls:
+        options.source.insert(0, "Pages list:")
+        print("\n  ".join(options.source))
+        return
     if options.update_cache:
         update_cache(language=options.language)
         return
