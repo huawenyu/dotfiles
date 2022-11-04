@@ -58,6 +58,7 @@ OS_DIRECTORIES = {
 
 src_dirs = []
 options = None
+home_dir = os.path.expanduser('~')
 
 class CacheNotExist(Exception):
     pass
@@ -237,7 +238,19 @@ def get_page_for_platform(
         raise EntryNotExist("Entry for {} in {} can't find: {}".format(command, platform, page_url))
 
     lines = data.splitlines()
-    options.data.append("---{}---".format(remote))
+
+    # Insert source URL split-line
+    show_url = page_url
+    if page_url.startswith('file://'):
+        show_url = page_url[len('file://'):]
+        if show_url.startswith(home_dir):
+            options.data.append("---'~{}'---".format(show_url[len(home_dir):]))
+        else:
+            options.data.append("---'{}'---".format(show_url))
+        show_url = ''
+    if show_url != '':
+        options.data.append("---{}---".format(show_url))
+
     options.data.extend(lines)
     return
 
@@ -464,7 +477,7 @@ def output(page: str, plain: bool = False) -> None:
             if "will-delete-if-no-change" in theFirstLine:
                 if EN_DEBUG:
                     print("wilson delete the template {}".format(fname))
-                os.system("rm -f {fname}".format(fname=fname))
+                os.remove(fname)
         return
 
     state = TextState.Null
