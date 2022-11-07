@@ -79,7 +79,8 @@ class TextState:
    Command   = 5
    Parameter = 6
    Block     = 7
-   List      = 8
+   Fence     = 8
+   List      = 9
 
 
 def get_language_code(language: str) -> str:
@@ -205,7 +206,7 @@ def get_page_for_platform(
             data_downloaded = True
 
             # Require show the file fullpath for editor
-            if options.file and remote.startswith('file://'):
+            if options.editor and remote.startswith('file://'):
                 # only remember the 1st local os-related file path
                 if options.page_url_exist == '':
                     options.page_url_exist = page_url
@@ -345,7 +346,7 @@ def get_page(
                 try:
                     get_page_for_platform(command, platform, remote, language)
                 except EntryDone:
-                    if options.file and options.page_url_exist:
+                    if options.editor and options.page_url_exist:
                         return options.page_url_exist
                 except CacheNotExist:
                     continue
@@ -374,6 +375,7 @@ DEFAULT_COLORS = {
     'command': 'red',
     'parameter': '',
     'block': 'yellow',
+    'fence': 'yellow',
     'list': 'blue',
     'comment': 'grey',
     'page': 'magenta',
@@ -457,11 +459,10 @@ def output(page: str, plain: bool = False) -> None:
             cmdName = os.path.splitext(cmdName)[0]
             with open(fname, 'w') as f:
                 f.write(""                                                          \
-                    "# {command}: will-delete-if-no-change\n"                         \
+                    "# {command}: will-delete-if-no-change\n"                       \
                     "\n"                                                            \
-                    "> Short, snappy description.\n"                                \
-                    "> Preferably one line; two are acceptable if necessary.\n"     \
-                    "> More information: <https://url-to-upstream.tld>.\n"          \
+                    "> Description.\n"                                              \
+                    "> [More information](https://url-to-upstream.tld).\n"          \
                     "\n"                                                            \
                     "- Example description:\n"                                      \
                     "\n"                                                            \
@@ -491,7 +492,21 @@ def output(page: str, plain: bool = False) -> None:
         if not isinstance(line, str):
             line = line.rstrip().decode('utf-8')
 
-        if plain:
+        if line.startswith('```'):
+            if state == TextState.Fence:
+                print()
+                state = TextState.Null
+                continue
+            state = TextState.Fence
+            continue
+        elif state == TextState.Fence:
+            if re.match(r'[ \t]{1,}#', line):
+                line = colored(line, *colors_of('comment')) + '\n'
+            else:
+                line = colored(line, *colors_of('fence')) + '\n'
+            sys.stdout.buffer.write(line.encode('utf-8'))
+            continue
+        elif plain:
             print(line)
             continue
         elif len(line) == 0:
@@ -535,16 +550,16 @@ def output(page: str, plain: bool = False) -> None:
                     item = colored(item, *colors_of('command'))
                 elements.append(item)
             sys.stdout.buffer.write(''.join(elements).encode('utf-8'))
-        elif line[0] == '\t':
+        elif line[0] == '\t' or re.match(r'[ ]{4,}', line):
             if state == TextState.Block:
-                if line.startswith('\t#'):
+                if re.match(r'[ \t]{1,}#', line):
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('comment'))
                 else:
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('block'))
             else:
-                if line.startswith('\t#'):
+                if re.match(r'[ \t]{1,}#', line):
                     line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('comment'))
                 else:
@@ -652,10 +667,10 @@ def create_parser() -> ArgumentParser:
                         type=str,
                         help="Only include page source contain <text>")
 
-    parser.add_argument('-f', '--file',
+    parser.add_argument('-e', '--editor',
                         default=False,
                         action='store_true',
-                        help="Show full path if it's local, used by editor")
+                        help="Edit the local entry")
 
     parser.add_argument('-c', '--color',
                         default=None,
@@ -731,7 +746,7 @@ def main() -> None:
                 options.src_local.append(the_dir)
                 options.source.insert(src_file_idx, src_location)
                 src_file_idx += 1
-        elif not options.file:
+        elif not options.editor:
             options.has_remote = True
             options.source.append(src_location)
 

@@ -11,7 +11,7 @@
 - Tool:
   - zsh/fish		# Better shell
   - tmux/alacritty	# Better terminal
-  - geany			# Simple editor: sudo apt install geany geany-plugins
+  - gedit/geany		# gedit:open-by-vim, geany: sudo apt install geany geany-plugins
   - tig				# Terminal GUI of git
   - pee				# Tee standard input to pipes
   - ts				# Timestamp standard input

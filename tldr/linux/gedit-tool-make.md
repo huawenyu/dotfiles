@@ -1,12 +1,12 @@
-#!/bin/bash
+	#!/bin/bash
 
-# [Gedit Tool]
-# Comment=Compile the current bufer
-# Name=Compile
-# Shortcut=<Control>F7
-# Applicability=all
-# Output=output-panel
-# Input=nothing
+	# [Gedit Tool]
+	# Comment=Compile the current bufer
+	# Name=Compile
+	# Shortcut=<Control>F7
+	# Applicability=all
+	# Output=output-panel
+	# Input=nothing
 
 FILE_NAME=$GEDIT_CURRENT_DOCUMENT_NAME
 if [ `echo $FILE_NAME | cut -d "." -f 2` = "cc" ]
