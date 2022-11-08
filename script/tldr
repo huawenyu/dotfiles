@@ -500,7 +500,7 @@ def output(page: str, plain: bool = False) -> None:
             state = TextState.Fence
             continue
         elif state == TextState.Fence:
-            if re.match(r'[ \t]{1,}#', line):
+            if re.match(r'[ \t]{1,}##', line):
                 line = colored(line, *colors_of('comment')) + '\n'
             else:
                 line = colored(line, *colors_of('fence')) + '\n'
@@ -552,14 +552,14 @@ def output(page: str, plain: bool = False) -> None:
             sys.stdout.buffer.write(''.join(elements).encode('utf-8'))
         elif line[0] == '\t' or re.match(r'[ ]{4,}', line):
             if state == TextState.Block:
-                if re.match(r'[ \t]{1,}#', line):
+                if re.match(r'[ \t]{1,}##', line):
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('comment'))
                 else:
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('block'))
             else:
-                if re.match(r'[ \t]{1,}#', line):
+                if re.match(r'[ \t]{1,}##', line):
                     line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('comment'))
                 else:
