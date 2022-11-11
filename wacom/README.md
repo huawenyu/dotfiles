@@ -13,3 +13,4 @@ https://joshuawoehlke.com/wacom-intuos-and-xsetwacom-on-ubuntu-18-04/
 
     $ xsetwacom set "Wacom One Pen Display 13 Pen stylus" MapToOutput 1920x1080+3840+1080
 
+# the draw tool: [xournalpp](https://xournalpp.github.io/)

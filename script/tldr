@@ -497,7 +497,11 @@ def output(page: str, plain: bool = False) -> None:
     listIndent = 0
     listModeIdx = 0
     listModes = ['list', 'list2']
+    hasNewLine = False
     for line in page:
+        newLine = '' if hasNewLine else '\n'
+        hasNewLine = False
+
         if not isinstance(line, str):
             line = line.rstrip().decode('utf-8')
 
@@ -511,8 +515,10 @@ def output(page: str, plain: bool = False) -> None:
         elif state == TextState.Fence:
             if re.match(r'[ \t]{1,}##', line):
                 line = colored(line, *colors_of('comment')) + '\n'
+                hasNewLine = True
             else:
                 line = colored(line, *colors_of('fence')) + '\n'
+                hasNewLine = True
             sys.stdout.buffer.write(line.encode('utf-8'))
             continue
         elif plain:
@@ -525,15 +531,18 @@ def output(page: str, plain: bool = False) -> None:
             continue
         elif line.startswith('--- '):
             state = TextState.NewEntry
-            line = '\n' + ' ' * LEADING_SPACES_NUM * 6 + \
+            line = newLine + ' ' * LEADING_SPACES_NUM * 6 + \
                     colored(line[4:], *colors_of('page')) + '\n'
+            hasNewLine = True
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '#':
             if state == TextState.NewEntry:
-                line = colored(line.replace('#', '∙'), *colors_of('name')) + '\n'
+                line = colored(line[1:], *colors_of('name')) + '\n'
+                hasNewLine = True
                 state = TextState.Name
             else:
-                line = colored(line.replace('#', '∙'), *colors_of('header')) + '\n'
+                line = newLine + colored(line.replace('#', '∙'), *colors_of('header')) + '\n'
+                hasNewLine = True
                 state = TextState.Header
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '>':
@@ -546,7 +555,7 @@ def output(page: str, plain: bool = False) -> None:
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '-':
             state = TextState.Example
-            line = '\n' + colored(line[1:].strip(), *colors_of('example'))
+            line = newLine + colored(line[1:].strip(), *colors_of('example'))
             sys.stdout.buffer.write(line.encode('utf-8'))
         elif line[0] == '`':
             state = TextState.Parameter
@@ -571,10 +580,10 @@ def output(page: str, plain: bool = False) -> None:
                             colored(line[1:], *colors_of('block'))
             else:
                 if re.match(r'[ \t]{1,}##', line):
-                    line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
+                    line = newLine + ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('comment'))
                 else:
-                    line = '\n' + ' ' * LEADING_SPACES_NUM * 2 + \
+                    line = newLine + ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('block'))
             state = TextState.Block
             sys.stdout.buffer.write(line.encode('utf-8'))
@@ -598,7 +607,7 @@ def output(page: str, plain: bool = False) -> None:
                 line = ' ' * LEADING_SPACES_NUM + \
                         colored(line, *colors_of(listModes[listModeIdx % len(listModes)]))
             else:
-                line = '\n' + ' ' * LEADING_SPACES_NUM + \
+                line = newLine + ' ' * LEADING_SPACES_NUM + \
                         colored(line, *colors_of(listModes[listModeIdx % len(listModes)]))
             state = TextState.List
             sys.stdout.buffer.write(line.encode('utf-8'))
