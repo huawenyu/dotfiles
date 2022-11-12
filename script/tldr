@@ -71,18 +71,18 @@ class EntryDone(Exception):
 
 
 class TextState:
-   Null      = 0
-   NewEntry  = 1
-   Name      = 2
-   Desc      = 3
-   Example   = 4
-   Command   = 5
-   Parameter = 6
-   Block     = 7
-   Fence     = 8
-   List      = 9
-   Header    = 10
-   Text      = 11
+   Null      = 'Null'
+   NewEntry  = 'Entry'
+   Name      = 'Name'
+   Desc      = 'Desc'
+   Example   = 'Example'
+   Command   = 'Command'
+   Parameter = 'Parameter'
+   Block     = 'Block'
+   Fence     = 'Fence'
+   List      = 'List'
+   Header    = 'Header'
+   Text      = 'Text'
 
 
 def get_language_code(language: str) -> str:
@@ -379,6 +379,7 @@ DEFAULT_COLORS = {
     'header':      'magenta bold',
     'command':     'red',
     'parameter':   '',
+    'blockdesc':   'cyan bold',
     'block':       'yellow',
     'fence':       'yellow',
     'list':        'blue',
@@ -449,6 +450,8 @@ def colors_of(key: str) -> Tuple[str, str, List[str]]:
 
 
 def output(page: str, plain: bool = False) -> None:
+    global options
+
     #if not plain:
     #    print()
 
@@ -470,14 +473,14 @@ def output(page: str, plain: bool = False) -> None:
                     "> Description.\n"                                              \
                     "> [More information](https://url-to-upstream.tld).\n"          \
                     "\n"                                                            \
-                    "- Example description:\n"                                      \
+                    "# Example description:\n"                                      \
                     "\n"                                                            \
                     "	# The `$_` is a special parameter that holds the last argument of the previous command.\n" \
                     "	command --option1 --option2 {{arg_value}}\n"                \
                     "\n"                                                            \
                     "# Features:\n"                                                 \
-                    "! [This is hidden comment](https://github.com/huawenyu/dotfiles/script/tldr)\n"   \
-                    "The feature list:\n"                                           \
+                    "! [This is hidden comment](https://github.com/huawenyu/dotfiles/script/tldr)\n" \
+                    "- The feature list:\n"                                         \
                     "  - support multiple page sources\n"                           \
                     "  - support edit(vi) mode by option `-e`\n"                    \
                     "  - support mutiple syntax: block, fence, list, comment\n"     \
@@ -500,7 +503,7 @@ def output(page: str, plain: bool = False) -> None:
     hasNewLine = False
     for line in page:
         newLine = '' if hasNewLine else '\n'
-        hasNewLine = False
+        m1 = None
 
         if not isinstance(line, str):
             line = line.rstrip().decode('utf-8')
@@ -519,9 +522,10 @@ def output(page: str, plain: bool = False) -> None:
             else:
                 line = colored(line, *colors_of('fence')) + '\n'
                 hasNewLine = True
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
             continue
-        elif plain:
+
+        if plain:
             print(line)
             continue
         elif len(line) == 0:
@@ -529,22 +533,26 @@ def output(page: str, plain: bool = False) -> None:
         elif line[0] == '!':
             # comment
             continue
-        elif line.startswith('--- '):
+
+        # So don't let the skipped emptyline reset it
+        hasNewLine = False
+
+        if line.startswith('--- '):
             state = TextState.NewEntry
             line = newLine + ' ' * LEADING_SPACES_NUM * 6 + \
                     colored(line[4:], *colors_of('page')) + '\n'
             hasNewLine = True
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '#':
             if state == TextState.NewEntry:
+                state = TextState.Name
                 line = colored(line[1:], *colors_of('name')) + '\n'
                 hasNewLine = True
-                state = TextState.Name
             else:
+                state = TextState.Header
                 line = newLine + colored(line.replace('#', '∙'), *colors_of('header')) + '\n'
                 hasNewLine = True
-                state = TextState.Header
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '>':
             state = TextState.Desc
             line = ' ' * (LEADING_SPACES_NUM - 1) + \
@@ -552,11 +560,11 @@ def output(page: str, plain: bool = False) -> None:
                     line.replace('>', '').replace('<', ''),
                     *colors_of('description')
             )
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '-':
             state = TextState.Example
             line = newLine + colored(line[1:].strip(), *colors_of('example'))
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '`':
             state = TextState.Parameter
             line = line[1:-1]  # need to actually parse ``
@@ -570,23 +578,27 @@ def output(page: str, plain: bool = False) -> None:
                     item = colored(item, *colors_of('command'))
                 elements.append(item)
             sys.stdout.buffer.write(''.join(elements).encode('utf-8'))
-        elif line[0] == '\t':
+        elif (line[0] == '\t'
+              or re.match(r'([ ]{4,})[^-*+]', line)
+              or (state == TextState.Block
+                   and re.match(r'([ ]{4,})[-*+]', line))
+              ):
             if state == TextState.Block:
                 if re.match(r'[ \t]{1,}##', line):
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
-                            colored(line[1:], *colors_of('comment'))
+                            colored(line[1:], *colors_of('blockdesc'))
                 else:
                     line = ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('block'))
             else:
                 if re.match(r'[ \t]{1,}##', line):
                     line = newLine + ' ' * LEADING_SPACES_NUM * 2 + \
-                            colored(line[1:], *colors_of('comment'))
+                            colored(line[1:], *colors_of('blockdesc'))
                 else:
                     line = newLine + ' ' * LEADING_SPACES_NUM * 2 + \
                             colored(line[1:], *colors_of('block'))
             state = TextState.Block
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif (line[0] == '*'
               or (m1 := re.match(r'([ ]{2,})[-*+]', line))
               ):
@@ -595,8 +607,6 @@ def output(page: str, plain: bool = False) -> None:
             if line[0] == '*':
                 newIndent = 0
             elif m1:
-                newIndent = len(m1.group(1))
-            elif m2:
                 newIndent = len(m1.group(1))
 
             if listIndent != newIndent:
@@ -610,12 +620,12 @@ def output(page: str, plain: bool = False) -> None:
                 line = newLine + ' ' * LEADING_SPACES_NUM + \
                         colored(line, *colors_of(listModes[listModeIdx % len(listModes)]))
             state = TextState.List
-            sys.stdout.buffer.write(line.encode('utf-8'))
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         else:
+            state = TextState.Text
             line = ' ' * LEADING_SPACES_NUM + \
                     colored(line, *colors_of('text'))
-            sys.stdout.buffer.write(line.encode('utf-8'))
-            state = TextState.Text
+            sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
             continue
 
         print()
@@ -687,6 +697,11 @@ def create_parser() -> ArgumentParser:
         metavar='PLATFORM',
         help="Override the operating system [linux, osx, sunos, windows, common]"
     )
+
+    parser.add_argument('-V', '--verbose',
+                        default=False,
+                        action='store_true',
+                        help="Show all text state name")
 
     parser.add_argument('-l', '--list',
                         default=False,

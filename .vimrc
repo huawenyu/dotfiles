@@ -5,6 +5,7 @@
 " - <Space>             Is the leader
 " - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
+" - Wiki                Define g:vim_wiki_dirs in ~/.vimrc.before
 " - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
 "
 " - Troubleshooting:
@@ -67,7 +68,6 @@
 "             \ 'indentline': 1,
 "             \
 "             \ 'fzf_files': ['~/mywiki',],
-"             \ 'fzf_notes': ['~/mywiki',],
 "             \}
 "       let g:vim_confi_option = extend(g:vim_confi_option, mylocal_vim_confi)
 "
@@ -160,8 +160,7 @@ let g:vim_confi_option = {
       \ 'qf_preview': 0,
       \
       \ 'start_page': '$HOME/dotfiles/startpage.md',
-      \ 'fzf_files': ['~/dotwiki/fortinet/doc', '~/dotwiki/cheat', '~/wiki/tool/cheat', '~/wiki/cheat', '~/.vim/bundle/vim.config/docs', ],
-      \ 'fzf_notes': ['~/wiki', '~/dotwiki', '~/work-doc', ],
+      \ 'wiki_dirs': ['~/dotwiki', '~/wiki', '~/dotfiles', ],
       \ 'tmp_file': '/tmp/vim.tmp',
       \}
 " =============================================================
@@ -470,6 +469,8 @@ endif
     endif
 " }
 
+" Please define our priviate wiki dirs in `~/.vimrc.before`
+let g:vim_wiki_dirs = get(g:, "vim_wiki_dirs", g:vim_confi_option.wiki_dirs)
 
 " Auto download the plug
 if g:vim_confi_option.auto_install_vimplug
@@ -711,7 +712,7 @@ call plug#begin('~/.vim/bundle')
 
         "Plug 'SidOfc/mkdx',             Cond(Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',      Cond(Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
-        Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
+        "Plug 'alok/notational-fzf-vim', Cond(Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
 "}}}
