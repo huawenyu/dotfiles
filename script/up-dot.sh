@@ -184,6 +184,11 @@ Main ()
             Run "ln -sfn $phy_dotfiles_dir/coc-settings.json ~/.vim/coc-settings.json"
         fi
 
+        if [ ! -f "~/.w3m/config" ]; then
+            Run "mv -fr ~/.w3m ~/w3m.old"
+            Run "ln -sfn $phy_dotfiles_dir/w3m ~/.w3m"
+        fi
+
         # The terminal emulor kitty's config
         if [ ! -d "~/.config/kitty" ]; then
             Run "ln -sfn $phy_dotfiles_dir/kitty ~/.config/kitty"
