@@ -24,33 +24,25 @@
 [kp-`]>[`]
 [=]>[`]
 
-[rwin]>[ralt]
 [bspace]>[lctrl]
 [delete]>[escape]
 [lctrl]>[bspace]
 [rctrl]>[enter]
-[home]>[lwin]
+[lalt]>[F4]
+[kp-alt]>[F7]
 [pup]>[F5]
+[kp-up]>[F6]
+[rwin]>[F8]
+[kp-rwin]>[F9]
+[home]>[lwin]
 [enter]>[=]
 
-{kp-up}>{-Lshift}{9}{+Lshift}
 {kp-down}>{-Lshift}{0}{+Lshift}
 {kpmin}>{-Lshift}{insert}{+Lshift}
 {kp-y}>{-lctrl}{a}{+lctrl}{-lshift}{-lalt}{p}{+lshift}{+lalt}
 {kp7}>{z}{-Lshift}{m}{+Lshift}
 {kp8}>{hyphen}{-Lshift}{.}{+Lshift}
 {kp9}>{z}{-Lshift}{r}{+Lshift}
-
-{lwin}{h}>{-lshift}{left}{+lshift}
-{lwin}{j}>{-lshift}{-lalt}{.}{+lshift}{+lalt}
-{lwin}{k}>{-lshift}{-lalt}{,}{+lshift}{+lalt}
-{lwin}{l}>{-lshift}{right}{+lshift}
-
-{lwin}{n}>{F4}
-{lwin}{m}>{F6}
-{lwin}{,}>{F7}
-{lwin}{.}>{F8}
-{lwin}{/}>{F9}
 
 {kp-s}>{s}{t}{r}{u}{c}{t}
 {kp-r}>{r}{e}{t}{u}{r}{n}
