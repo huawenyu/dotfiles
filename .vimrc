@@ -759,7 +759,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'junegunn/fzf.vim',    Cond(HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',    Cond(Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-        Plug 'sunaku/vim-shortcut', Cond(Mode(['basic', 'editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
+        Plug 'huawenyu/vim-shortcut', Cond(Mode(['basic', 'editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
         Plug 'kopischke/vim-fetch', Cond(Mode(['editor',]))			| " Support vim fname:line
 
         "Plug 'sudormrfbin/cheatsheet.nvim'
