@@ -3,7 +3,7 @@
 " TryIt:
 " - vim --clean         Startup vim without any config/plug
 " - <Space>             Is the leader
-" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle
+" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle: vim.command/plugin/map.vim:404
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
 " - Wiki                Define g:vim_wiki_dirs in ~/.vimrc.before
 " - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
@@ -601,6 +601,8 @@ call plug#begin('~/.vim/bundle')
         Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
         Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+        Plug 'nikvdp/neomux',              Cond(Mode(['editor',]))	| " :Neomux
+        "Plug 'jdhao/better-escape.vim',   Cond(Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
 
         "Plug 'michaelb/sniprun',           Cond(Mode(['admin']) && has('nvim'), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
         "Plug 'arjunmahishi/flow.nvim',     Cond(Mode(['coder',]))   | " runcode.nvim
@@ -772,6 +774,8 @@ call plug#begin('~/.vim/bundle')
     " Async {{{3
         "Plug 'tpope/vim-dispatch',        Cond(Mode(['admin',]))
         "Plug 'Shougo/vimproc.vim',         Cond(Mode(['admin',]), {'do' : 'make'})
+        "Plug 'neomake/neomake',            Cond(Mode(['admin',]))
+
         Plug 'skywind3000/asyncrun.vim',   Cond(Mode(['admin',]))
         Plug 'skywind3000/asynctasks.vim', Cond(HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
     "}}}
