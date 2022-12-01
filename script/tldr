@@ -529,6 +529,9 @@ def output(page: str, plain: bool = False) -> None:
             print(line)
             continue
         elif len(line) == 0:
+            if not hasNewLine:
+                hasNewLine = True
+                print(newLine)
             continue
         elif line[0] == '!':
             # comment
