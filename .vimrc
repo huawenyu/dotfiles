@@ -3,7 +3,7 @@
 " TryIt:
 " - vim --clean         Startup vim without any config/plug
 " - <Space>             Is the leader
-" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle: vim.command/plugin/map.vim:404
+" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
 " - Wiki                Define g:vim_wiki_dirs in ~/.vimrc.before
 " - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
