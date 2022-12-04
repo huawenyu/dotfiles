@@ -607,7 +607,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'michaelb/sniprun',           Cond(Mode(['admin']) && has('nvim'), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
         "Plug 'arjunmahishi/flow.nvim',     Cond(Mode(['coder',]))   | " runcode.nvim
         "Plug 'huawenyu/vimux-script',      Cond(Mode(['coder',]))	| " :
-        "Plug 'xolox/vim-misc',            Cond(Mode(['coder',]))	| " :
+        "Plug 'xolox/vim-misc',             Cond(Mode(['coder',]))	| " :
 
     "}}}
 
@@ -886,20 +886,20 @@ call plug#begin('~/.vim/bundle')
 
     " Text objects? {{{2
     " https://blog.carbonfive.com/vim-text-objects-the-definitive-guide/
-        Plug 'wellle/targets.vim',              Cond(Mode(['editor']))           | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
+        Plug 'wellle/targets.vim',              Cond(Mode(['editor']))      | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
         Plug 'kana/vim-textobj-user',           Cond(Mode(['editor']))
         Plug 'michaeljsmith/vim-indent-object', Cond(Mode(['editor',]))     | " <count>ai, aI, ii, iI
-        Plug 'glts/vim-textobj-indblock',       Cond(Mode(['coder',]))           | " vao, Select a block of indentation whitespace before ascii
-        Plug 'kana/vim-textobj-entire',         Cond(Mode(['coder',]))             | " vae, Select entire buffer
-        Plug 'kana/vim-textobj-function',       Cond(Mode(['coder',]))            | " vaf, Support: c, java, vimscript
-        Plug 'mattn/vim-textobj-url',           Cond(Mode(['editor',]))               | " vau
-        Plug 'kana/vim-textobj-diff',           Cond(Mode(['coder',]))                | " vdh, hunk;  vdH, file;  vdf, file
-        Plug 'glts/vim-textobj-comment',        Cond(Mode(['coder',]))             | " vac, vic
-        Plug 'Julian/vim-textobj-brace',        Cond(Mode(['editor',]))            | " vaj
+        Plug 'glts/vim-textobj-indblock',       Cond(Mode(['coder',]))      | " vao, Select a block of indentation whitespace before ascii
+        Plug 'kana/vim-textobj-entire',         Cond(Mode(['coder',]))      | " vae, Select entire buffer
+        Plug 'kana/vim-textobj-function',       Cond(Mode(['coder',]))      | " vaf, Support: c, java, vimscript
+        Plug 'mattn/vim-textobj-url',           Cond(Mode(['editor',]))     | " vau
+        Plug 'kana/vim-textobj-diff',           Cond(Mode(['coder',]))      | " vdh, hunk;  vdH, file;  vdf, file
+        Plug 'glts/vim-textobj-comment',        Cond(Mode(['coder',]))      | " vac, vic
+        Plug 'Julian/vim-textobj-brace',        Cond(Mode(['editor',]))     | " vaj
         Plug 'whatyouhide/vim-textobj-xmlattr', Cond(Mode(['coder',]))      | " vax
-        "Plug 'kana/vim-textobj-indent',        Cond(Mode(['editor',]))            | " vai, vaI
+        "Plug 'kana/vim-textobj-indent',        Cond(Mode(['editor',]))     | " vai, vaI
         "Plug 'machakann/vim-textobj-functioncall', Cond(Mode(['coder',]))
-        "Plug 'thinca/vim-textobj-between', Cond(Mode(['editor',]))          | " vaf, break the vim-textobj-function
+        "Plug 'thinca/vim-textobj-between', Cond(Mode(['editor',]))         | " vaf, break the vim-textobj-function
     "}}}
 
 "}}}
@@ -911,7 +911,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'kassio/neoterm',   Cond(Mode(['admin',]) && has('nvim'))        | " Not work after update, a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
         Plug 'akinsho/toggleterm.nvim',   Cond(Mode(['admin',]) && has('nvim'))| " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
 
-        Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))        | " focus on a selected region. <leader>nr :NR - Open selected into new window; :w - (in the new window) write the changes back
+        Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
         Plug 'jamessan/vim-gnupg',  Cond(Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
         Plug 'huawenyu/vim-tabber', Cond(Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
     "}}}
