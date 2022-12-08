@@ -50,3 +50,5 @@ wiki:wiki,md,sh
 # Because who cares about case!?
 --smart-case
 --no-heading
+--line-number
+--sort-files
