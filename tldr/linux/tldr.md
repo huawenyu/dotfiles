@@ -3,7 +3,12 @@
 > My dotfiles/script/tldr
 > Original: <https://raw.githubusercontent.com/tldr-pages/tldr-python-client/main/tldr.py>.
 
-- Sample with option:
+# setup
+
+	### add to shell-profile
+	export TLDR_PAGES_SOURCE_LOCATION="https://raw.githubusercontent.com/tldr-pages/tldr/master/pages; file://$HOME/dotwiki/tldr; file://$HOME/wiki/tldr; file://$HOME/dotfiles/tldr"
+
+# Sample with option:
 
 	# List all command
 	tldr -l
