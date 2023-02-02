@@ -14,8 +14,8 @@
 [kp-N]>[home]
 [kp3]>[end]
 
-[cbrack]>[rctrl]
-[obrack]>[ralt]
+[cbrack]>[lctrl]
+[obrack]>[lalt]
 [up]>[obrack]
 [down]>[cbrack]
 
