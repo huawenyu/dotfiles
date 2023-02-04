@@ -36,7 +36,7 @@ Install from https://github.com/microsoft/terminal
 
 - Kitty (from putty, so far it's good)
   + [config unix/linux sample](https://sw.kovidgoyal.net/kitty/conf/#font-sizes)
-  + Can't map the change font-size shortcusts
+  + #Can't map the change font-size shortcusts
   + Don't support ProxyJump/mosh, since all ssh implement by itself, but perfer inside WSL(ubuntu 20.04), then use ssh to access remote
 
 - Microsoft-terminal

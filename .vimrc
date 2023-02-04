@@ -17,20 +17,29 @@
 " Install:  help 'H' on the topic
 " - [Debian]
 "     ### Auto setup/install env
-"     $ wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
-"     $ chmod +x ~/chk-ubuntu
-"     $ ~/chk-ubuntu
-"     $
-"     $ wget --no-check-certificate -O ~/.vimrc  https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
-"     $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"     #$ sudo add-apt-repository ppa:neovim-ppa/unstable -y
-"     $ sudo add-apt-repository ppa:neovim-ppa/stable -y
-"     $ sudo apt-get install neovim
-"     $ sudo update-alternatives --config vi
-"     $ sudo update-alternatives --config vim
+"         wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
+"         chmod +x ~/chk-ubuntu
+"         ~/chk-ubuntu
 "
-"     ### .vimrc as Config [Reference: vi -c 'help nvim-from-vim']
+"     ### Install neovim:
+"         sudo apt-get install neovim
+"         sudo update-alternatives --config vi
+"         sudo update-alternatives --config vim
+"
+"     ### 1. Update latest vim config:
+"         wget --no-check-certificate -O ~/.vimrc  https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+"         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"     ### 2.1 Update vim from repo:
+"         #sudo add-apt-repository ppa:neovim-ppa/unstable -y
+"         sudo add-apt-repository ppa:neovim-ppa/stable -y
+"         sudo apt-get install neovim
+"     ### 2.2 [OR] Update vim from binary:
+"         curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+"         chmod u+x nvim.appimage
+"         sudo mv /usr/bin/nvim /usr/bin/nvim.old
+"         sudo mv nvim.appimage /usr/bin/nvim
+"     ### 3. Take `.vimrc` as Config [Reference: vi -c 'help nvim-from-vim']
 "         ### oneline version
 "         $ mkdir -p ~/.vim && rm -fr ~/.vim/init.vim && ln -s ~/.vimrc ~/.vim/init.vim && mkdir -p ~/.config && rm -fr ~/.config/nvim && ln -s ~/.vim ~/.config/nvim
 "
