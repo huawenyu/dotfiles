@@ -795,7 +795,7 @@ call plug#begin('~/.vim/bundle')
             Plug 'huawenyu/c-utils.vim',             Cond(Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',       Cond(Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
         Plug 'chengzeyi/fzf-preview.vim',   Cond(Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
-            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && has('cscope') && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
+            Plug 'huawenyu/fzf-cscope.vim', Cond(Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         " Tags/cscope/indexer? {{{4
             Plug 'preservim/tagbar',       Cond(IfNoPlug('vista.vim') && Mode(['coder',]))
