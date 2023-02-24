@@ -12,12 +12,13 @@
 	user = huawenyu
 [alias]
 	log0  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
-	log00  = log --first-parent --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
-	log1  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --shortstat
-	log2  = log --graph --abbrev-commit --decorate --date=short --format=format:'%C(bold blue)%h%C(reset) %ad %C(white)%s%C(reset) %C(dim white)%C(cyan)(%an)%C(reset)%C(reset)%C(bold yellow)%d%C(reset)' --all
-	log3  = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	log4  = log --format=format:"%H" --shortstat
+	log1  = log --color --no-walk --tags --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
 
+	log00  = log --first-parent --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+	log4  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --shortstat
+	log5  = log --graph --abbrev-commit --decorate --date=short --format=format:'%C(bold blue)%h%C(reset) %ad %C(white)%s%C(reset) %C(dim white)%C(cyan)(%an)%C(reset)%C(reset)%C(bold yellow)%d%C(reset)' --all
+	log6  = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	log7  = log --format=format:"%H" --shortstat
 	# But too slow: git-foresta --all --style=10 | less -RSX
 	#   Foresta: https://github.com/takaaki-kasai/git-foresta
 	#       Install: curl -L https://github.com/takaaki-kasai/git-foresta/raw/master/git-foresta -o ~/bin/git-foresta && chmod +x ~/bin/git-foresta

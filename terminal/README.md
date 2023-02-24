@@ -17,7 +17,7 @@ Select the Start, enter `snipping tool`, then select Snipping Tool from the resu
 
 Press Windowskey + Shift + S.
 
-## best terminal microsoft-terminal
+## Best terminal microsoft-terminal
 
 Install from https://github.com/microsoft/terminal
 
@@ -43,4 +43,16 @@ Install from https://github.com/microsoft/terminal
   + [O] almost don't need config,
   + [O] shortcusts support select tab,
   + [O] Using WSL, so everything doing inside WSL-ubuntu like ssh ProxyJump/mosh, and configgable by ~/.ssh/config
+
+## Microsoft terminal
+
+- Disable: Warn when the text to paste contains multiple lines
+
+  Hold down the `Shift` key while selecting Settings in the Windows Terminal dropdown menu.
+    This will open the editor associated with json files `settings.json`, change as:
+
+	"multiLinePasteWarning": false,
+- Select auto-to clipboard
+
+	Setting->Interaction->Automatically copy selection to clipboard=On
 

@@ -55,6 +55,10 @@
 "     zshrc -- Simpler zshrc for oh-my-zsh
 "       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 "       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
+"     oh-my-bash
+"       $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+"         OSH_THEME="robbyrussell"
+"         DISABLE_AUTO_UPDATE="true"
 "     tmux.conf -- Simpler zshrc for oh-my-zsh
 "       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
 " - [Issue]
