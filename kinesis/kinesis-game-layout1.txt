@@ -1,4 +1,3 @@
-[hk6]>[caps]
 [caps]>[fnshf]
 fn [caps]>[fnshf]
 [pause]>[ins]
@@ -16,8 +15,11 @@ fn [rctrl]>[prev]
 fn [lft]>[next]
 fn [dwn]>[F7]
 fn [rght]>[F8]
-{hk1}>{-lctrl}{a}{a}{+lctrl}
-{lwin}{y}>{-lctrl}{a}{+lctrl}{-lshft}{-lalt}{p}{+lshft}{+lalt}
-{lwin}{/}>{-lctrl}{a}{+lctrl}{obrk}{/}
+[lwin]>[lalt]
+[lspc]>[esc]
+{hk1}>{-lctrl}{a}{+lctrl}{-lshft}{-lalt}{p}{+lshft}{+lalt}
+[hk2]>[esc]
+[hk5]>[lwin]
+[hk6]>[ent]
 {hk7}>{-lctrl}{a}{+lctrl}{-lshft}{lft}{+lshft}
 {hk8}>{-lctrl}{a}{+lctrl}{-lshft}{rght}{+lshft}
