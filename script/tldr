@@ -23,10 +23,12 @@ from urllib.error import HTTPError, URLError
 from termcolor import colored
 import colorama  # Required for Windows
 import shtab
+import inspect
 
 __version__ = "3.1.0"
 __client_specification__ = "1.5"
 
+#EN_DEBUG = True
 EN_DEBUG = False
 
 REQUEST_HEADERS = {'User-Agent': 'tldr-python-client'}
@@ -194,9 +196,9 @@ def get_page_for_platform(
     if USE_CACHE and not remote.startswith('file://') and have_recent_cache(command, platform, language) :
         data = load_page_from_cache(command, platform, language)
         if EN_DEBUG:
-            print("wilson get cache succ %s" % (page_url))
+            print("  wilson %s() get cache succ: %s,%s,%s" % (inspect.stack()[0][3], command, platform, remote))
     else:
-        #print("wilson urlopen {}-{}: {}".format(platform, language, remote))
+        #print("  wilson urlopen {}-{}: {}".format(platform, language, remote))
         try:
             data = urlopen(
                 Request(page_url, headers=REQUEST_HEADERS),
@@ -204,7 +206,7 @@ def get_page_for_platform(
             ).read()
 
             if EN_DEBUG:
-                print("wilson get succ %s" % (page_url))
+                print("  wilson %s() get succ %s" % (inspect.stack()[0][3], page_url))
             data_downloaded = True
 
             # Require show the file fullpath for editor
@@ -216,7 +218,7 @@ def get_page_for_platform(
 
         except Exception:
             if EN_DEBUG:
-                print("wilson get fail %s" % (page_url))
+                print("  wilson get fail %s" % (page_url))
 
             # local file no cache needed
             if remote.startswith('file://'):
@@ -225,7 +227,7 @@ def get_page_for_platform(
                     options.page_url_empty = page_url
 
                 if EN_DEBUG:
-                    print("wilson wild %s" % (page_wildcard[len('file://'):]))
+                    print("  wilson wild %s" % (page_wildcard[len('file://'):]))
                 if len(glob.glob(page_wildcard[len('file://'):])) > 0:
                     options.page_url_empty = page_wildcard
 
@@ -291,6 +293,10 @@ def get_platform_list() -> List[str]:
     current_platform = get_platform()
     platforms.remove(current_platform)
     platforms.insert(0, current_platform)
+
+    if EN_DEBUG:
+        print("  wilson {}(): platforms={}".format(inspect.stack()[0][3], platforms))
+
     return platforms
 
 
@@ -332,6 +338,9 @@ def get_page(
     options.page_url_empty = ''
     options.page_url_exist = ''
 
+    if EN_DEBUG:
+        print("  wilson {}(): platforms={}".format(inspect.stack()[0][3], platforms))
+
     if platforms is None:
         platforms = get_platform_list()
     if languages is None:
@@ -362,7 +371,7 @@ def get_page(
                         raise
 
     if EN_DEBUG:
-        print("wilson final data.len=".format(len(options.data)))
+        print("  wilson final data.len={}".format(len(options.data)))
     if len(options.data) > 1:
         return options.data
     if options.page_url_empty:
@@ -462,7 +471,7 @@ def output(page: str, plain: bool = False) -> None:
         if not os.path.exists(fname) and not '*' in fname:
             is_temp_file = True
             if EN_DEBUG:
-                print("wilson create template {}".format(fname))
+                print("  wilson create template {}".format(fname))
 
             cmdName = os.path.basename(fname)
             cmdName = os.path.splitext(cmdName)[0]
@@ -492,7 +501,7 @@ def output(page: str, plain: bool = False) -> None:
             theFirstLine = os.popen("head -n 1 {fname}".format(fname=fname)).read()
             if "will-delete-if-no-change" in theFirstLine:
                 if EN_DEBUG:
-                    print("wilson delete the template {}".format(fname))
+                    print("  wilson delete the template {}".format(fname))
                 os.remove(fname)
         return
 
@@ -500,10 +509,15 @@ def output(page: str, plain: bool = False) -> None:
     listIndent = 0
     listModeIdx = 0
     listModes = ['list', 'list2']
-    hasNewLine = False
+    hadNewline = False
+    is_local = True
+    if EN_DEBUG:
+        print("  wilson new-page")
     for line in page:
-        newLine = '' if hasNewLine else '\n'
+        newLine = '' if hadNewline else '\n'
         m1 = None
+        if EN_DEBUG and not hadNewline:
+            print("  wilson {}(state={} newLine={})".format(inspect.stack()[0][3], state, newLine == '\n'))
 
         if not isinstance(line, str):
             line = line.rstrip().decode('utf-8')
@@ -518,10 +532,10 @@ def output(page: str, plain: bool = False) -> None:
         elif state == TextState.Fence:
             if re.match(r'[ \t]{1,}##', line):
                 line = colored(line, *colors_of('comment')) + '\n'
-                hasNewLine = True
+                hadNewline = True
             else:
                 line = colored(line, *colors_of('fence')) + '\n'
-                hasNewLine = True
+                hadNewline = True
             sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
             continue
 
@@ -529,32 +543,43 @@ def output(page: str, plain: bool = False) -> None:
             print(line)
             continue
         elif len(line) == 0:
-            if not hasNewLine:
-                hasNewLine = True
-                print(newLine)
+            if not hadNewline:
+                hadNewline = True
+                if EN_DEBUG:
+                    print("  wilson {} add-Newline by emptyline(state={} newLine={})".format(inspect.stack()[0][3], state, newLine == ''))
+                else:
+                    print()
             continue
         elif line[0] == '!':
             # comment
             continue
 
         # So don't let the skipped emptyline reset it
-        hasNewLine = False
+        hadNewline = False
 
         if line.startswith('--- '):
             state = TextState.NewEntry
+
+            is_local = True
+            if line[4:].startswith('http'):
+                is_local = False
+            if EN_DEBUG:
+                print("  wilson is_local={}: {}".format(is_local, line[4:]))
+
+            hadNewline = True
             line = newLine + ' ' * LEADING_SPACES_NUM * 6 + \
                     colored(line[4:], *colors_of('page')) + '\n'
-            hasNewLine = True
+
             sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '#':
             if state == TextState.NewEntry:
                 state = TextState.Name
                 line = colored(line[1:], *colors_of('name')) + '\n'
-                hasNewLine = True
+                hadNewline = True
             else:
                 state = TextState.Header
                 line = newLine + colored(line.replace('#', '∙'), *colors_of('header')) + '\n'
-                hasNewLine = True
+                hadNewline = True
             sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
         elif line[0] == '>':
             state = TextState.Desc
@@ -631,8 +656,16 @@ def output(page: str, plain: bool = False) -> None:
             sys.stdout.buffer.write((state + line if options.verbose else line).encode('utf-8'))
             continue
 
+        if is_local:
+            if EN_DEBUG:
+                print("  wilson add-newline by inner")
+            else:
+                print()
+
+    if EN_DEBUG:
+        print("  wilson add-newline by outter")
+    else:
         print()
-    print()
 
 
 def update_cache(language: Optional[List[str]] = None) -> None:
@@ -696,9 +729,9 @@ def create_parser() -> ArgumentParser:
         nargs='+',
         default=None,
         type=str,
-        choices=['linux', 'osx', 'sunos', 'windows', 'common'],
+        choices=['common', 'linux', 'osx', 'sunos', 'windows'],
         metavar='PLATFORM',
-        help="Override the operating system [linux, osx, sunos, windows, common]"
+        help="Override the operating system [common, linux, osx, sunos, windows]"
     )
 
     parser.add_argument('-V', '--verbose',
@@ -797,17 +830,19 @@ def main() -> None:
     src_file_idx = 0
     options.has_local = False
     options.has_remote = False
+
+    # Last show local
     for src_location in src_dirs:
         if src_location.startswith('file://'):
             the_dir = src_location[len('file://'):]
             if os.path.exists(the_dir):
                 options.has_local = True
                 options.src_local.append(the_dir)
-                options.source.insert(src_file_idx, src_location)
-                src_file_idx += 1
+                options.source.append(src_location)
         elif not options.editor:
             options.has_remote = True
-            options.source.append(src_location)
+            options.source.insert(src_file_idx, src_location)
+            src_file_idx += 1
 
     if options.urls:
         options.source.insert(0, "Pages list:")
@@ -819,6 +854,12 @@ def main() -> None:
     elif len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
+
+    options.platform.remove('common')
+    options.platform.insert(0, 'common')
+    if EN_DEBUG:
+        print("  wilson {}(): platforms={}".format(inspect.stack()[0][3], options.platform))
+
     if options.list:
         print(*get_commands(options.platform), sep='\n')
     elif options.render:

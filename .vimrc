@@ -614,7 +614,6 @@ call plug#begin('~/.vim/bundle')
         Plug 'huawenyu/vim-floaterm-repl', Cond(HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
         Plug 'wsdjeg/notifications.vim',   Cond(Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(Mode(['admin']) && has('nvim'), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
-        Plug 'nikvdp/neomux',              Cond(Mode(['editor',]))	| " :Neomux
         "Plug 'jdhao/better-escape.vim',   Cond(Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
 
         "Plug 'michaelb/sniprun',           Cond(Mode(['admin']) && has('nvim'), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
@@ -837,6 +836,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'christoomey/vim-tmux-navigator', Cond(Mode(['basic', 'editor', 'log', 'floatview']))
         Plug 'easymotion/vim-easymotion',      Cond(Mode(['editor',]))
         Plug 'tpope/vim-abolish',              Cond(Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
+        "Plug 'karb94/neoscroll.nvim',         Cond(Mode(['editor',]))
 
         " 1. Rename a var:  search the var -> cgn -> change-it -> .(repeat-it-whole)
         Plug 'tpope/vim-repeat', Cond(Mode(['editor',]))
@@ -855,7 +855,6 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Auto completion {{{2
-
         " The autocomp fzf seems not works
         "Plug 'ms-jpq/coq_nvim',         Cond(Mode(['coder',]) && LINUX(), {'branch': 'coq'})
         "Plug 'ms-jpq/coq.artifacts',    Cond(Mode(['coder',]) && LINUX(), {'branch': 'artifacts'})
@@ -921,12 +920,16 @@ call plug#begin('~/.vim/bundle')
     " Terminal/shell  {{{3
         Plug 'tpope/vim-eunuch', Cond(Mode(['admin',]))  | " Support unix shell cmd: Delete,Unlink,Move,Rename,Chmod,Mkdir,Cfind,Clocate,Lfind,Wall,SudoWrite,SudoEdit
         Plug 'tpope/vim-dotenv', Cond(Mode(['admin',]))  | " Basic support for .env and Procfile
-        "Plug 'kassio/neoterm',   Cond(Mode(['admin',]) && has('nvim'))        | " Not work after update, a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
-        Plug 'akinsho/toggleterm.nvim',   Cond(Mode(['admin',]) && has('nvim'))| " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+
+        "Plug 'kassio/neoterm',                 Cond(Mode(['admin',]) && has('nvim'))        | " Not work after update, a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        Plug 'nikvdp/neomux',                   Cond(Mode(['editor',])) | " :Neomux, best terminal (it's real color shell)
+        Plug 'akinsho/toggleterm.nvim',         Cond(Mode(['admin',]) && has('nvim'))| " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        "Plug 'skywind3000/vim-terminal-help',   Cond(Mode(['editor',])) | " Toggle-Terminal by <Alt>=
 
         Plug 'chrisbra/NrrwRgn',    Cond(Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
         Plug 'jamessan/vim-gnupg',  Cond(Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
         Plug 'huawenyu/vim-tabber', Cond(Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
+
     "}}}
 
     " Presentation? draw? pencil  {{{3
