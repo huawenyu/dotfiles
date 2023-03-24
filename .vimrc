@@ -626,6 +626,7 @@ call plug#begin('~/.vim/bundle')
     " gdb front-end {{{3
         "Plug 'huawenyu/vimgdb',        Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | "
         Plug 'huawenyu/vwm.vim',        Cond(Mode(['coder']))      |  " Clone from fireflowerr/vwm.vim, vim windows management
+        Plug 'huawenyu/vim-windowswap',    Cond(Mode(['coder']))      |  " Swap window buffers
         Plug 'huawenyu/termdebug.nvim', Cond(Mode(['coder']) && IfNoPlug('vimspector') && has('nvim'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
     "}}}
 
