@@ -49,21 +49,21 @@ color?when show colored output (always|never|auto)
     eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt --stuck-long -- "$@" || echo exit $?)"
 
     while [ $# -gt 0 ]; do
-	opt="$1"
-	shift
+        opt="$1"
+        shift
 
-	case "$opt" in
-	    --color)
+        case "$opt" in
+            --color)
                 COLOR=always
                 ;;
             --color\=*)
                 COLOR="${opt#*=}"
                 ;;
-	    --)
-		break
-		;;
-	    *)
-		die "Unexpected option: $opt"
+            --)
+                break
+                ;;
+            *)
+                die "Unexpected option: $opt"
                 ;;
         esac
     done
@@ -86,6 +86,11 @@ color?when show colored output (always|never|auto)
     esac
 
     git_info "$1"
+
+    echo "Ignored:"
+    git ls-files . --ignored --exclude-standard --others | sed 's/^/    /'
+    echo "Untracked:"
+    git ls-files . --exclude-standard --others | sed 's/^/    /'
 }
 
 initialize_colors () {
