@@ -2,9 +2,9 @@
 #set -o nounset     # Treat unset variables as an error
 
 declare -r DIR=$(cd "$(dirname "$0")" && pwd)
-source $DIR/lib_common.sh
-source $DIR/lib_bsfl.sh
-source $DIR/lib_log4sh.sh
+source $DIR/conf/lib_common.sh
+source $DIR/conf/lib_bsfl.sh
+source $DIR/conf/lib_log4sh.sh
 
 # default message level: ERROR, INFO
 #logger_setLevel INFO
@@ -170,7 +170,7 @@ Main ()
         done
 
         # test file exists cannot use '~' to replace $HOME, and should have double-quote
-        #Run "awk -f $phy_dotfiles_dir/script/zsh_hist.awk $HOME/.zsh_history $phy_dotfiles_dir/.zsh_history > $HOME/.zsh_history"
+        #Run "awk -f $phy_dotfiles_dir/script/awk/zsh_hist.awk $HOME/.zsh_history $phy_dotfiles_dir/.zsh_history > $HOME/.zsh_history"
 
         gvimrc="$HOME/.gvimrc"
         Run "rm -f $gvimrc"

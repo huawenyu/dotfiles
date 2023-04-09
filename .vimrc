@@ -938,12 +938,13 @@ call plug#begin('~/.vim/bundle')
         Plug 'sk1418/HowMuch',       Cond(Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
 
         Plug 'sotte/presenting.vim', Cond(Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
-        Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil, seem require neovim version > 0.5
+        Plug 'jbyuki/venn.nvim',     Cond(Mode(['editor',]))       | " Draw pencil, seem require neovim > 0.5
     "}}}
 
-    " Project {{{3
-        Plug 'tpope/vim-projectionist',         Cond(Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
-        Plug 'c-brenn/fuzzy-projectionist.vim', Cond(Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
+    " Project/Session/Workspace {{{3
+        "Plug 'tpope/vim-projectionist',         Cond(Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
+        "Plug 'c-brenn/fuzzy-projectionist.vim', Cond(Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
+        Plug 'rmagatti/auto-session',            Cond(Mode(['editor']) && Mode(['extra']))  | " neovim > 0.7
     "}}}
 
     " File/Explore {{{3

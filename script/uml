@@ -10,4 +10,4 @@ fi
 
 file="$1"
 rm -f /tmp/uml.png
-cat $file | java -jar ~/script/plantuml.jar -pipe -tutxt > /tmp/uml.txt
+cat $file | java -jar ~/script/conf/plantuml.jar -pipe -tutxt > /tmp/uml.txt
