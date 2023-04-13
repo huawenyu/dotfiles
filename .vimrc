@@ -735,7 +735,9 @@ call plug#begin('~/.vim/bundle')
 " Facade {{{2
     Plug 'huawenyu/startscreen.vim',         Cond(Mode(['editor']) && len(g:vim_confi_option.start_page))
     Plug 'millermedeiros/vim-statline',      Cond(Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
-    Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor']))
+    "Plug 'rcarriga/nvim-notify',            Cond(Mode(['coder',]))	 | " Substitute the vim's original print-type message
+    Plug 'j-hui/fidget.nvim',                Cond(Mode(['coder',]))	 | " Standalone UI for nvim-lsp progress
+    "Plug 'junegunn/rainbow_parentheses.vim', Cond(Mode(['editor']))
     Plug 'huawenyu/vim-mark',                Cond(Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',           Cond(Mode(['editor'])) | " place, toggle and display marks
     Plug 'lukas-reineke/indent-blankline.nvim', Cond(Mode(['editor']) && g:vim_confi_option.indentline)

@@ -1,6 +1,5 @@
-traceme [--help | --silent | --verbose | --dryrun
-    | -a (add | clear)
-    | -t (<target>) ] ... ;
+traceme ((add | clear) (<target>));
+traceme --help;
 
 target = ! eval "ls ${TracemeDIR}" ;
 

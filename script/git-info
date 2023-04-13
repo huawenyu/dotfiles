@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # git-info - shows information about a Git repository a la `svn info'
 #
@@ -46,7 +46,7 @@ $0 shows information about a Git repository.
 h,help     show the help
 color?when show colored output (always|never|auto)
 "
-    eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt --stuck-long -- "$@" || echo exit $?)"
+    #eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt --stuck-long -- "$@" || echo exit $?)"
 
     while [ $# -gt 0 ]; do
         opt="$1"
@@ -58,6 +58,27 @@ color?when show colored output (always|never|auto)
                 ;;
             --color\=*)
                 COLOR="${opt#*=}"
+                ;;
+            branch)
+                showBranch=1
+                ;;
+            status)
+                showStatus=1
+                ;;
+            -vvv)
+                verbose=3
+                showBranch=1
+                showStatus=1
+                showCommit=1
+                ;;
+            -vv)
+                verbose=2
+                showBranch=1
+                showCommit=1
+                ;;
+            -v)
+                verbose=1
+                showStatus=1
                 ;;
             --)
                 break
@@ -87,10 +108,15 @@ color?when show colored output (always|never|auto)
 
     git_info "$1"
 
-    echo "Ignored:"
-    git ls-files . --ignored --exclude-standard --others | sed 's/^/    /'
-    echo "Untracked:"
-    git ls-files . --exclude-standard --others | sed 's/^/    /'
+    if [[ $showStatus -ge 2 ]] || [[ $showStatus == 1 ]] && [[ $verbose -ge 1 ]] ; then
+        echo "Ignored:"
+        git ls-files . --ignored --exclude-standard --others | sed 's/^/    /'
+    fi
+
+    if [[ $showStatus -eq 1 ]]; then
+        echo "Untracked:"
+        git ls-files . --exclude-standard --others | sed 's/^/    /'
+    fi
 }
 
 initialize_colors () {
@@ -225,11 +251,13 @@ do_git_info () {
             "$TEMPFILE"
     fi
 
-    GIT_DIR="$git_dir" git branch -r --color=$COLOR_BRANCH > "$TEMPFILE"
-    if [ -s "$TEMPFILE"  ]; then
-        echo "Remote Branches:"
-        sed -e "s/\([ 	]\{1,\}->[ 	]\{1,\}\)\([^ 	]\{1,\}\)/\1$REMOTE_COLOR\2$RESET_COLOR/" \
-            -e 's/^ */	/' "$TEMPFILE"
+    if [[ $showBranch == 1 ]] ; then
+        GIT_DIR="$git_dir" git branch -r --color=$COLOR_BRANCH > "$TEMPFILE"
+        if [ -s "$TEMPFILE"  ]; then
+            echo "Remote Branches:"
+            sed -e "s/\([ 	]\{1,\}->[ 	]\{1,\}\)\([^ 	]\{1,\}\)/\1$REMOTE_COLOR\2$RESET_COLOR/" \
+                -e 's/^ */	/' "$TEMPFILE"
+        fi
     fi
 
     GIT_DIR="$git_dir" git branch --color=$COLOR_BRANCH > "$TEMPFILE"
@@ -293,28 +321,30 @@ do_git_info () {
         done
     }
 
-    (cd "$root" && GIT_DIR="$git_dir" git log --max-count=1 "$@") | {
-        while read -r field line; do
-            color=
-            reset=
-            case "$field" in
-                commit)
-                    field='Commit ID:'
-                    color="$ID_COLOR"
-                    reset="$RESET_COLOR"
-                    ;;
-                *:)
-                    ;;
-                '')
-                    break
-                    ;;
-            esac
-            echo "Last Changed $field $color$line$reset"
-        done
-        cat > "$TEMPFILE"
-    }
-    echo "Last Changed Log:"
-    sed 's/^    /	/' "$TEMPFILE"
+    if [[ $showCommit == 1 ]]; then
+        (cd "$root" && GIT_DIR="$git_dir" git log --max-count=1 "$@") | {
+            while read -r field line; do
+                color=
+                reset=
+                case "$field" in
+                    commit)
+                        field='Commit ID:'
+                        color="$ID_COLOR"
+                        reset="$RESET_COLOR"
+                        ;;
+                    *:)
+                        ;;
+                    '')
+                        break
+                        ;;
+                esac
+                echo "Last Changed $field $color$line$reset"
+            done
+            cat > "$TEMPFILE"
+        }
+        echo "Last Changed Log:"
+        sed 's/^    /	/' "$TEMPFILE"
+    fi
 
     finalize
 }
