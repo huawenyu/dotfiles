@@ -396,7 +396,7 @@ SyncClangdJson()
 {
     echo "Handling '$ClangdFile' ..."
     export _ZT_ARGS_Indent="    "
-    urlInfo=$(git-info | grep "url")
+    urlInfo=$(git-info | grep "url = ")
     if echo "$urlInfo" | grep -q -ie "fpx\|fortiproxy" ; then
         guessPlat="fortiproxy"
     elif echo $urlInfo | grep -q -ie "fos\|fortios\|fgt\|ftg\|fortigate" ; then
@@ -414,9 +414,10 @@ SyncClangdJson()
     if [[ $action == "push" ]]; then
         if [[ -f $ClangdFile ]]; then
             echo "${_ZT_ARGS_Indent}Push '$ClangdFile' to server /clangd/$guessPlat/${verNum1}${verNum2}${verNum3}B${buildNum}"
+            tar czf "$ClangdFile.tgz" $ClangdFile
             eval "${LFTP_ATCMD}'mkdir -fp /clangd/$guessPlat/${verNum1}${verNum2}${verNum3}B${buildNum}; \
                 cd /clangd/$guessPlat/${verNum1}${verNum2}${verNum3}B${buildNum}/; \
-                mput ${ClangdFile}'"
+                mput ${ClangdFile}.tgz'"
         else
             echo "${_ZT_ARGS_Indent}Can't push non-exist file '$ClangdFile'"
             return 1
@@ -428,9 +429,10 @@ SyncClangdJson()
         eval "$LFTP_ATCMD'ls /clangd/$guessPlat/${verNum1}*B*' > /tmp/tag.log"
         if [[ $? == 0 ]]; then
             upBuild=$(upper.awk -v t=$buildNum /tmp/tag.log)
-            eval "${LFTP_ATCMD}'mget /clangd/$guessPlat/${verNum1}*B*${upBuild}/${ClangdFile};'"
+            eval "${LFTP_ATCMD}'mget /clangd/$guessPlat/${verNum1}*B*${upBuild}/${ClangdFile}.tgz;'"
+            tar xzf "$ClangdFile.tgz"
+            rm "$ClangdFile.tgz"
             grep "${upBuild}$" /tmp/tag.log | cut -d ' ' -f 8- | sed "s/^/${_ZT_ARGS_Indent}/"
-            ftpRt=$?
         fi
     fi
 }
