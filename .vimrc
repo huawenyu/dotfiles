@@ -840,7 +840,10 @@ call plug#begin('~/.vim/bundle')
 
     " Motion {{{3
         Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']))
-        Plug 'easymotion/vim-easymotion',       Cond(has('nvim') && Mode(['editor',]))
+
+        "Plug 'easymotion/vim-easymotion',      Cond(has('nvim') && Mode(['editor',]))
+        Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]))
+
         Plug 'tpope/vim-abolish',               Cond(has('nvim') && Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
         "Plug 'karb94/neoscroll.nvim',          Cond(has('nvim') && Mode(['editor',]))
 

@@ -35,6 +35,7 @@
 #
 
 COLOR=
+verbose=0
 
 main () {
     local opt
@@ -110,12 +111,12 @@ color?when show colored output (always|never|auto)
 
     if [[ $showStatus -ge 2 ]] || [[ $showStatus == 1 ]] && [[ $verbose -ge 1 ]] ; then
         echo "Ignored:"
-        git ls-files . --ignored --exclude-standard --others | sed 's/^/    /'
+        git ls-files . --ignored --exclude-standard --others | grep -v "/obj/debug" | grep -v "node_modules" | sed 's/^/    /'
     fi
 
     if [[ $showStatus -eq 1 ]]; then
         echo "Untracked:"
-        git ls-files . --exclude-standard --others | sed 's/^/    /'
+        git ls-files . --exclude-standard --others | grep -v ".cache/clangd" | sed 's/^/    /'
     fi
 }
 
@@ -260,66 +261,63 @@ do_git_info () {
         fi
     fi
 
-    GIT_DIR="$git_dir" git branch --color=$COLOR_BRANCH > "$TEMPFILE"
-    if [ -s "$TEMPFILE"  ]; then
+    if [[ $verbose -ge 2 ]] ; then
+      GIT_DIR="$git_dir" git branch --color=$COLOR_BRANCH > "$TEMPFILE"
+      if [ -s "$TEMPFILE"  ]; then
         echo "Local Branches:"
         sed 's/^/	/' "$TEMPFILE"
+      fi
     fi
 
-    echo "Repository Configuration:"
-    GIT_DIR="$git_dir" git config --local --list | sort | {
-        prev_section=
-        prev_subsection=
-        while read line; do
-            case "$line" in
-                (*=*)
-                    lhs=$(expr "$line" : '\([^=]\{1,\}\)')
-                    rhs=$(expr "$line" : '[^=]\{1,\}=\(.*\)')
-                    case "$lhs" in
-                        (?*.?*.?*)
-                            section=$(expr "$lhs" : '\([^.]\{1,\}\)')
-                            subsection=$(expr "$lhs" : '[^.]\{1,\}\.\(.\{1,\}\)\.')
-                            key=$(expr "$lhs" : '[^.]\{1,\}\..\{1,\}\.\([^.]\{0,\}\)$')
-                            if [ "$section" != "$prev_section" -o "$subsection" != "$prev_subsection" ]; then
-                                prev_section=$section
-                                prev_subsection=$subsection
-                                case "$section" in
-                                    (remote)
-                                        subsection=$REMOTE_COLOR$subsection$RESET_COLOR
-                                        ;;
-                                    (branch)
-                                        subsection=$LOCAL_COLOR$subsection$RESET_COLOR
-                                esac
-                                printf "\t[%s \"%s\"]\n" "$section" "$subsection"
-                            fi
-                            case "$section" in
-                                (remote)
-                                    if [ "$key" = url ]; then
-                                        rhs=$REPOSITORY_COLOR$rhs$RESET_COLOR
-                                    fi
-                                    ;;
-                                (branch)
-                                    if [ "$key" = remote ]; then
-                                        rhs=$REMOTE_COLOR$rhs$RESET_COLOR
-                                    fi
-                            esac
-                            printf "\t\t%s = %s\n" "$key" "$rhs"
-                            ;;
-                        (?*.?*)
-                            section=$(expr "$lhs" : '\([^.]\{1,\}\)')
-                            key=$(expr "$lhs" : '[^.]\{1,\}\.\([^.]\{1,\}\)$')
-                            if [ "$section" != "$prev_section" -o -n "$prev_subsection" ]; then
-                                prev_section=$section
-                                prev_subsection=
-                                printf "\t[%s]\n" "$section"
-                            fi
-                            printf "\t\t$key = $rhs\n"
-                            ;;
-                        (*)
-                    esac
-            esac
-        done
-    }
+    echo "Repository Configuration: git config --local --list"
+    echo "" > $TEMPFILE
+    echo "" > $TEMPFILE2
+    GIT_DIR="$git_dir" git config --local --list > $TEMPFILE2
+    awk -F'=' -f <(cat - <<-'_EOF_'
+        #function walk_array(arr, name,    i)
+        #{
+        #    for (i in arr) {
+        #        if (isarray(arr[i]))
+        #            walk_array(arr[i], (name "[" i "]"))
+        #        else
+        #            printf("%s[%s] = %s\n", name, i, arr[i])
+        #    }
+        #}
+
+        BEGIN{c=0} {
+        }
+        match($1, /^([^.]+)?\.(.*)\.(.*)$/, grp){
+            table[ grp[1] ][ grp[2] ][ grp[3] ] = $2
+        }
+        END {
+            #walk_array(table, name, i)
+            for (type in table) {
+                print "   " type " :"
+                if (isarray(table[type])) {
+                    for (brName in table[type]) {
+                        print "      [" brName "]"
+                        if (isarray(table[type][brName])) {
+                            for (attrKey in table[type][brName]) {
+                                print "        " attrKey " = " table[type][brName][attrKey]
+                            }
+                        } else {
+                            print table[i]
+                        }
+                    }
+                } else {
+                    print table[i]
+                }
+            }
+        }
+_EOF_
+) $TEMPFILE2 > $TEMPFILE
+
+    if [[ $verbose -eq 0 ]] ; then
+        cat $TEMPFILE | grep -A4 "\[origin"
+    elif [[ $verbose -ge 2 ]] ; then
+        cat $TEMPFILE
+    fi
+
 
     if [[ $showCommit == 1 ]]; then
         (cd "$root" && GIT_DIR="$git_dir" git log --max-count=1 "$@") | {
@@ -346,6 +344,13 @@ do_git_info () {
         sed 's/^    /	/' "$TEMPFILE"
     fi
 
+    echo "Worktree: git worktree list"
+    if [[ $verbose -eq 0 ]] ; then
+        git worktree list | grep -v "workref" | awk '{print $3 " --> " $1}' | sed 's/^/	/'
+    elif [[ $verbose -ge 1 ]] ; then
+        git worktree list | awk '{print $3 " --> " $1}' | sed 's/^/	/'
+    fi
+
     finalize
 }
 
@@ -362,11 +367,20 @@ maketemp () {
         TEMPFILE="$(mktemp /tmp/git-info.XXXXXX)" || die
         trap "finalize; exit 130" 1 2 3 15
     fi
+
+    if [ -z "$TEMPFILE2" ]; then
+        TEMPFILE2="$(mktemp /tmp/git-info.XXXXXX)" || die
+        trap "finalize; exit 130" 1 2 3 15
+    fi
 }
 
 finalize () {
     if [ -n "$TEMPFILE" ]; then
         rm -f "$TEMPFILE"
+    fi
+
+    if [ -n "$TEMPFILE2" ]; then
+        rm -f "$TEMPFILE2"
     fi
 }
 
