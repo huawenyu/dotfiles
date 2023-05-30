@@ -1,0 +1,249 @@
+#!/bin/bash
+#
+# git-worktree2 - Create a worktree from a tag/remote-branch, used command like:
+#     git --work-tree=/path/to/outputdir checkout HEAD -- subdirname
+#     git checkout tags/fg_7_2356 -b fg_7_2356
+#     git worktree add -b br_7-0_http_transact_log_b0153 ~/work/bf-top3/br_7-0_http_transact_log_b0153 origin/br_7-0_http_transact_log_b0153
+#
+# How to use:
+#     $ git worktree2
+#     $ git worktree2 br_7-0_http_transact_log_b0153
+#     $ git worktree2 br_7-0_http_transact_log_b0153 ~/work/bf-top3
+#
+# Copyright (c) 2009-2022 Akinori MUSHA
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+#
+
+branchName=""
+workDir="$HOME/work"
+branchDir="bf-top3"
+
+DoIt () {
+    >&2 echo "    DO: $*"
+    eval "$@"
+}
+
+main () {
+    local opt
+    local OPTS_SPEC="\
+$0 [<options>] [<path>]
+
+$0 shows information about a Git repository.
+--
+h,help     show the help
+"
+    case "$#" in
+        2)
+            branchName="$1"
+            branchDir="$2"
+            ;;
+        1)
+            branchName="$1"
+            ;;
+        0)
+            if [ -n "$GIT_DIR" ]; then
+                set -- "$GIT_DIR"
+            else
+                set -- .
+            fi
+            ;;
+        *)
+            die "Too many arguments"
+            ;;
+    esac
+
+    git_worktree
+}
+
+git_worktree () {
+    local dir relpath root git_dir
+
+    if [ -n "$git_dir" ]; then
+        dir=
+        relpath=
+    elif case "$dir" in ?*.git) [ -d "$dir/objects" -a -d "$dir/refs" ] ;; *) false ;; esac; then
+        git_dir="$dir"
+        relpath=
+    else
+        root="$(
+            cd "$dir" || exit 1
+            while [ ! -e .git ]; do
+                [ "$(pwd)" = / ] && exit 1
+                cd ..
+            done
+            pwd
+        )" || die "Not a git repository."
+        git_dir="$root/.git"
+        if [ "$dir" = "$root" ]; then
+            relpath=.
+        elif [ -n "$relpath" ]; then
+            relpath="${dir#"$root/"}/$relpath"
+        else
+            relpath="${dir#"$root/"}"
+        fi
+    fi
+
+    set -- "$git_dir"
+    if [ -n "$relpath" ]; then
+        set -- "$@" "$relpath"
+    fi
+
+    do_git_worktree "$@"
+}
+
+do_git_worktree () {
+    local git_dir="$1" relpath="$2" root line field color reset
+    shift
+
+    echo "Repository Path: $PATH_COLOR$git_dir$RESET_COLOR"
+    if [ $# -gt 0 ]; then
+        root="$(dirname "$git_dir")"
+        if  [ "$relpath" = . ]; then
+            echo "Path: $PATH_COLOR$root$RESET_COLOR"
+        else
+            echo "Path: $PATH_COLOR$root/$relpath$RESET_COLOR"
+        fi
+    fi
+
+    maketemp
+
+    #branchName=""
+    #workDir="$HOME/work"
+    #branchDir="bf-top3"
+    # Dummy-Loop-once
+    for i in $(seq 1); do
+        if [[ -z "$branchName" ]]; then
+            break
+        fi
+
+        # Valid dest working dir
+        if [[ ! -d "$branchDir" ]]; then
+            if [[ ! -d "${workDir}/${branchDir}" ]]; then
+                mkdir -p "${workDir}/${branchDir}"
+                branchDir="${workDir}/${branchDir}"
+            fi
+            if [[ -d "${workDir}/${branchDir}" ]]; then
+                branchDir="${workDir}/${branchDir}"
+            else
+                die "    Create dest work dir fail: '${workDir}/${branchDir}'"
+            fi
+        fi
+
+        oldbranch=$( git rev-parse --abbrev-ref HEAD )
+        # Check it's exist local branch
+        if GIT_DIR="$git_dir" git branch -l | grep -q "$branchName"
+        then
+            echo "    Creating worktree against existed local branch ..."
+            if [[ -d "${branchDir}/${branchName}" ]]; then
+                echo "    The dest dir already exist: Do nothing!"
+                break
+            fi
+
+            #DoIt git --work-tree="${branchDir}/${branchName}"   checkout   ${branchName}   > /dev/null
+            DoIt git checkout   "${branchName}"   > /dev/null
+            DoIt git clone --local   "$(dirname $git_dir)"   "${branchDir}/${branchName}"
+            # Done and exit-loop
+            break
+        fi
+
+        # Check it's valid tag
+        if GIT_DIR="$git_dir" git tag -l | grep -q "$branchName"
+        then
+            echo "    Creating worktree against tag ..."
+            DoIt git --work-tree="${branchDir}/${branchName}"   checkout   tags/${branchName}   -b   ${branchName}   > /dev/null
+            # Done and exit-loop
+            break
+        fi
+
+
+        # Check it's valid remote branch
+        GIT_DIR="$git_dir" git branch -r > "$TEMPFILE"
+        if [ -s "$TEMPFILE"  ]; then
+            sed -e "s/\([ 	]\{1,\}->[ 	]\{1,\}\)\([^ 	]\{1,\}\)/\1$REMOTE_COLOR\2$RESET_COLOR/" \
+                -e 's/^ */	/' "$TEMPFILE" > $TEMPFILE2
+        fi
+
+        if grep -q "$branchName" $TEMPFILE2; then
+            echo "    Creating worktree against remote branch"
+            # git worktree add -b br_7-0_http_transact_log_b0153 ~/work/bf-top3/br_7-0_http_transact_log_b0153 origin/br_7-0_http_transact_log_b0153
+            DoIt git worktree add -b   "$branchName"   "${branchDir}/${branchName}"   origin/${branchName}
+            # Done and exit-loop
+            break
+        else
+            die "    Remote branch '${branchName}' not exist!"
+        fi
+    done
+
+
+    # Checkout back to old branch
+    if [[ ! -z "$oldbranch" ]]; then
+        curbranch=$( git rev-parse --abbrev-ref HEAD )
+        if [[ "$curbranch" !=  "$oldbranch" ]]; then
+            DoIt git checkout $oldbranch
+        fi
+    fi
+
+
+    echo "Worktree: git worktree list"
+    if [[ $verbose -eq 0 ]] ; then
+        git worktree list | grep -v "workref" | awk '{print $3 " --> " $1}' | sed 's/^/	/'
+    elif [[ $verbose -ge 1 ]] ; then
+        git worktree list | awk '{print $3 " --> " $1}' | sed 's/^/	/'
+    fi
+
+    finalize
+}
+
+die () {
+    [ "$#" -gt 0 ] && echo "$0: $@" >&2
+    finalize
+    exit 1
+}
+
+TEMPFILE=
+
+maketemp () {
+    if [ -z "$TEMPFILE" ]; then
+        TEMPFILE="$(mktemp /tmp/git-info.XXXXXX)" || die
+        trap "finalize; exit 130" 1 2 3 15
+    fi
+
+    if [ -z "$TEMPFILE2" ]; then
+        TEMPFILE2="$(mktemp /tmp/git-info.XXXXXX)" || die
+        trap "finalize; exit 130" 1 2 3 15
+    fi
+}
+
+finalize () {
+    if [ -n "$TEMPFILE" ]; then
+        rm -f "$TEMPFILE"
+    fi
+
+    if [ -n "$TEMPFILE2" ]; then
+        rm -f "$TEMPFILE2"
+    fi
+}
+
+main "$@"

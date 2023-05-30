@@ -769,6 +769,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'tmux-plugins/vim-tmux',           Cond(has('nvim') && Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
     Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && has('nvim') && Mode(['coder',]))
     Plug 'xuhdev/syntax-dosini.vim',        Cond(has('nvim') && has('nvim') && Mode(['coder',]))
+    Plug 'eiginn/iptables-vim',             Cond(has('nvim') && has('nvim') && Mode(['coder',]))
 "}}}
 
 " Improve {{{2
