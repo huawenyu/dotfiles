@@ -155,14 +155,19 @@ do_git_worktree () {
         # Check it's exist local branch
         if GIT_DIR="$git_dir" git branch -l | grep -q "$branchName"
         then
-            echo "    Creating worktree against existed local branch ..."
+            git branch -l | grep "$branchName" | sed 's/^/	Candidate: /' > "$TEMPFILE"
+            # https://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
+            branchName=$( git branch -l | grep "$branchName" | tail -1 | xargs )
+            echo "    Creating worktree against existed local branch '$branchName' ..."
+            cat "$TEMPFILE"
+
             if [[ -d "${branchDir}/${branchName}" ]]; then
                 echo "    The dest dir already exist: Do nothing!"
                 break
             fi
 
             #DoIt git --work-tree="${branchDir}/${branchName}"   checkout   ${branchName}   > /dev/null
-            DoIt git checkout   "${branchName}"   > /dev/null
+            DoIt git checkout -f  "${branchName}"   > /dev/null
             DoIt git clone --local   "$(dirname $git_dir)"   "${branchDir}/${branchName}"
             # Done and exit-loop
             break
@@ -171,7 +176,11 @@ do_git_worktree () {
         # Check it's valid tag
         if GIT_DIR="$git_dir" git tag -l | grep -q "$branchName"
         then
-            echo "    Creating worktree against tag ..."
+            git tag -l | grep "$branchName" | sed 's/^/	Candidate: /' > "$TEMPFILE"
+            branchName=$( git tag -l | grep "$branchName" | tail -1 | xargs )
+            echo "    Creating worktree against tag '$branchName' ..."
+            cat "$TEMPFILE"
+
             DoIt git --work-tree="${branchDir}/${branchName}"   checkout   tags/${branchName}   -b   ${branchName}   > /dev/null
             # Done and exit-loop
             break
@@ -194,6 +203,9 @@ do_git_worktree () {
         else
             die "    Remote branch '${branchName}' not exist!"
         fi
+
+        # Sanity loop once
+        break
     done
 
 
