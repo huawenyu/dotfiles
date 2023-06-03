@@ -162,7 +162,7 @@ do_git_worktree () {
             cat "$TEMPFILE"
 
             if [[ -d "${branchDir}/${branchName}" ]]; then
-                echo "    The dest dir already exist: Do nothing!"
+                echo "    The dest dir '${branchDir}/${branchName}' already exist: Do nothing!"
                 break
             fi
 
@@ -179,9 +179,19 @@ do_git_worktree () {
             git tag -l | grep "$branchName" | sed 's/^/	Candidate: /' > "$TEMPFILE"
             branchName=$( git tag -l | grep "$branchName" | tail -1 | xargs )
             echo "    Creating worktree against tag '$branchName' ..."
+            #commitSHA=$( git rev-list -n 1 tags/${branchName} )
             cat "$TEMPFILE"
 
-            DoIt git --work-tree="${branchDir}/${branchName}"   checkout   tags/${branchName}   -b   ${branchName}   > /dev/null
+            if [[ -d "${branchDir}/${branchName}" ]]; then
+                echo "    The dest dir '${branchDir}/${branchName}' already exist: Do nothing!"
+                break
+            fi
+
+            DoIt  git  checkout -f  tags/${branchName}   -b   ${branchName}   > /dev/null
+            DoIt git clone --local   "$(dirname $git_dir)"   "${branchDir}/${branchName}"
+            #DoIt git --work-tree="${branchDir}/${branchName}"   checkout   tags/${branchName}   -b   ${branchName}   > /dev/null
+            #DoIt git worktree add -f --checkout  -B ${branchName}  "${branchDir}/${branchName}"  ${commitSHA}
+
             # Done and exit-loop
             break
         fi
@@ -196,6 +206,12 @@ do_git_worktree () {
 
         if grep -q "$branchName" $TEMPFILE2; then
             echo "    Creating worktree against remote branch"
+
+            if [[ -d "${branchDir}/${branchName}" ]]; then
+                echo "    The dest dir '${branchDir}/${branchName}' already exist: Do nothing!"
+                break
+            fi
+
             # git worktree add -b br_7-0_http_transact_log_b0153 ~/work/bf-top3/br_7-0_http_transact_log_b0153 origin/br_7-0_http_transact_log_b0153
             DoIt git worktree add -b   "$branchName"   "${branchDir}/${branchName}"   origin/${branchName}
             # Done and exit-loop
@@ -213,7 +229,7 @@ do_git_worktree () {
     if [[ ! -z "$oldbranch" ]]; then
         curbranch=$( git rev-parse --abbrev-ref HEAD )
         if [[ "$curbranch" !=  "$oldbranch" ]]; then
-            DoIt git checkout $oldbranch
+            DoIt git checkout -f $oldbranch
         fi
     fi
 
