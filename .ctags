@@ -1,0 +1,6 @@
+--langmap=tcl:+.ws3.test
+--regex-tcl=/^[ \t]*(::)?web::command[ \t]+([^ \t]+)[ \t]+\{/\2/c,command/
+--regex-tcl=/^[ \t]*(::)?web::command[ \t]+\{/default/c,command/
+--regex-tcl=/^[ \t]*((::)?tcltest::)?test[ \t]+([^ \t]+)[ \t]+\{/\3/t,tests/
+--regex-tcl=/^(set|variable)[ \t]+([^ \t]+)[ \t]+(.+)/\2/Globals/
+
