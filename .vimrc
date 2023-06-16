@@ -738,7 +738,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'huawenyu/startscreen.vim',        Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
     Plug 'millermedeiros/vim-statline',     Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
-    Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]))	 | " Standalone UI for nvim-lsp progress
+    Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',          Cond(has('nvim') && Mode(['editor'])) | " place, toggle and display marks
 
