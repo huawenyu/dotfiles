@@ -886,7 +886,7 @@ call plug#begin('~/.vim/bundle')
         Plug 'williamboman/nvim-lsp-installer', Cond(has('nvim') && Mode(['coder',]))
 
         "Plug 'glepnir/lspsaga.nvim',       Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': 'main'})
-        Plug 'huawenyu/nvim-lspfuzzy',      Cond(has('nvim') && Mode(['editor',]))  | " Sink lsp-result to fzf-float-windows, Select-All<c-aa> sink again to quickfix(<enter>)
+        Plug 'ojroques/nvim-lspfuzzy',      Cond(has('nvim') && Mode(['editor',]))  | " Sink lsp-result to fzf-float-windows, Select-All<c-aa> sink again to quickfix(<enter>)
         "Plug 'gfanto/fzf-lsp.nvim',        Cond(has('nvim') && Mode(['editor',]))
         "Plug 'VonHeikemen/lsp-zero.nvim',  Cond(has('nvim') && Mode(['editor',]))
 
