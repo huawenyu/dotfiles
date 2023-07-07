@@ -561,9 +561,20 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " ColorTheme {{{2
-    Plug 'vim-scripts/holokai',         Cond(IfNoPlug('seoul256.vim') && Mode(['theme', 'floatview']))
-    Plug 'junegunn/seoul256.vim',       Cond(IfNoPlug('holokai')      && Mode(['theme', 'floatview']))
-    Plug 'NLKNguyen/papercolor-theme',  Cond(Mode(['theme', 'floatview']))        |  " set background=light;colorscheme PaperColor
+    Plug 'tomasr/molokai'
+    Plug 'vim-scripts/holokai'
+    "Plug 'pR0Ps/molokai-dark'
+    "Plug 'shannonmoeller/vim-monokai256'
+
+    Plug 'nanotech/jellybeans.vim'
+
+    "Plug 'loctvl842/monokai-pro.nvim'
+    "Plug 'ayu-theme/ayu-vim'
+
+    "Plug 'junegunn/seoul256.vim'
+    "Plug 'NLKNguyen/papercolor-theme'
+    Plug 'marko-cerovac/material.nvim'
+    "Plug 'cpea2506/one_monokai.nvim'
 "}}}
 
 " Writer {{{2
@@ -595,7 +606,7 @@ call plug#begin('~/.vim/bundle')
         " Plug 'nvim-treesitter/playground'
         " Plug 'romgrk/nvim-treesitter-context'
         " Plug 'nelstrom/vimprint'
-        Plug 'marko-cerovac/material.nvim'
+        Plug 'andymass/vim-matchup'
     "}}}
 
     " Comment,Extra {{{3
