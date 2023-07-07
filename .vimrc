@@ -590,11 +590,12 @@ call plug#begin('~/.vim/bundle')
         "       \ })
         " endif
 
-        " Plug 'nvim-treesitter/nvim-treesitter'
+        Plug 'nvim-treesitter/nvim-treesitter',   Cond(has('nvim') && Mode(['admin']), { 'do': ':TSUpdate' })
         " Plug 'nvim-treesitter/nvim-treesitter-refactor'
         " Plug 'nvim-treesitter/playground'
         " Plug 'romgrk/nvim-treesitter-context'
         " Plug 'nelstrom/vimprint'
+        Plug 'marko-cerovac/material.nvim'
     "}}}
 
     " Comment,Extra {{{3
@@ -725,7 +726,7 @@ call plug#begin('~/.vim/bundle')
         " ge: open link
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
         " [[, []: previous header/sibling
-        Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        "Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
 
         "Plug 'SidOfc/mkdx',                Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',         Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
