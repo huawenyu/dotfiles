@@ -566,7 +566,7 @@ call plug#begin('~/.vim/bundle')
     "Plug 'pR0Ps/molokai-dark'
     "Plug 'shannonmoeller/vim-monokai256'
 
-    Plug 'nanotech/jellybeans.vim'
+    Plug 'huawenyu/jellybeans.vim'
 
     "Plug 'loctvl842/monokai-pro.nvim'
     "Plug 'ayu-theme/ayu-vim'
