@@ -85,6 +85,12 @@
 "       let g:vim_confi_option = extend(g:vim_confi_option, mylocal_vim_confi)
 "
 "
+" Check_commands:
+"
+" :colorscheme holokai
+" :colorscheme jellybeans
+" :echo colors_name
+"
 " Help:(press 'H' on the words, or list all wiki, and builtin tutor commands ":vimtutor" for vim, ":Tutor" for neovim)
 " require-plug(vim-floaterm/vim-basic/vim.config
 "
@@ -601,12 +607,12 @@ call plug#begin('~/.vim/bundle')
         "       \ })
         " endif
 
-        Plug 'nvim-treesitter/nvim-treesitter',   Cond(has('nvim') && Mode(['admin']), { 'do': ':TSUpdate' })
-        " Plug 'nvim-treesitter/nvim-treesitter-refactor'
-        " Plug 'nvim-treesitter/playground'
-        " Plug 'romgrk/nvim-treesitter-context'
-        " Plug 'nelstrom/vimprint'
-        Plug 'andymass/vim-matchup'
+        Plug 'nvim-treesitter/nvim-treesitter',             Cond (has('nvim') && Mode(['admin']), { 'do': ':TSUpdate', 'for': ['c', 'cpp', 'rust', 'java', 'awk', 'bash', 'meson', 'python', 'tcl', 'expect'] })
+        " Plug 'nvim-treesitter/nvim-treesitter-refactor',  Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+        " Plug 'nvim-treesitter/playground',                Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+        " Plug 'romgrk/nvim-treesitter-context',            Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+        " Plug 'nelstrom/vimprint',                         Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+        Plug 'andymass/vim-matchup',                        Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
     "}}}
 
     " Comment,Extra {{{3
@@ -667,8 +673,8 @@ call plug#begin('~/.vim/bundle')
     "}}}
 
     " Python {{{3
-        Plug 'python-mode/python-mode',     Cond(has('nvim') && Mode(['coder']) && Mode(['python']), {'for': 'python'})
-        Plug 'davidhalter/jedi-vim',        Cond(has('nvim') && Mode(['coder']) && Mode(['python']), {'for': 'python'}) | " K: doc-of-method; <leader>d: go-definition; n: usage-of-file; r: rename
+        Plug 'python-mode/python-mode',     Cond(has('nvim') && Mode(['coder']) && Mode(['python']), {'for': 'python', 'frozen': 1 })
+        Plug 'davidhalter/jedi-vim',        Cond(has('nvim') && Mode(['coder']) && Mode(['python']), {'for': 'python', 'frozen': 1 }) | " K: doc-of-method; <leader>d: go-definition; n: usage-of-file; r: rename
     "}}}
 
     " LaTeX {{{3
@@ -1033,13 +1039,18 @@ call plug#begin('~/.vim/bundle')
 
 call plug#end()
 
-
 " Keymap fzf {{{2
 " If don't source it directly, looks this plugin not works.
 if HasPlug('vim-shortcut')
     " Shortcut! keys description
     let thedir = PlugGetDir('vim-shortcut')
     exec "source ". thedir. "plugin/shortcut.vim"
+endif
+
+
+" Load my lua utils functions
+if HasPlug('vim-basic')
+    lua require 'nvim_utils'
 endif
 
 
