@@ -86,6 +86,7 @@
 "
 "
 " Check_commands:
+" https://www.color-hex.com/color
 "
 " :colorscheme holokai
 " :colorscheme jellybeans
