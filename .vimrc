@@ -776,6 +776,8 @@ call plug#begin('~/.vim/bundle')
 "}}}
 
 " Syntax/Language {{{2
+    "Plug 'norcalli/nvim-colorizer.lua'
+
     " Speedup vim by disable syntastic checker when write event
     "Plug 'vim-syntastic/syntastic',        Cond(has('nvim') && Mode(['editor', 'floatview']))
     ""Plug 'Chiel92/vim-autoformat',        Cond(has('nvim') && Mode(['coder',]))
