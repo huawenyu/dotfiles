@@ -976,7 +976,7 @@ call plug#begin('~/.vim/bundle')
     " Project/Session/Workspace {{{3
         "Plug 'tpope/vim-projectionist',         Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
         "Plug 'c-brenn/fuzzy-projectionist.vim', Cond(has('nvim') && Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
-        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))  | " neovim > 0.7
+        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), {'frozen': 1})  | " neovim > 0.7
     "}}}
 
     " File/Explore {{{3
