@@ -179,7 +179,7 @@ let g:vim_confi_option = {
       \ 'help_keys': 1,
       \ 'qf_preview': 0,
       \
-      \ 'start_page': '$HOME/dotfiles/startpage.md',
+      \ 'start_page': "$HOME/dotfiles/startpage.md",
       \ 'wiki_dirs': ['~/dotwiki', '~/wiki', '~/dotfiles', ],
       \ 'tmp_file': '/tmp/vim.tmp',
       \}
@@ -817,7 +817,7 @@ call plug#begin('~/.vim/bundle')
         "Plug 'neomake/neomake',            Cond(has('nvim') && Mode(['admin',]))
 
         Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]))
-        Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]), { 'do': 'ln -s $HOME/.vim_tasks.ini $HOME/.vim/tasks.ini' })   | " ~/.vim/tasks.ini
+        Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
     "}}}
 
     " Search/Jump {{{3
@@ -976,7 +976,7 @@ call plug#begin('~/.vim/bundle')
     " Project/Session/Workspace {{{3
         "Plug 'tpope/vim-projectionist',         Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
         "Plug 'c-brenn/fuzzy-projectionist.vim', Cond(has('nvim') && Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
-        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), {'frozen': 1})  | " neovim > 0.7
+        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']))  | " neovim > 0.7
     "}}}
 
     " File/Explore {{{3
