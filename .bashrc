@@ -108,6 +108,17 @@ plugins=(
 source "$OSH"/oh-my-bash.sh
 
 # User configuration
+add_paths=( \
+  "$HOME/dotfiles/script" \
+  "$HOME/dotwiki/tool" \
+)
+for aPath in "${add_paths[@]}"
+do
+    if [ -d $aPath ]; then
+        export PATH="$aPath:$PATH"
+    fi
+done
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
