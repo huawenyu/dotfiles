@@ -15,6 +15,15 @@
 "   - Reload a plugin:    :PlugUpdate deoplete.nvim
 "
 " Install:  help 'H' on the topic
+" - [Windows]
+"     ### Install
+"        - Doc: https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
+"        - Install Git (available at https://git-scm.com/downloads)
+"        - Copy the plug.vim and place it in "autoload" directory of vim.
+"        - In your .vimrc, include the plugins that you need to install.
+"        - Save and source the .vimrc.
+"        - Run ":PlugInstall"
+"
 " - [Debian]
 "     ### Auto setup/install env
 "         wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
@@ -98,7 +107,7 @@
 " - vim-tutor?
 " - latest-neovim?
 " - vi-to-neovim?
-" - windows-install?    https://jdhao.github.io/2018/11/15/neovim_configuration_windows/   MUST install: windows-version git, curl
+" - windows-install?
 " - checkhealth?
 " - vim-more?
 " - troubleshooting? (Find which script change the config, howto enable debug log)
