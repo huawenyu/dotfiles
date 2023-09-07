@@ -904,7 +904,7 @@ endif
         "Plug 'ms-jpq/coq.artifacts',       Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': 'artifacts'})
         "Plug 'ms-jpq/coq.thirdparty',      Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': '3p'})
 
-        Plug 'Shougo/deoplete.nvim',        Cond(has('nvim') && Mode(['editor',]))         | "{ 'do': ':UpdateRemotePlugins' }
+        Plug 'Shougo/deoplete.nvim',        Cond(has('nvim') && Mode(['editor',]) && LINUX(), )         | "{ 'do': ':UpdateRemotePlugins' }
         Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
         Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
