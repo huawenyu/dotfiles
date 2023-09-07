@@ -18,6 +18,7 @@
 " - [Windows]
 "     ### Install
 "        - Doc: https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
+"        - Install neovim, https://github.com/neovim/neovim/wiki/Installing-Neovim
 "        - Install Git (available at https://git-scm.com/downloads)
 "        - Copy the plug.vim and place it in "autoload" directory of vim.
 "        - In your .vimrc, include the plugins that you need to install.
