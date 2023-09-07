@@ -98,7 +98,7 @@
 " - vim-tutor?
 " - latest-neovim?
 " - vi-to-neovim?
-" - windows-install?
+" - windows-install?    https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
 " - checkhealth?
 " - vim-more?
 " - troubleshooting? (Find which script change the config, howto enable debug log)
@@ -186,23 +186,6 @@ let g:vim_confi_option = {
 " =============================================================
 
 " Plugins {{{1
-" https://github.com/habamax/.vim/blob/e9312935fb915fd6bfc4436b70b300387445aef8/vimrc
-" Vim-Plug bootstrapping. {{{2
-" Don't forget to call :PlugInstall
-let g:vim_plug_installed = filereadable(expand('~/.vim/autoload/plug.vim'))
-if !g:vim_plug_installed
-    echomsg "Install vim-plug with 'InstallVimPlug' command and restart vim."
-    echomsg "'curl' should be installed first"
-    command InstallVimPlug !mkdir -p ~/.vim/autoload |
-                \ curl -fLo ~/.vim/autoload/plug.vim
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
-
-" Do not load plugins if plugin manager is not installed.
-if !g:vim_plug_installed
-    finish
-endif
-
 if g:vim_confi_option.remap_leader
     " Bother when termopen and input space cause a little pause-stop-wait
     let mapleader = "\<Space>"
@@ -277,6 +260,22 @@ endif
         set nocompatible        " Must be first line
         if UNIXLIKE()
             set shell=/bin/sh
+            " https://github.com/habamax/.vim/blob/e9312935fb915fd6bfc4436b70b300387445aef8/vimrc
+            " Vim-Plug bootstrapping. {{{2
+            " Don't forget to call :PlugInstall
+            let g:vim_plug_installed = filereadable(expand('~/.vim/autoload/plug.vim'))
+            if !g:vim_plug_installed
+                echomsg "Install vim-plug with 'InstallVimPlug' command and restart vim."
+                echomsg "'curl' should be installed first"
+                command InstallVimPlug !mkdir -p ~/.vim/autoload |
+                            \ curl -fLo ~/.vim/autoload/plug.vim
+                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            endif
+
+            " Do not load plugins if plugin manager is not installed.
+            if !g:vim_plug_installed
+                finish
+            endif
 
             ":help 'rtp'
             ":help $VIMRUNTIME
