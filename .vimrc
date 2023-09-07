@@ -98,7 +98,7 @@
 " - vim-tutor?
 " - latest-neovim?
 " - vi-to-neovim?
-" - windows-install?    https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
+" - windows-install?    https://jdhao.github.io/2018/11/15/neovim_configuration_windows/   MUST install: windows-version git, curl
 " - checkhealth?
 " - vim-more?
 " - troubleshooting? (Find which script change the config, howto enable debug log)
@@ -288,9 +288,9 @@ endif
     " Windows Compatible {
         " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
         " across (heterogeneous) systems easier.
-        if WINDOWS()
-            set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-        endif
+        "if WINDOWS()
+        "    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+        "endif
     " }
 
     " Arrow Key Fix {
@@ -548,7 +548,11 @@ endif
 
 " Plugins {{{1}}}
 " more-plugins?
+if WINDOWS()
+call plug#begin('~/AppData/Local/nvim/plugged')
+else
 call plug#begin('~/.vim/bundle')
+endif
 
 " Using vimplug as multiple repo manager: other not vim-plugins repos {{{2
     Plug 'huawenyu/dotfiles',           {'dir': '~/dotfiles', 'do': './script/up-dot.sh', 'on': ['NeverEverLoadMe'], 'for': 'RepoManager'}
