@@ -1064,9 +1064,12 @@ if HasPlug('vim-shortcut')
 endif
 
 
-" Load my lua utils functions
-if HasPlug('vim-basic')
-    lua require 'nvim_utils'
+" nvim/vim shared: vim-basic
+if has('nvim') && Mode(['coder',])
+    if HasPlug('vim-basic')
+        " Load my lua utils functions
+        lua require 'nvim_utils'
+    endif
 endif
 
 
