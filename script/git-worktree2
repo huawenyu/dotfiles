@@ -157,7 +157,10 @@ do_git_worktree () {
         then
             git branch -l | grep "$branchName" | sed 's/^/	Candidate: /' > "$TEMPFILE"
             # https://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
-            branchName=$( git branch -l | grep "$branchName" | tail -1 | xargs )
+            # "+ br_1-0_my_sp1"   ==> br_1-0_my_sp1
+            _branchName=$( git branch -l | grep "$branchName" | tail -1 | xargs | tr -s '[:blank:]' ':')
+            branchName=${_branchName##*:}
+
             echo "    Creating worktree against existed local branch '$branchName' ..."
             cat "$TEMPFILE"
 
@@ -167,6 +170,7 @@ do_git_worktree () {
             fi
 
             #DoIt git --work-tree="${branchDir}/${branchName}"   checkout   ${branchName}   > /dev/null
+            DoIt git worktree prune
             DoIt git checkout -f  "${branchName}"   > /dev/null
             DoIt git clone --local   "$(dirname $git_dir)"   "${branchDir}/${branchName}"
             # Done and exit-loop
