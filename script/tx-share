@@ -53,9 +53,8 @@ EOF
 
 write "$guest_user" <<EOF || :
 You can attach $USER's session by running:
-
     $attach_cmd
+  Append "-r" for read-only access.
 
-Append "-r" for read-only access.
 EOF
 
