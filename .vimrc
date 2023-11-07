@@ -1,5 +1,7 @@
 " vim: set expandtab: set tabstop=4: set shiftwidth=4: set softtabstop=4:
 " =============================================================
+" Plugins Rank:
+"   https://vimawesome.com
 " TryIt:
 " - vim --clean         Startup vim without any config/plug
 " - <Space>             Is the leader
@@ -840,6 +842,8 @@ endif
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
         Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
+
+        Plug 'romainl/vim-cool',           Cond(has('nvim') && Mode(['editor',]))  | " No config, just disables search highlighting when you are done searching and re-enables it when you search again.
 
         " Tags/cscope/indexer? {{{4
             Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
