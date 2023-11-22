@@ -38,7 +38,7 @@ case "$1" in
 	id "$guest_user" > /dev/null
 	sudo setfacl -m u:"$guest_user":rw "${socket_path}"
 	sudo setfacl -m u:"$guest_user":rX "${socket_path%/*}"
-	tmux server-access -a "$guest_user"
+	tmux server-access -a "$guest_user" || true
 	;;
 esac
 
