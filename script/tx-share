@@ -27,8 +27,8 @@ case "$1" in
 	exit 1
 	;;
     -x)
-	setfacl --remove-all "${socket_path}"
-	setfacl --remove-all "${socket_path%/*}"
+	sudo setfacl --remove-all "${socket_path}"
+	sudo setfacl --remove-all "${socket_path%/*}"
 	tmux detach-client -a	# Detach all other clients
 	echo >&2 "Unshared"
 	exit 0
@@ -36,8 +36,9 @@ case "$1" in
     *)
 	guest_user=${1:?No user specified}
 	id "$guest_user" > /dev/null
-	setfacl -m u:"$guest_user":rw "${socket_path}"
-	setfacl -m u:"$guest_user":rX "${socket_path%/*}"
+	sudo setfacl -m u:"$guest_user":rw "${socket_path}"
+	sudo setfacl -m u:"$guest_user":rX "${socket_path%/*}"
+	tmux server-access -a "$guest_user"
 	;;
 esac
 
