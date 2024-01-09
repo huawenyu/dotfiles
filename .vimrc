@@ -997,8 +997,11 @@ endif
     "}}}
 
     " File/Explore {{{3
-        Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
-        Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
+        "Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
+        "Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
+        Plug 'lambdalisue/fern.vim',            Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :Fern . -draw -width=30
+            Plug 'LumaKernel/fern-mapping-fzf.vim', Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " maps-for-fern-windows: ff, fd, fa, frf, frd, fra
+            "Plug 'yuki-yano/fern-preview.vim',      Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :
 
         " Plugin 'defx' {{{4
         if has('nvim')

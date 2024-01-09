@@ -2,6 +2,7 @@
 # https://github.com/dubiousjim/awkenough/blob/master/library.awk
 # globals EXITCODE, MISSING
 #
+@namespace "util"
 
 # if you call die, assert, or check*: start END blocks with
 #    { if (EXITCODE) exit EXITCODE; ... }
