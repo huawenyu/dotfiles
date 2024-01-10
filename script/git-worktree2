@@ -10,35 +10,6 @@
 #     $ git worktree2 br_7-0_http_transact_log_b0153
 #     $ git worktree2 br_7-0_http_transact_log_b0153 ~/work/bf-top3
 #
-# Copyright (c) 2009-2022 Akinori MUSHA
-#
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-# SUCH DAMAGE.
-#
-
-var_branchName=""
-var_workDir="$HOME/work"
-var_branchDir="bf-top3"
 
 
 # Check Prerequirement: {{{1}}}
@@ -57,14 +28,17 @@ git worktree2: create a worktree from tags/remote-branch/create-new-branch
       git worktree2 -b br_7-0_new_feature1
 
       ###-- Create a new worktree by <branchname>
-      git worktree2 -c br_7-0_new_feature1
+      git worktree2 -a new br_7-0_new_feature1
 
       ###-- Create a new worktree into <dstdir> by <branchname> against tags/remote-branch
       git worktree2 br_7-0_new_feature1 ~/work/bf-top3
       git worktree2 -b br_7-0_new_feature1 -o ~/work/bf-top3
 
+      ###-- Create a merge request
+      git worktree2 -a push br_7-0_new_feature1
+
       ###-- Delete the worktree by <name>
-      git worktree2 -d br_7-0_new_feature1
+      git worktree2 -a delete br_7-0_new_feature1
 END
 )
 type getoptions 2>&1 > /dev/null || (echo "require install shellscript getoptions <===???"; echo ""; echo "$_PreRequirement"; exit 2;)
@@ -75,12 +49,13 @@ function parser_definition() {
   setup   REST help:usage -- "Usage: git worktree2 [options] [branch-name] [dest-work-dir] ..." ''
 
   msg -- 'Options:'
-  flag  var_DEBUG      -n --dryrun       -- "Debug mode and list all local variable"
-  flag  var_DELETE     -d --delete       -- "Debug mode and list all local variable"
-  flag  var_Create     -c --create         -- "Create a new branch"
-  param var_branchName -b --branch      -- "The branch name"
-  param var_workDir    -w   --work   init:="$HOME/work"        -- "Checking existed dir"
-  param var_branchDir  -o   --out   init:="bf-top3"        -- "Working  dir"
+  flag  var_VERBOSE    -v --verbose  counter:true init:=0    -- "e.g. -vvv is verbose level 3"
+  flag  var_DEBUG      -n --dryrun                           -- "Debug mode and list all local variable"
+  param var_ACTION     -a --action   init:="switch"  pattern:"switch | new | pull | push | delete"     -- "Action: *switch|new|pull|push|delete"
+  param var_branchName -b --branch                           -- "The branch name"
+  param var_Message    -m --message                          -- "The review/push commit message"
+  param var_workDir    -w --work     init:="$HOME/work"      -- "Checking existed dir"
+  param var_branchDir  -o --out      init:="bf-top3"         -- "Working  dir"
 
   disp  VERSION        --version
   disp  :usage         -h --help   -- "$_PreRequirement"
@@ -200,8 +175,16 @@ do_git_worktree () {
     #var_branchDir="bf-top3"
     # Dummy-Loop-once
     for i in $(seq 1); do
+        oldbranch=$( git rev-parse --abbrev-ref HEAD )
+
         if [[ -z "$var_branchName" ]]; then
-            break
+            # If it's already special branch name, assign to branchName
+            n=${#oldbranch}
+            if [[ $n -gt 6 ]]; then
+                var_branchName="$oldbranch"
+            else
+                break
+            fi
         fi
 
         # Check Valid dest working dir {{{2}}}
@@ -217,16 +200,29 @@ do_git_worktree () {
             fi
         fi
 
-        oldbranch=$( git rev-parse --abbrev-ref HEAD )
-
-        # Delete a worktree {{{2}}}
-        if [[ -n "$var_DELETE" ]]; then
+        if [[ $var_ACTION == "delete" ]]; then
+            # Delete a worktree {{{2}}}
             if GIT_DIR="$git_dir" git worktree list | grep -q "$var_branchName"
             then
                  _worktreeDirName=$( git worktree list | grep "$var_branchName" | awk '{print $1}')
+                 # Ignore un-commit change
                  DoIt git worktree remove --force  "${_worktreeDirName}"
                  DoIt git worktree prune
             fi
+
+            break
+        elif [[ $var_ACTION == "push" ]]; then
+            n=$( git diff | wc -l )
+            if [[ $n -gt 0 ]]; then
+                if [[ -n "$var_Message" ]]; then
+                    DoIt git commit -am "'$var_Message'"
+                else
+                    die "    Merge request branch '${var_branchName}' fail, maybe give commit message by '-m', '--message'!"
+                fi
+            fi
+
+            # Request a Merge request for review {{{2}}}
+            DoIt git push origin HEAD:$var_branchName || true
 
             break
         fi
@@ -304,11 +300,11 @@ do_git_worktree () {
 
 
         # Will exit if not intentional create a new local branch {{{2}}}
-        if [[ -n "$var_Create" ]]; then
+        if [[ $var_ACTION == "new" ]]; then
             # git worktree add ../app-example-2 origin/main -b bug-fix
             DoIt git worktree add -b   "$var_branchName"   "${var_branchDir}/${var_branchName}"   origin/${oldbranch}
         else
-            die "    Remote branch '${var_branchName}' not exist!"
+            die "    Remote branch '${var_branchName}' not exist, maybe create a new branch by '-c', '--create'!"
         fi
 
 
