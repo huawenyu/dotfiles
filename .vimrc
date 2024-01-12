@@ -759,7 +759,8 @@ endif
         " ge: open link
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
         " [[, []: previous header/sibling
-        "Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'ellisonleao/glow.nvim',       Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), { 'on':  ['Glow'], 'for': 'markdown'})
 
         "Plug 'SidOfc/mkdx',                Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',         Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
