@@ -4,7 +4,7 @@ linux config files: zsh, tmux, vim, script, ...
 - editor: nvim
 - tmux: multiple shell with share support
 - [sub](https://github.com/qrush/sub): a delicious way to organize programs/scripts/tools
-- vimplug: update this dotfiles
+- vimplug: nvim/vim plugin manager, used to update this `dotfiles`
 - xsel: clipboard tool
 
 ## Install
@@ -20,6 +20,10 @@ linux config files: zsh, tmux, vim, script, ...
 
 ## Usage
 
-For your convenience, please add the `<your-download-dir>/dotfiles/script` to `$PATH` by
-`export PATH=$HOME/dotfiles/script:$PATH` to our `.bashrc` or `.zshrc`
+For your convenience, please add the `<your-download-dir>/dotfiles/script` to `$PATH`:
+
+```sh
+###  add this line to `.bashrc` or `.zshrc`
+export PATH=$HOME/dotfiles/script:$PATH
+```
 
