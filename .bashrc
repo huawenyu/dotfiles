@@ -145,3 +145,6 @@ done
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
