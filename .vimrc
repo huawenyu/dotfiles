@@ -845,6 +845,7 @@ endif
             Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         Plug 'romainl/vim-cool',           Cond(has('nvim') && Mode(['editor',]))  | " No config, just disables search highlighting when you are done searching and re-enables it when you search again.
+        Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
 
         " Tags/cscope/indexer? {{{4
             Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))

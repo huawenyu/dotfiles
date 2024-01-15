@@ -12,7 +12,7 @@ export OSH='/home/hyu/.oh-my-bash'
 #OSH_THEME="rana"
 #OSH_THEME="pure"
 #OSH_THEME="font"
-#OSH_THEME="robbyrussell"
+OSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # OMB_CASE_SENSITIVE="true"
@@ -146,5 +146,6 @@ done
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
+eval "$(/home/hyu/sub-me/bin/me init -)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
