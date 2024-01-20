@@ -231,14 +231,29 @@ do_git_info () {
 
     shift
 
+    : ' Comments
+    echo "test1"
+    echo "test2"
+    echo "test3"
+    branchName=$( git rev-parse --abbrev-ref HEAD )
+    echo $branchName
+    '
     echo "Repository Path: $PATH_COLOR$git_dir$RESET_COLOR"
+    branchName=$( git rev-parse --abbrev-ref HEAD )
 
     if [ $# -gt 0 ]; then
+
+        # Get parent name
+        commitMsg=$( grep -m 1 "$branchName^" <( git show-branch -a 2> /dev/null) )
+        shortCommit=$( echo $commitMsg | sed -n "s/.*${branchName}.*]\s*\(\S*\):.*$/\1/p" )
+        commitParent=$( grep -m 1 "HEAD.*$shortCommit" <( git log --pretty=format:'%d %s') )
+        parentName=$( echo $commitParent | sed -n "s/.*, \(.*\)) .*$/\1/p" )
+
         root="$(dirname "$git_dir")"
         if  [ "$relpath" = . ]; then
-            echo "Path: $PATH_COLOR$root$RESET_COLOR"
+            echo "Branch from '$parentName': '$branchName' at $PATH_COLOR$root$RESET_COLOR"
         else
-            echo "Path: $PATH_COLOR$root/$relpath$RESET_COLOR"
+            echo "Branch from '$parentName': '$branchName' at $PATH_COLOR$root/$relpath$RESET_COLOR"
         fi
     fi
 
