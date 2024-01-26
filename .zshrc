@@ -4,6 +4,7 @@
 # $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # $ git clone https://github.com/huawenyu/zsh-local.git     ~/.oh-my-zsh/custom/plugins/zsh-local
 # $ git clone https://github.com/zsh-users/zsh-completions  ~/.oh-my-zsh/custom/plugins/zsh-completions
+# $ git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
 #
 ######################################################################################################
 # Path to your oh-my-zsh installation.
@@ -84,7 +85,7 @@ COMPLETION_WAITING_DOTS="true"
 #      ctrl-d, to delete selected matches.
 #plugins=(lighthouse history-search-multi-word zsh-directory-history history-substring-search zsh-completions zsh-autosuggestions)
 #plugins=(history-substring-search zsh-completions zsh-local fzf-marks)
-plugins=(history-substring-search zsh-completions zsh-local)
+plugins=(history-substring-search zsh-completions zsh-vi-mode zsh-local)
 autoload -U compinit && compinit
 
 # Folder permission "Insecure completion-dependent directories detected" #6835
@@ -122,6 +123,9 @@ function git_prompt_info() {
 # Use these lines to enable search by globs, e.g. gcc*foo.c
 #
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(atuin init zsh)"
+
 if [ -e /home/wilson/.nix-profile/etc/profile.d/nix.sh ]; then . /home/wilson/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export LFTP_ATCMD="lftp --norc -c 'open -u ftpuser,ftpuser 172.16.80.139; set ftp:ssl-allow off; set xfer:clobber on; set ssl:verify-certificate no;'"
+

@@ -245,15 +245,19 @@ do_git_info () {
 
         # Get parent name
         commitMsg=$( grep -m 1 "$branchName^" <( git show-branch -a 2> /dev/null) )
-        shortCommit=$( echo $commitMsg | sed -n "s/.*${branchName}.*]\s*\(\S*\):.*$/\1/p" )
+        shortCommit=$( echo $commitMsg | sed -n "s/.*${branchName}.*]\s*\(.*\):.*$/\1/p" )
         commitParent=$( grep -m 1 "HEAD.*$shortCommit" <( git log --pretty=format:'%d %s') )
-        parentName=$( echo $commitParent | sed -n "s/.*, \(.*\)) .*$/\1/p" )
+        parentName=$( echo $commitParent | sed -n "s/\(.*\?\)origin\/\(.*\),.*$/\2/p" )
+
+        # Get up-stream
+        upStream=$( git branch -vv | grep "$branchName" | sed -n "s/.*\[\(.*\)\].*$/\1/p" )
 
         root="$(dirname "$git_dir")"
+        echo "Branch from '$parentName', remote trace '$upStream'"
         if  [ "$relpath" = . ]; then
-            echo "Branch from '$parentName': '$branchName' at $PATH_COLOR$root$RESET_COLOR"
+            echo "  Path: $PATH_COLOR$root$RESET_COLOR"
         else
-            echo "Branch from '$parentName': '$branchName' at $PATH_COLOR$root/$relpath$RESET_COLOR"
+            echo "  Path: $PATH_COLOR$root/$relpath$RESET_COLOR"
         fi
     fi
 
@@ -373,6 +377,12 @@ die () {
     [ "$#" -gt 0 ] && echo "$0: $@" >&2
     finalize
     exit 1
+}
+
+# Usage:
+#   debug myvar
+debug () {
+    echo "$1 => \"$(eval echo \$$1)\"" >&2;
 }
 
 TEMPFILE=
