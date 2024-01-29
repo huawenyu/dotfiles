@@ -12,9 +12,11 @@
 "
 " - Troubleshooting:
 " -------------
-"   - Enable log:   let g:vim_confi_option.debug = 1
-"   - Check log:    (LinuxPC) $ tail -f /tmp/vim.log
-"   - Reload a plugin:    :PlugUpdate deoplete.nvim
+"   1. Enable log:   let g:vim_confi_option.debug = 1
+"   2. Ensure the instance existed:
+"         " Insert this line to the front of our vimscript:
+"         silent! let s:log = logger#getLogger(expand('<sfile>:t'))
+"   3. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
 "
 " Install:  help 'H' on the topic
 " - [Windows]
@@ -165,7 +167,7 @@ let g:vim_confi_option = {
       \ 'theme': 1,
       \ 'conf': 1,
       \ 'verbose': 0,
-      \ 'debug': 0,
+      \ 'debug': 1,
       \
       \ 'upper_keyfixes': 1,
       \ 'enable_map_basic': 1,
@@ -837,7 +839,6 @@ endif
     "}}}
 
     " Search/Jump {{{3
-        Plug 'google/vim-searchindex',      Cond(has('nvim') && Mode(['editor',]))  | " Show the times a search pattern occurs in the current buffer
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]))  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',    Cond(has('nvim') && Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
