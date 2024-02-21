@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SECONDS=0
 scriptDir=$(dirname $0)
@@ -56,7 +56,11 @@ fi
 # ctags disable add the function protocol by remove "+p" from c-kinds
 #v3. CTAGS_FLAG="--fields=+niazS --extras=+Ffq --c++-kinds=+x --c-kinds=+x --output-format=e-ctags"
 # improve c-kinds
-CTAGS_FLAG="--fields=+niazS --extras=+Ffq --c++-kinds=+x --c-kinds=+defgstumx --output-format=e-ctags"
+CTAGS_FLAG=" --fields=+n  --output-format=e-ctags "
+CTAGS_FLAG_c="--fields=+niazS --extras=+Ffq --c++-kinds=+x --c-kinds=+defgstumx"
+#CTAGS_FLAG_md=' -x --_xformat="%{input}	%{line}	%{name}	%{pattern}" '
+CTAGS_FLAG_md=' --fields=FPnN --tag-relative=no --extras=+{subparser}{guest} --language-force=Markdown '
+CTAGS_FLAG_script=" --with-list-header=no --machinable=yes"
 FLIST=".cscope.files"
 ClangdFile="compile_commands.json"
 
@@ -220,11 +224,11 @@ PrepareFileList() {
     filecnt_rust=0
     filecnt_markdown=0
     if [[ "$action" == "wiki" ]]; then
-        if has-var TLDR_PAGES_SOURCE_LOCATION; then
-            dstDir="$HOME/.cache"
-        else
-            echo "Please set multiple wiki dirs into var 'TLDR_PAGES_SOURCE_LOCATION' under '$action' action, Exit!"
+        if [ -z ${MARKDOWN_TAGS_DIR+x} ]; then
+            echo "Please set multiple wiki dirs into var 'MARKDOWN_TAGS_DIR' under '$action' action, Exit!"
             return 1
+        else
+            dstDir="$HOME/.cache"
         fi
     elif [ -f ${FLIST} ]; then
         filecnt_c=1024
@@ -238,8 +242,11 @@ PrepareFileList() {
     # Rust
     if [ $filecnt_rust -ge 3 ]; then
         rusty-tags vi --output=".tags"
+
         #return 0
     elif [ $filecnt_c -ge 3 ]; then
+        CTAGS_FLAG="$CTAGS_FLAG $CTAGS_FLAG_c $CTAGS_FLAG_script"
+
         if [ $filecnt_c -lt 1024 ]; then
             clean_files+=("${FLIST}")
         fi
@@ -293,12 +300,13 @@ PrepareFileList() {
         sort ${tmpDir}/cscope.f2 > ${tmpDir}/cscope.f3
         mv ${tmpDir}/cscope.f3 ${FLIST}
     elif [[ "$action" == "wiki" ]]; then
+        CTAGS_FLAG="$CTAGS_FLAG $CTAGS_FLAG_md $CTAGS_FLAG_script"
         clean_files+=("${tmpDir}/${FLIST}")
 
         # multiple wiki dir
-        for oneDir in $(echo $TLDR_PAGES_SOURCE_LOCATION | tr ";,\ " "\n"); do
+        for oneDir in $(echo $MARKDOWN_TAGS_DIR | tr ";,\ " "\n"); do
             if [[ $oneDir = file://* ]]; then
-                oneDir=${oneDir:7:$}
+                oneDir=${oneDir:7}
                 if [ -d $oneDir ]; then
                     absDir=$(realpath "$oneDir")
                     find -L "$absDir" -name '*.md' >> ${tmpDir}/cscope.f1
@@ -315,6 +323,7 @@ PrepareFileList() {
         sort ${tmpDir}/cscope.f2 > ${tmpDir}/cscope.f3
         mv ${tmpDir}/cscope.f3 ${tmpDir}/${FLIST}
     elif [ $filecnt_markdown -ge 10 ]; then
+        CTAGS_FLAG="$CTAGS_FLAG $CTAGS_FLAG_md $CTAGS_FLAG_script"
         clean_files+=("${FLIST}")
 
         # current dir auto markdown
@@ -362,10 +371,15 @@ GenTag()
         LC_COLLATE=C ctags ${CTAGS_FLAG} -f "${dstDir}/.tags"  --exclude=.git --exclude=node_modules --exclude=.ccls-cache -R . > /dev/null 2>&1
         LC_COLLATE=C ctags --exclude=.git --exclude=node_modules --exclude=.ccls-cache -xR . > "${dstDir}/.tagx" 2>/dev/null
     else
-        # tage-emacs, tags-vim, tagx-fuzzy
-        #LC_COLLATE=C ctags -e ${CTAGS_FLAG} -L ${FLIST} -f .tage > /dev/null 2>&1
-        LC_COLLATE=C ctags ${CTAGS_FLAG} -L ${fList} -f "${dstDir}/.tags" > /dev/null 2>&1
-        LC_COLLATE=C ctags -xL ${fList} > "${dstDir}/.tagx" 2>/dev/null
+        if [[ "$action" == "wiki" ]]; then
+            #cat "${dstDir}/.tags" | sort -t$'\t' -k 2 > "${dstDir}/.tagx"
+            grep -n '^#' $( cat $fList ) > "${dstDir}/.tagx"
+        else
+            # tage-emacs, tags-vim, tagx-fuzzy
+            #LC_COLLATE=C ctags -e ${CTAGS_FLAG} -L ${FLIST} -f .tage > /dev/null 2>&1
+            LC_COLLATE=C ctags ${CTAGS_FLAG} -L ${fList} -f "${dstDir}/.tags" > /dev/null 2>&1
+            LC_COLLATE=C ctags -xL ${fList} > "${dstDir}/.tagx" 2>/dev/null
+        fi
     fi
 }
 

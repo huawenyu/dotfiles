@@ -3,20 +3,26 @@
 " Plugins Rank:
 "   https://vimawesome.com
 " TryIt:
-" - vim --clean         Startup vim without any config/plug
+" - vim --clean                          Startup vim without any config/plug
+"   vim --headless "+PlugUpdate" +qa     Update env/plugin
 " - <Space>             Is the leader
 " - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
 " - Press 'H'           on topic word with the '?' sign (by cheat?)
 " - Wiki                Define g:vim_wiki_dirs in ~/.vimrc.before
 " - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
 "
-" - Troubleshooting:
+" - Debug log/troubleshooting:
 " -------------
-"   1. Enable log:   let g:vim_confi_option.debug = 1
-"   2. Ensure the instance existed:
+"   1. Enable log from global config:
+"         "let g:vim_confi_option.debug = 1
+"         # <or> specify from command line
+"         debug=1 vim <file>
+"   2. Ensure the log instance existed:
 "         " Insert this line to the front of our vimscript:
 "         silent! let s:log = logger#getLogger(expand('<sfile>:t'))
-"   3. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
+"   3. Debug/print:
+"         silent! call s:log.info(l:__func__, 'enter')
+"   4. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
 "
 " Install:  help 'H' on the topic
 " - [Windows]
@@ -576,12 +582,12 @@ endif
 "}}}
 
 " Plug config: order-sensible {{{2
-    Plug 'tpope/vim-sensible',          Cond(Mode(['basic', 'log', 'floatview']))
-    Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview']))
+    Plug 'tpope/vim-sensible',          Cond(Mode(['basic', 'log', 'floatview', 'editor']))
+    Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
 
-    Plug 'huawenyu/vim-basic',          Cond(Mode(['local', 'log', 'conf-basic', 'floatview']))
-    Plug 'huawenyu/vim.config',         Cond(has('nvim') && Mode(['local', 'log', 'conf-plug']))  | " config the plugs
-    Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['local', 'log', 'conf-extra'])) | " config the plugs
+    Plug 'huawenyu/vim-basic',          Cond(Mode(['local', 'log', 'conf-basic', 'floatview', 'editor']))
+    Plug 'huawenyu/vim.config',         Cond(has('nvim') && Mode(['local', 'log', 'conf-plug', 'editor']))  | " config the plugs
+    Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['local', 'log', 'conf-extra', 'editor'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
@@ -842,8 +848,8 @@ endif
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]))  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',    Cond(has('nvim') && Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
-        Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['coder',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
-            Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['coder',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
+        Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
+            Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
         Plug 'romainl/vim-cool',           Cond(has('nvim') && Mode(['editor',]))  | " No config, just disables search highlighting when you are done searching and re-enables it when you search again.
         Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
@@ -896,6 +902,7 @@ endif
             " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
             Plug  'glts/vim-radical',       Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
             Plug  'glts/vim-magnum',        Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
+            Plug  'triglav/vim-visual-increment', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))    | " Select by C-v, then increase by C-a, <OR-step-#>  #C-a
 
             "Plug 'svermeulen/vim-macrobatics', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
             "Plug  'huawenyu/vim-macroscope',   Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
@@ -1032,6 +1039,7 @@ endif
 " Integration {{{2
     " git {{{3
         Plug 'tpope/vim-fugitive',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
+        Plug 'tpope/vim-rhubarb',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
         Plug 'airblade/vim-gitgutter',      Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
         Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'))  | " Awesome git wrapper
 

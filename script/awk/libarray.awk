@@ -25,7 +25,8 @@ function walk(arr, name, comma,      i, _func)
 				walk(arr[i], (name "[" i "]"), comma)
 		} else if (i ~ "^_@_") { #indrect function
 			_func = arr[i]
-			@_func()
+			if (_func)
+				@_func()
 		} else if (comma) {
 			printf("%s%s%s = %s\n", name, comma, i, arr[i])
 		} else {
@@ -34,6 +35,43 @@ function walk(arr, name, comma,      i, _func)
 	}
 }
 
+# Usage:
+# BEGIN {
+#      family["me"]["father"]["grandpa"]["name"] = "George"
+#      family["me"]["father"]["grandpa"]["age"]  = 70
+#      family["me"]["father"]["grandma"]["name"] = "Katherine"
+#      family["me"]["father"]["name"]            = "Vasiliy"
+#      family["me"]["name"]                      = "Ivan"
+#      array::show(family, "Family")
+# }
+function show(arr, arrname,      i, member, arrnum)
+{
+	if (!awk::isarray(arr)) {
+		print indent arrname member "[\033[1;31m" elt "\033[0m]=\"\033[1;32m" arr "\033[0m\""
+	} else {
+		arrnum = elt
+		member = elt ? member "[" elt "]" : ""
+		#print indent (elt ? arrname member : arrname) "(\033[1;34m" length(arr) " member" (length(arr) > 1 ? "s" : "") "\033[0m)"
+		indent = indent " "
+		for (elt in arr) {
+			if (elt ~ "^_@_") { #indrect function
+				_func = arr[elt]
+				if (_func)
+					@_func()
+			} else {
+				show(arr[elt], arrname, elt, member, arrnum)
+			}
+		}
+		indent = substr(indent, 1, length(indent)-1)
+	}
+}
+
+function show2(arr, arrname, _1)
+{
+	indent = ""
+	show(arr, arrname)
+	indent = ""
+}
 
 # Usage:
 # BEGIN {

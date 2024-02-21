@@ -124,7 +124,7 @@ function git_prompt_info() {
 #
 
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 
 if [ -e /home/wilson/.nix-profile/etc/profile.d/nix.sh ]; then . /home/wilson/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export LFTP_ATCMD="lftp --norc -c 'open -u ftpuser,ftpuser 172.16.80.139; set ftp:ssl-allow off; set xfer:clobber on; set ssl:verify-certificate no;'"
