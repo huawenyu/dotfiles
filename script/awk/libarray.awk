@@ -44,10 +44,12 @@ function walk(arr, name, comma,      i, _func)
 #      family["me"]["name"]                      = "Ivan"
 #      array::show(family, "Family")
 # }
-function show(arr, arrname,      i, member, arrnum)
+function show(arr, arrname, skip,     elt, member, arrnum)
 {
 	if (!awk::isarray(arr)) {
-		print indent arrname member "[\033[1;31m" elt "\033[0m]=\"\033[1;32m" arr "\033[0m\""
+		if (index(skip, elt) == 0) {
+			print indent arrname member "[\033[1;31m" elt "\033[0m]=\"\033[1;32m" arr "\033[0m\""
+		}
 	} else {
 		arrnum = elt
 		member = elt ? member "[" elt "]" : ""
@@ -59,17 +61,17 @@ function show(arr, arrname,      i, member, arrnum)
 				if (_func)
 					@_func()
 			} else {
-				show(arr[elt], arrname, elt, member, arrnum)
+				show(arr[elt], arrname, skip, elt, member, arrnum)
 			}
 		}
 		indent = substr(indent, 1, length(indent)-1)
 	}
 }
 
-function show2(arr, arrname, _1)
+function show2(arr, arrname, skip)
 {
 	indent = ""
-	show(arr, arrname)
+	show(arr, arrname, skip)
 	indent = ""
 }
 
