@@ -5,11 +5,11 @@
 " TryIt:
 " - vim --clean                          Startup vim without any config/plug
 "   vim --headless "+PlugUpdate" +qa     Update env/plugin
-" - <Space>             Is the leader
-" - Press ';;'          Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
-" - Press 'H'           on topic word with the '?' sign (by cheat?)
-" - Wiki                Define g:vim_wiki_dirs in ~/.vimrc.before
-" - Maps desc(which-key.nvim)   Search '<c-U>' in ~/.vim/bundle
+" - <Space>                     : Is the leader
+" - Press ';;'                  : Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
+" - Press 'K' | <leader>K       : on topic word with the '?' sign (by cheat?)
+" - Wiki                        : Define g:vim_wiki_dirs in ~/.vimrc.before
+" - Maps desc(which-key.nvim)   : Search '<c-U>' in ~/.vim/bundle
 "
 " - Debug log/troubleshooting:
 " -------------
@@ -636,7 +636,7 @@ endif
         " Plug 'nvim-treesitter/playground',                Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
         " Plug 'romgrk/nvim-treesitter-context',            Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
         " Plug 'nelstrom/vimprint',                         Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
-        Plug 'andymass/vim-matchup',                        Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+        Plug 'andymass/vim-matchup',                        Cond (has('nvim') && Mode(['editor',]))
     "}}}
 
     " Comment,Extra {{{3
@@ -778,13 +778,14 @@ endif
 "}}}
 
 " Facade {{{2
-    Plug 'huawenyu/startscreen.vim',        Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
+    "Plug 'huawenyu/startscreen.vim',        Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
     Plug 'millermedeiros/vim-statline',     Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',          Cond(has('nvim') && Mode(['editor'])) | " place, toggle and display marks
 
+    "Plug 'itchyny/vim-cursorword',          Cond(has('nvim') && Mode(['editor'])) | " Underlines the word under the cursor
     Plug 'lukas-reineke/indent-blankline.nvim', Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.indentline)
     "Plug 'junegunn/rainbow_parentheses.vim',   Cond(has('nvim') && Mode(['editor']))
 
@@ -889,6 +890,8 @@ endif
 
     " Motion {{{3
         Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']))
+
+        Plug 'mg979/vim-visual-multi',          Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align, https://github.com/mg979/vim-visual-multi/blob/master/doc/vm-mappings.txt
 
         "Plug 'easymotion/vim-easymotion',      Cond(has('nvim') && Mode(['editor',]))
         Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]))
@@ -1054,7 +1057,7 @@ endif
         Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))              | " :'<,'>Gist -e 'list-sample'
     "}}}
 
-    Plug 'wlemuel/vim-tldr',                Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
+    "Plug 'wlemuel/vim-tldr',                Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
     Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]))
     Plug 'szw/vim-dict',                    Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
     Plug 'szw/vim-g',                       Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
