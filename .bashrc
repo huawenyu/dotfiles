@@ -107,6 +107,16 @@ plugins=(
 
 source "$OSH"/oh-my-bash.sh
 
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/
+export BASH_THEME_GIT_PROMPT_PREFIX="\e[0;34mgit:(\e[m\e[0;31m"
+export BASH__THEME_GIT_PROMPT_CLEAN="\e[m\e[0;34m"
+export BASH__THEME_GIT_PROMPT_SUFFIX=")\e[m"
+function git_prompt_info() {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "$BASH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}${BASH__THEME_GIT_PROMPT_CLEAN}${BASH__THEME_GIT_PROMPT_SUFFIX}"
+}
+
 # User configuration
 add_paths=( \
   "$HOME/dotfiles/script" \
@@ -118,6 +128,14 @@ do
         export PATH="$aPath:$PATH"
     fi
 done
+
+## Loading customize local bashrc {{{2}}}
+if [ -f "$HOME/.local/local" ]; then
+    #echo "load local succ!"
+    source $HOME/.local/local
+else
+    do-echo "Harmless! [$me] no local-env loaded from '$HOME/.local/local', silent by `touch $HOME/.local/local`!"
+fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -151,4 +169,5 @@ eval "$(/home/hyu/sub-me/bin/me init -)"
 
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
+eval "$(atuin init bash --disable-up-arrow)"
+

@@ -7,7 +7,7 @@
 "   vim --headless "+PlugUpdate" +qa     Update env/plugin
 " - <Space>                     : Is the leader
 " - Press ';;'                  : Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
-" - Press 'K' | <leader>K       : on topic word with the '?' sign (by cheat?)
+" - Press 'K' | <leader>K       : on topic word with the '?'
 " - Wiki                        : Define g:vim_wiki_dirs in ~/.vimrc.before
 " - Maps desc(which-key.nvim)   : Search '<c-U>' in ~/.vim/bundle
 "
@@ -112,22 +112,11 @@
 " :colorscheme jellybeans
 " :echo colors_name
 "
-" Help:(press 'H' on the words, or list all wiki, and builtin tutor commands ":vimtutor" for vim, ":Tutor" for neovim)
-" require-plug(vim-floaterm/vim-basic/vim.config
-"
+" Help:(press <leader>K on the words, ":vimtutor" for vim, ":Tutor" for neovim)
+"       require-plug(vim-floaterm/vim-basic/vim.config
 " - vim-tutor?
-" - latest-neovim?
 " - vi-to-neovim?
-" - windows-install?
-" - checkhealth?
-" - vim-more?
 " - troubleshooting? (Find which script change the config, howto enable debug log)
-" - vim-config?
-" - vim-search?
-" - vimscript?
-" - vim-fold?
-" - vim-lsp? (Nvim built-in supports the Language Server Protocol)
-" - quickfix?
 " =============================================================
 "  Mode:
 "  Support set from env's variable, like: mode=basic vi ~/.vimrc
@@ -654,10 +643,6 @@ endif
     "}}}
 
     " Repl {{{3
-        Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',])) | "
-        Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
-        Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :Echoerr xxxxx
-        Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
         "Plug 'jdhao/better-escape.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
 
         "Plug 'michaelb/sniprun',           Cond(has('nvim') && Mode(['admin']), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
@@ -984,9 +969,14 @@ endif
         Plug 'tpope/vim-eunuch',            Cond(has('nvim') && Mode(['admin',]))  | " Support unix shell cmd: Delete,Unlink,Move,Rename,Chmod,Mkdir,Cfind,Clocate,Lfind,Wall,SudoWrite,SudoEdit
         Plug 'tpope/vim-dotenv',            Cond(has('nvim') && Mode(['admin',]))  | " Basic support for .env and Procfile
 
-        "Plug 'kassio/neoterm',             Cond(has('nvim') && Mode(['admin',]))        | " Not work after update, a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',])) | "
+        Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
+        Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :Echoerr xxxxx
+        Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+
+        Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux, best terminal (it's real color shell)
-        Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))| " a terminal for neovim; :T ls, # exit terminal mode by <c-\\><c-n>
+        "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
         "Plug 'chrisbra/NrrwRgn',           Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
         "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
