@@ -25,19 +25,6 @@ BEGIN {
 }
 
 
-#Usage: join an array into a string
-function join(array, start, end, sep,    result, i)
-{
-	if (sep == "")
-		sep = " "
-	else if (sep == SUBSEP) # magic value
-		sep = ""
-	result = array[start]
-	for (i = start + 1; i <= end; i++)
-		result = result sep array[i]
-	return result
-}
-
 # Usage: assert that a condition is true. Otherwise exit.
 function assert(condition, string)
 {
@@ -50,20 +37,13 @@ function assert(condition, string)
 }
 
 
-# Usage:  turn a byte into readable 1's and 0's
-function bits2str(bits,        data, mask)
+# Usage: join the fields range [start,end]
+function join_fields(start,end,str_split,   i_, ret_)
 {
-	if (bits == 0)
-		return "0"
-
-	mask = 1
-	for (; bits != 0; bits = rshift(bits, 1))
-		data = (and(bits, mask) ? "1" : "0") data
-
-	while ((length(data) % 8) != 0)
-		data = "0" data
-
-	return data
+	for (i_ = start; i_ <= end; i_++) {
+		ret_ = ret_ str_split $i_
+	}
+	return ret_
 }
 
 

@@ -72,17 +72,18 @@
 "     $ vi -c 'PlugInstall'
 "
 " - [Optional] - other config/tool
-"     zshrc -- Simpler zshrc for oh-my-zsh
+"     + zshrc -- Simpler zshrc for oh-my-zsh
 "       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 "       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
-"     oh-my-bash
+"     + oh-my-bash
 "       $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 "         OSH_THEME="robbyrussell"
 "         DISABLE_AUTO_UPDATE="true"
-"     tmux.conf -- Simpler zshrc for oh-my-zsh
+"     + tmux.conf -- Simpler zshrc for oh-my-zsh
 "       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
-" - [Issue]
-"     cscope was removed -- :help cscope or :help nvim-features-removed, [ref](https://github.com/neovim/neovim/pull/20545)
+"     + [neovim-remote](https://github.com/mhinz/neovim-remote)
+" - [QuickStart]
+"     - checkhealth
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
@@ -180,6 +181,7 @@ let g:vim_confi_option = {
       \
       \ 'keywordprg_filetype': 1,
       \
+      \ 'modeline': 0,
       \ 'view_folding': 0,
       \ 'show_number': 0,
       \ 'wrapline': 0,
@@ -769,6 +771,7 @@ endif
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',          Cond(has('nvim') && Mode(['editor'])) | " place, toggle and display marks
+    "Plug 'ciaranm/securemodelines',         Cond(has('nvim') && Mode(['editor'])) | " Limit the vim magic mode line feature
 
     "Plug 'itchyny/vim-cursorword',          Cond(has('nvim') && Mode(['editor'])) | " Underlines the word under the cursor
     Plug 'lukas-reineke/indent-blankline.nvim', Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.indentline)
@@ -784,6 +787,10 @@ endif
 
     " Preview
     Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
+
+    "Plug 'chrisbra/NrrwRgn',           Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
+    "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
+    Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
 "}}}
 
 " Syntax/Language {{{2
@@ -834,6 +841,7 @@ endif
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]))  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',    Cond(has('nvim') && Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
+        Plug 'tweekmonster/fzf-filemru',    Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " : FilesMru
         Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
@@ -877,6 +885,8 @@ endif
         Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']))
 
         Plug 'mg979/vim-visual-multi',          Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align, https://github.com/mg979/vim-visual-multi/blob/master/doc/vm-mappings.txt
+        "Plug 'anuvyklack/hydra.nvim',          Cond(has('nvim') && Mode(['editor',]))      | " Create custom submodes and menus
+        "Plug 'smoka7/multicursors.nvim',       Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align,
 
         "Plug 'easymotion/vim-easymotion',      Cond(has('nvim') && Mode(['editor',]))
         Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]))
@@ -898,7 +908,7 @@ endif
         Plug 'rhysd/clever-f.vim',          Cond(has('nvim') && Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion',         Cond(has('nvim') && Mode(['editor',]))  | " Jump according indent
         Plug 'junegunn/vim-easy-align',     Cond(has('nvim') && Mode(['editor',]))   | " tablize selected and ga=
-        Plug 'dhruvasagar/vim-table-mode',  Cond(has('nvim') && Mode(['editor',]))| " <leader>tm :TableModeToggle; <leader>tr: Align; <leader>tt: Format existed
+        "Plug 'dhruvasagar/vim-table-mode',  Cond(has('nvim') && Mode(['editor',]))| " <leader>tm :TableModeToggle; <leader>tr: Align; <leader>tt: Format existed
     "}}}
 
     " Auto completion {{{2
@@ -974,15 +984,15 @@ endif
         Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :Echoerr xxxxx
         Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
 
-        Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
-        Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux, best terminal (it's real color shell)
+        "Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
+        "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
-        "Plug 'chrisbra/NrrwRgn',           Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
-        "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
-        Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
-
-        "Plug 'skywind3000/vim-terminal-help',   Cond(has('nvim') && Mode(['editor',])) | " Toggle-Terminal by <Alt>=
+        "Plug 'thinca/vim-quickrun',            Cond(has('nvim') && Mode(['editor',]))   | " :QuickRun
+        "Plug 'preservim/vimux',                Cond(has('nvim') && Mode(['editor',]))   | " :VimuxRunCommand
+        "Plug 'jpalardy/vim-slime',             Cond(has('nvim') && Mode(['editor',]))   | " :
+        "Plug 'jalvesaq/vimcmdline',            Cond(has('nvim') && Mode(['editor',]))   | " :
+        Plug 'skywind3000/vim-terminal-help',   Cond(has('nvim') && Mode(['editor',]))   | " :H ls -l  <OR> Toogle-terminal by <C-\>;
     "}}}
 
     " Presentation? draw? pencil  {{{3
@@ -996,7 +1006,7 @@ endif
     " Project/Session/Workspace {{{3
         "Plug 'tpope/vim-projectionist',         Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
         "Plug 'c-brenn/fuzzy-projectionist.vim', Cond(has('nvim') && Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
-        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']))  | " neovim > 0.7
+        "Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']))  | " neovim > 0.7
     "}}}
 
     " File/Explore {{{3
