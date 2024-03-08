@@ -135,13 +135,13 @@ function trimright(str) {
 # end
 
 
-function has_prefix(str, pre,   len2) {
+function beginwith(str, pre,   len2) {
         len2 = length(pre)
         return substr(str, 1, len2) == pre
 }
 
 
-function has_suffix(str, suf,   len1, len2) {
+function endwith(str, suf,   len1, len2) {
         len1 = length(str)
         len2 = length(suf)
         return len2 <= len1 && substr(str, len1 - len2 + 1) == suf

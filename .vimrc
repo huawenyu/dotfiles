@@ -644,16 +644,6 @@ endif
         Plug 'ericcurtin/CurtineIncSw.vim',      Cond(has('nvim') && Mode(['coder',]))          | " Toggle source/header
     "}}}
 
-    " Repl {{{3
-        "Plug 'jdhao/better-escape.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
-
-        "Plug 'michaelb/sniprun',           Cond(has('nvim') && Mode(['admin']), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
-        "Plug 'arjunmahishi/flow.nvim',     Cond(has('nvim') && Mode(['coder',]))   | " runcode.nvim
-        "Plug 'huawenyu/vimux-script',      Cond(has('nvim') && Mode(['coder',]))	| " :
-        "Plug 'xolox/vim-misc',             Cond(has('nvim') && Mode(['coder',]))	| " :
-
-    "}}}
-
     " gdb front-end {{{3
         "Plug 'huawenyu/vimgdb',            Cond(has('nvim') && Mode(['coder']) && IfNoPlug('vimspector'))    | "
         Plug 'huawenyu/vwm.vim',            Cond(has('nvim') && Mode(['coder']))      |  " Clone from fireflowerr/vwm.vim, vim windows management
@@ -701,21 +691,21 @@ endif
         Plug 'pangloss/vim-javascript',     Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
         Plug 'maksimr/vim-jsbeautify',      Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
         Plug 'elzr/vim-json',               Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
-        Plug 'tpope/vim-jdaddy',            Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))  | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
+        "Plug 'tpope/vim-jdaddy',            Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))  | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
         Plug 'ternjs/tern_for_vim',         Cond(has('nvim') && Mode(['coder']) && Mode(['javascript'])) | " Tern-based JavaScript editing support.
         Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
     "}}}
 
     " TypeScript {{{3
-        Plug 'palantir/tslint',             Cond(has('nvim') && Mode(['coder']) && Mode(['typescript']), { 'for': 'typescript' })
+        "Plug 'palantir/tslint',             Cond(has('nvim') && Mode(['coder']) && Mode(['typescript']), { 'for': 'typescript' })
     "}}}
 
     " Clojure {{{3
-        Plug 'tpope/vim-fireplace',         Cond(has('nvim') && Mode(['coder']) && Mode(['clojure']), { 'for': 'clojure' })
+        "Plug 'tpope/vim-fireplace',         Cond(has('nvim') && Mode(['coder']) && Mode(['clojure']), { 'for': 'clojure' })
     "}}}
 
     " Database {{{3
-        Plug 'tpope/vim-dadbod',            Cond(has('nvim') && Mode(['coder']) && Mode(['database']))       | " :DB mongodb:///test < big_query.js
+        "Plug 'tpope/vim-dadbod',            Cond(has('nvim') && Mode(['coder']) && Mode(['database']))       | " :DB mongodb:///test < big_query.js
     "}}}
 
     " Golang {{{3
@@ -826,15 +816,6 @@ endif
 
         "Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))      |  " vim config auto set
-    "}}}
-
-    " Async {{{3
-        "Plug 'tpope/vim-dispatch',         Cond(has('nvim') && Mode(['admin',]))
-        "Plug 'Shougo/vimproc.vim',         Cond(has('nvim') && Mode(['admin',]), {'do' : 'make'})
-        "Plug 'neomake/neomake',            Cond(has('nvim') && Mode(['admin',]))
-
-        Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]))
-        Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
     "}}}
 
     " Search/Jump {{{3
@@ -982,17 +963,37 @@ endif
         Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',])) | "
         Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
         Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :Echoerr xxxxx
-        Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+
+        "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
+        Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE), { 'on':  ['VimuxTogglePane', 'VimuxRunCommand', 'VimuxOpenRunner', ] })   | " Send command to tmux's marked pane
 
         "Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
         "Plug 'thinca/vim-quickrun',            Cond(has('nvim') && Mode(['editor',]))   | " :QuickRun
-        "Plug 'preservim/vimux',                Cond(has('nvim') && Mode(['editor',]))   | " :VimuxRunCommand
         "Plug 'jpalardy/vim-slime',             Cond(has('nvim') && Mode(['editor',]))   | " :
         "Plug 'jalvesaq/vimcmdline',            Cond(has('nvim') && Mode(['editor',]))   | " :
         Plug 'skywind3000/vim-terminal-help',   Cond(has('nvim') && Mode(['editor',]))   | " :H ls -l  <OR> Toogle-terminal by <C-\>;
+    "}}}
+
+    " Async {{{3
+        "Plug 'tpope/vim-dispatch',         Cond(has('nvim') && Mode(['admin',]))
+        "Plug 'Shougo/vimproc.vim',         Cond(has('nvim') && Mode(['admin',]), {'do' : 'make'})
+        "Plug 'neomake/neomake',            Cond(has('nvim') && Mode(['admin',]))
+
+        Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]))
+        Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
+    "}}}
+
+    " Repl {{{3
+        "Plug 'jdhao/better-escape.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
+
+        "Plug 'michaelb/sniprun',           Cond(has('nvim') && Mode(['admin']), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
+        "Plug 'arjunmahishi/flow.nvim',     Cond(has('nvim') && Mode(['coder',]))   | " runcode.nvim
+        "Plug 'huawenyu/vimux-script',      Cond(has('nvim') && Mode(['coder',]))	| " :
+        "Plug 'xolox/vim-misc',             Cond(has('nvim') && Mode(['coder',]))	| " :
+
     "}}}
 
     " Presentation? draw? pencil  {{{3
