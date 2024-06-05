@@ -60,7 +60,7 @@ function show(arr, arrname, skip,     elt, member, arrnum)
 				_func = arr[elt]
 				if (_func)
 					@_func()
-			} else {
+			} else if (index(skip, elt) == 0) {
 				show(arr[elt], arrname, skip, elt, member, arrnum)
 			}
 		}

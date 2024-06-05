@@ -102,6 +102,12 @@ function trimright(str) {
         return ""
 }
 
+function trimprint(str)
+{
+    gsub(/[\001-\007\013\016-\037\n\r]/, "", str)
+    return str
+}
+
 # # faster than either of:
 # function trimright2(str,   n) {
 #     n = length(str)
@@ -135,16 +141,45 @@ function trimright(str) {
 # end
 
 
-function beginwith(str, pre,   len2) {
-        len2 = length(pre)
-        return substr(str, 1, len2) == pre
+function beginwith(str, pre,   len1)
+{
+	len1 = length(pre)
+	return substr(str, 1, len1) == pre
 }
 
 
-function endwith(str, suf,   len1, len2) {
-        len1 = length(str)
-        len2 = length(suf)
-        return len2 <= len1 && substr(str, len1 - len2 + 1) == suf
+function endwith(str, suf,   len0, len2)
+{
+	len0 = length(str)
+	len2 = length(suf)
+	return len2 <= len0 && substr(str, len0 - len2 + 1) == suf
+}
+
+
+function trimprefix(str, pre,   len0, len1)
+{
+	len0 = length(str)
+	len1 = length(pre)
+	if (substr(str, 1, len1) == pre) {
+		return substr(str, len1+1)
+	} else {
+		return str
+	}
+}
+
+function trimsuffix(str, pre,   len0, len2)
+{
+	len0 = length(str)
+	len2 = length(suf)
+	if (len2 <= len0 && substr(str, len0 - len2 + 1) == suf) {
+		return substr(str, 1, len0 - len2)
+	} else {
+		return str
+	}
+}
+
+function contain(str, word,   len2) {
+    return index(str, word) != 0
 }
 
 

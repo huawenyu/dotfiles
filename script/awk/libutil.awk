@@ -49,7 +49,7 @@ function isnull(s, u) {
 function isnum(n, u) {
     # return n ~ /^[+-]?[0-9]+$/
     if (u) return n == n +0 # accept missing as well
-    return n "" == n +0 
+    return n "" == n +0
     # NOTE: awk will also convert when there's leading space/trailing anything
     #       and will convert any other non-numeric to 0
 }

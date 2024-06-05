@@ -576,14 +576,14 @@ endif
     Plug 'tpope/vim-sensible',          Cond(Mode(['basic', 'log', 'floatview', 'editor']))
     Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
 
-    Plug 'huawenyu/vim-basic',          Cond(Mode(['local', 'log', 'conf-basic', 'floatview', 'editor']))
-    Plug 'huawenyu/vim.config',         Cond(has('nvim') && Mode(['local', 'log', 'conf-plug', 'editor']))  | " config the plugs
-    Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['local', 'log', 'conf-extra', 'editor'])) | " config the plugs
+    Plug 'huawenyu/vim-basic',          Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
+    Plug 'huawenyu/vim.config',         Cond(has('nvim') && Mode(['basic', 'log', 'conf-plug', 'editor']))  | " config the plugs
+    Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['basic', 'log', 'conf-extra', 'editor'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
-    Plug 'tomasr/molokai'
-    Plug 'vim-scripts/holokai'
+    Plug 'tomasr/molokai',              Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
+    Plug 'vim-scripts/holokai',         Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
     "Plug 'pR0Ps/molokai-dark'
     "Plug 'shannonmoeller/vim-monokai256'
 
@@ -802,7 +802,7 @@ endif
 
 " Improve {{{2
     " Basic {{{3
-        Plug 'junegunn/fzf',                Cond(has('nvim') && Mode(['editor',]), { 'dir': '~/.fzf', 'do': './install --all' })
+        Plug 'junegunn/fzf',                Cond(has('nvim') && Mode(['editor',]), { 'dir': '~/.fzf', 'do': './install --all' })    | "Update-to-latest ($ fzf --version), FromVim :PlugUpdate fzf
         Plug 'junegunn/fzf.vim',            Cond(has('nvim') && HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',            Cond(has('nvim') && Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
