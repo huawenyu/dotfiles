@@ -865,7 +865,7 @@ endif
     " Motion {{{3
         Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']))
 
-        Plug 'mg979/vim-visual-multi',          Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align, https://github.com/mg979/vim-visual-multi/blob/master/doc/vm-mappings.txt
+        Plug 'mg979/vim-visual-multi',          Cond(has('nvim') && Mode(['editor',]))      | " `\\` Active:   Mult-select Change/replace/align, https://github.com/mg979/vim-visual-multi/blob/master/doc/vm-mappings.txt
         "Plug 'anuvyklack/hydra.nvim',          Cond(has('nvim') && Mode(['editor',]))      | " Create custom submodes and menus
         "Plug 'smoka7/multicursors.nvim',       Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align,
 
