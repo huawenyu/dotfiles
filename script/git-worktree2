@@ -71,14 +71,6 @@ DoIt () {
 }
 
 main () {
-    local opt
-    local OPTS_SPEC="\
-$0 [<options>] [<path>]
-
-$0 shows information about a Git repository.
---
-h,help     show the help
-"
     case "$#" in
         2)
             if [ -z "$var_branchName" ]; then
@@ -363,3 +355,4 @@ finalize () {
 }
 
 main "$@"
+

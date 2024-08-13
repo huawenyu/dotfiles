@@ -22,6 +22,7 @@
 	# But too slow: git-foresta --all --style=10 | less -RSX
 	#   Foresta: https://github.com/takaaki-kasai/git-foresta
 	#       Install: curl -L https://github.com/takaaki-kasai/git-foresta/raw/master/git-foresta -o ~/bin/git-foresta && chmod +x ~/bin/git-foresta
+	message = show -s --format=%B
 	#tree  = foresta --all --style=10
 	tree  = log --graph --decorate --oneline --all
 
@@ -34,6 +35,17 @@
 
 	#parent = "!git show-branch 2>&1 | grep '*' | grep -v 'warning: ' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 	parent = "!git show-branch 2>/dev/null | grep '!' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | tail -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+
+    # list aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+
+	# https://stackoverflow.com/questions/3321492/git-alias-with-positional-parameters
+	ls  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+	# https://jay.gooby.org/2021/07/13/positional-arguments-in-git-aliases
+	mantis = "!f() { \
+		git log $@ | awk 'BEGIN{text=\"\"} /^\\s*$/{next} /^commit/{one=0} /^Author: /{one=1; text=$0; next} /^Date: /{text = $2 \"  \" text; print text; next} /^    Problem Description:/{one=0} /^    Description:/{one=0} !/^    Purpose: /{ if (one==1) {print $0} } /^    Mantis: /{one=0} '; \
+		}; f"
+
 
 	# Git subtree if just use third-part repo, but no push request
 	#   git st-add <remote-repo> [<branch-name>]
