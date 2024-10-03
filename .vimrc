@@ -622,7 +622,7 @@ endif
         "       \ })
         " endif
 
-        Plug 'nvim-treesitter/nvim-treesitter',             Cond (has('nvim') && Mode(['admin']), { 'do': ':TSUpdate', 'for': ['c', 'cpp', 'rust', 'java', 'awk', 'bash', 'meson', 'python', 'tcl', 'expect'] })
+        "Plug 'nvim-treesitter/nvim-treesitter',             Cond (has('nvim') && Mode(['admin']), { 'do': ':TSUpdate', 'for': ['c', 'cpp', 'rust', 'java', 'awk', 'bash', 'meson', 'python', 'tcl', 'expect'] })
         " Plug 'nvim-treesitter/nvim-treesitter-refactor',  Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
         " Plug 'nvim-treesitter/playground',                Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
         " Plug 'romgrk/nvim-treesitter-context',            Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
@@ -778,7 +778,7 @@ endif
     " Preview
     Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
 
-    "Plug 'chrisbra/NrrwRgn',           Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
+    Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
     Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
 "}}}
@@ -812,7 +812,13 @@ endif
         "Plug 'sudormrfbin/cheatsheet.nvim'
         "Plug 'nvim-lua/popup.nvim'
         "Plug 'nvim-lua/plenary.nvim'
-        "Plug 'nvim-telescope/telescope.nvim'
+
+        " Cody AI-code
+        Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
+        " Required for various utilities
+        Plug 'nvim-lua/plenary.nvim'
+        " Required if you want to use some of the search functionality
+        "Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
 
         "Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))      |  " vim config auto set

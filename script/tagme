@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-
+#
+#set -x
+#
 SECONDS=0
 scriptDir=$(dirname $0)
 currDir=$(/usr/bin/pwd)
@@ -63,7 +65,11 @@ CTAGS_FLAG_md=' --fields=FPnN --tag-relative=no --extras=+{subparser}{guest} --l
 CTAGS_FLAG_script=" --with-list-header=no --machinable=yes"
 FLIST=".cscope.files"
 ClangdFile="compile_commands.json"
-
+FIND_FLAG=( \
+    -maxdepth 3 -type f \
+    "-not" "-path" './linux-?.*' \
+    "-not" "-path" './kernel/*' \
+)
 
 ## Other files:
 #     tags.temp
@@ -233,10 +239,12 @@ PrepareFileList() {
     elif [ -f ${FLIST} ]; then
         filecnt_c=1024
     else
-        filecnt_c=$(find . -maxdepth 3 -type f -name '*.c' | wc -l)
-        filecnt_python=$(find . -maxdepth 3 -type f -name '*.py' | wc -l)
-        filecnt_rust=$(find . -maxdepth 3 -type f -name '*.rs' | wc -l)
-        filecnt_markdown=$(find . -maxdepth 3 -type f -name '*.md' | wc -l)
+        filecnt_c=$(       find . "${FIND_FLAG[@]}" -name '*.c'  | wc -l)
+        filecnt_python=$(  find . "${FIND_FLAG[@]}" -name '*.py' | wc -l)
+        filecnt_rust=$(    find . "${FIND_FLAG[@]}" -name '*.rs' | wc -l)
+        filecnt_markdown=$(find . "${FIND_FLAG[@]}" -name '*.md' | wc -l)
+
+        echo "Files count: c=$filecnt_c, python=$filecnt_python, rust=$filecnt_rust, markdown=$filecnt_markdown!"
     fi
 
     # Rust
