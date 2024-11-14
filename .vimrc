@@ -164,7 +164,6 @@ let g:vim_confi_option = {
       \ 'conf': 1,
       \ 'verbose': 0,
       \ 'debug': 0,
-      \ 'health': 0,
       \
       \ 'upper_keyfixes': 1,
       \ 'enable_map_basic': 1,
@@ -502,12 +501,6 @@ endif
 
 " Please define our priviate wiki dirs in `~/.vimrc.before`
 let g:vim_wiki_dirs = get(g:, "vim_wiki_dirs", g:vim_confi_option.wiki_dirs)
-
-" Vim-default will checkhealth
-if g:vim_confi_option.health == 0
-    let g:checkhealth_disabled = 1
-endif
-    let g:checkhealth_disabled = 1
 
 " Auto download the plug
 if g:vim_confi_option.auto_install_vimplug
