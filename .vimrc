@@ -164,6 +164,7 @@ let g:vim_confi_option = {
       \ 'conf': 1,
       \ 'verbose': 0,
       \ 'debug': 0,
+      \ 'health': 0,
       \
       \ 'upper_keyfixes': 1,
       \ 'enable_map_basic': 1,
@@ -502,6 +503,12 @@ endif
 " Please define our priviate wiki dirs in `~/.vimrc.before`
 let g:vim_wiki_dirs = get(g:, "vim_wiki_dirs", g:vim_confi_option.wiki_dirs)
 
+" Vim-default will checkhealth
+if g:vim_confi_option.health == 0
+    let g:checkhealth_disabled = 1
+endif
+    let g:checkhealth_disabled = 1
+
 " Auto download the plug
 if g:vim_confi_option.auto_install_vimplug
     if LINUX()
@@ -773,7 +780,7 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
-    Plug 'folke/which-key.nvim',            Cond(has('nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
+    Plug 'huawenyu/which-key.nvim',         Cond(has('nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
 
     " Preview
     Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
@@ -1006,14 +1013,14 @@ endif
         Plug 'sk1418/blockit',              Cond(has('nvim') && Mode(['editor',]))       | " :Block -- Draw a Box around text region
         Plug 'sk1418/HowMuch',              Cond(has('nvim') && Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
 
-        Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | " n-next, p-prev, q-quit
+        Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
         Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]))       | " Draw pencil, seem require neovim > 0.5
     "}}}
 
     " Project/Session/Workspace {{{3
         "Plug 'tpope/vim-projectionist',         Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))  | " MVC like project, used when our project have some fixed struct map rule
         "Plug 'c-brenn/fuzzy-projectionist.vim', Cond(has('nvim') && Mode(['coder'])  && Mode(['extra']))  | " Change the prefixChar from E to F, we can get fuzzy feature
-        "Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']))  | " neovim > 0.7
+        Plug 'rmagatti/auto-session',            Cond(has('nvim') && Mode(['editor']))  | " neovim > 0.7
     "}}}
 
     " File/Explore {{{3

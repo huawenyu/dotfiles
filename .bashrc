@@ -171,3 +171,5 @@ eval "$(/home/hyu/sub-me/bin/me init -)"
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
 
+
+. "$HOME/.atuin/bin/env"
