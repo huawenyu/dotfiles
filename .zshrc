@@ -124,10 +124,15 @@ function git_prompt_info() {
 #
 
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(atuin init zsh --disable-up-arrow)"
 
-if [ -e /home/wilson/.nix-profile/etc/profile.d/nix.sh ]; then . /home/wilson/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if command -v atuin 2>&1 >/dev/null
+then
+    eval "$(atuin init zsh --disable-up-arrow)"
+fi
+
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi # added by Nix installer
 export LFTP_ATCMD="lftp --norc -c 'open -u ftpuser,ftpuser 172.16.80.139; set ftp:ssl-allow off; set xfer:clobber on; set ssl:verify-certificate no;'"
 
 
-. "$HOME/.atuin/bin/env"
+if [ -e "$HOME/.atuin/bin/env" ]; then . "$HOME/.atuin/bin/env"; fi # Add atuin addons for command-history autocomplete
+
