@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #
+# Debug
 #set -x
 #
 SECONDS=0
@@ -149,8 +150,8 @@ ClangdCompileFile() {
 
     if [[ -f "$srcfile" ]]; then
         cp  $srcfile  $dstfile
-        sed -i   "s/${srcdir//\//\\/}/${dstdir//\//\\/}/g"  $dstfile
-        sed -i   "s/${srcdir2//\//\\/}/${dstdir2//\//\\/}/g"  $dstfile
+        sed -i   "s#${srcdir//\//\\/}#${dstdir//\//\\/}#g"  $dstfile
+        sed -i   "s#${srcdir2//\//\\/}#${dstdir2//\//\\/}#g"  $dstfile
         echo "[Done!] Clangd ${ClangdFile}: ${srcdir} -> ${dstdir}"
     else
         _do-echo $skipClangNote
@@ -454,7 +455,7 @@ SyncClangdJson()
             eval "${LFTP_ATCMD}'mget /clangd/$guessPlat/${verNum1}*B*${upBuild}/${ClangdFile}.tgz;'"
             tar xzf "$ClangdFile.tgz"
             rm "$ClangdFile.tgz"
-            grep "${upBuild}$" /tmp/tag.log | cut -d ' ' -f 8- | sed "s/^/${_ZT_ARGS_Indent}/"
+            grep "${upBuild}$" /tmp/tag.log | cut -d ' ' -f 8- | sed "s#^#${_ZT_ARGS_Indent}#"
         fi
     fi
 }
