@@ -1006,7 +1006,9 @@ endif
         Plug 'sk1418/blockit',              Cond(has('nvim') && Mode(['editor',]))       | " :Block -- Draw a Box around text region
         Plug 'sk1418/HowMuch',              Cond(has('nvim') && Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
 
-        Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
+        " Terminal Powerpoint: Suggestion use `presenterm` (https://mfontanini.github.io/presenterm/guides/basics.html)
+        "Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
+
         Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]))       | " Draw pencil, seem require neovim > 0.5
     "}}}
 
