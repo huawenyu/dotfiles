@@ -173,3 +173,4 @@ eval "$(atuin init bash --disable-up-arrow)"
 
 
 . "$HOME/.atuin/bin/env"
+. "$HOME/.cargo/env"
