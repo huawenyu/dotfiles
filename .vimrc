@@ -846,9 +846,9 @@ endif
             Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
-            "Plug 'folke/todo-comments.nvim'        Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
+            Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]) && HasPlug('plenary.nvim'))       | " :TodoLocList, :TodoQuickFix
             "Plug 'freitass/todo.txt-vim',          Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
-            "Plug 'bfrg/vim-qf-preview'             Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
+            "Plug 'bfrg/vim-qf-preview',            Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
 
         "}}}
 
