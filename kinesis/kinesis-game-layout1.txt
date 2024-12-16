@@ -20,6 +20,7 @@ fn [rght]>[F8]
 {hk1}>{-lctrl}{a}{+lctrl}{-lshft}{-lalt}{p}{+lshft}{+lalt}
 [hk2]>[esc]
 [hk5]>[lwin]
+[rght]>[rwin]
 [hk6]>[ent]
 {hk7}>{-lctrl}{a}{+lctrl}{-lshft}{lft}{+lshft}
 {hk8}>{-lctrl}{a}{+lctrl}{-lshft}{rght}{+lshft}
