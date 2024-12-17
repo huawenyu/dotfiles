@@ -908,6 +908,7 @@ endif
         Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
         Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
+        Plug 'huawenyu/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
