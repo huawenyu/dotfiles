@@ -806,7 +806,7 @@ endif
         Plug 'junegunn/fzf.vim',            Cond(has('nvim') && HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',            Cond(has('nvim') && Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-        Plug 'huawenyu/vim-shortcut',       Cond(has('nvim') && Mode(['basic', 'editor', 'floatview']))         | " ';;' Popup shortcut help, but don't execute
+        "Plug 'huawenyu/vim-shortcut',      Cond(has('nvim') && Mode(['basic', 'editor', 'floatview']))         | " replace by which-key
         Plug 'kopischke/vim-fetch',         Cond(has('nvim') && Mode(['editor',]))			| " Support vim fname:line
 
         "Plug 'sudormrfbin/cheatsheet.nvim'
@@ -839,6 +839,7 @@ endif
             Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
             "Plug 'liuchengxu/vista.vim',   Cond(has('nvim') && IfNoPlug('tagbar')    && Mode(['coder',]))
             "Plug 'vim-scripts/taglist.vim',Cond(has('nvim') && HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
+            Plug 'wellle/context.vim',      Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
         "}}}
 
         " Quickfix/Todo list {{{4
@@ -908,7 +909,7 @@ endif
         Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
         Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
-        Plug 'huawenyu/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md
+        Plug 'huawenyu/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md,   vi a-new.md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
@@ -1087,13 +1088,6 @@ endif
 call plug#end()
 
 " Keymap fzf {{{2
-" If don't source it directly, looks this plugin not works.
-if HasPlug('vim-shortcut')
-    " Shortcut! keys description
-    let thedir = PlugGetDir('vim-shortcut')
-    exec "source ". thedir. "plugin/shortcut.vim"
-endif
-
 
 " nvim/vim shared: vim-basic
 if has('nvim') && Mode(['coder',])
