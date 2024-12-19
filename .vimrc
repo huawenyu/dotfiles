@@ -764,7 +764,6 @@ endif
     Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
     "Plug 'itchyny/lightline.vim',          Cond(has('nvim') && Mode(['coder',]))	 | "
     "Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))	 | "
-    Plug 'nvim-tree/nvim-web-devicons',     Cond(has('nvim') && HasPlug('lualine.nvim') && Mode(['coder',]))	 | "
 
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
@@ -1089,7 +1088,8 @@ endif
     Plug 'vim-jp/vital.vim',                Cond(has('nvim') && Mode(['coder']) && Mode(['library']))  | " promise?
     Plug 'google/vim-maktaba',              Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
     Plug 'tomtom/tlib_vim',                 Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
-    "Plug 'echasnovski/mini.nvim',           Cond(has('nvim') && Mode(['editor']), { 'branch': 'stable' })
+    Plug 'echasnovski/mini.icons',          Cond(has('nvim') && Mode(['editor']))	 | "
+    Plug 'nvim-tree/nvim-web-devicons',     Cond(has('nvim') && Mode(['editor',]))	 | "
 "}}}
 
 " Debug {{{2
