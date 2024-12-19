@@ -577,6 +577,8 @@ endif
 "}}}
 
 " Plug config: order-sensible {{{2
+    "Plug 'echasnovski/mini.nvim',       Cond(has('nvim') && Mode(['editor']))	 | " Alternertive ~40 plugins
+
     Plug 'tpope/vim-sensible',          Cond(Mode(['basic', 'log', 'floatview', 'editor']))
     Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
 
@@ -781,7 +783,7 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
-    Plug 'huawenyu/which-key.nvim',         Cond(has('nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
+    Plug 'huawenyu/which-key.nvim',         Cond(has('nvim') && IfNoPlug('mini.nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
 
     " Preview
     Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
