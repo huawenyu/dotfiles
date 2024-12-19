@@ -136,3 +136,5 @@ export LFTP_ATCMD="lftp --norc -c 'open -u ftpuser,ftpuser 172.16.80.139; set ft
 
 if [ -e "$HOME/.atuin/bin/env" ]; then . "$HOME/.atuin/bin/env"; fi # Add atuin addons for command-history autocomplete
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

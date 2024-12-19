@@ -186,6 +186,7 @@ let g:vim_confi_option = {
       \ 'show_number': 0,
       \ 'wrapline': 0,
       \ 'indentline': 0,
+      \ 'me_statusline': 0,
       \
       \ 'help_keys': 1,
       \ 'qf_preview': 0,
@@ -212,6 +213,9 @@ if g:vim_confi_option.remap_leader
     map Q <Nop>
 endif
 
+if g:vim_confi_option.me_statusline == 0
+    let g:loaded_c_utils_statusline = 0
+endif
 
 if !empty($mode)
     let g:vim_confi_option.mode = [$mode]
@@ -755,8 +759,13 @@ endif
 "}}}
 
 " Facade {{{2
-    "Plug 'huawenyu/startscreen.vim',        Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
-    Plug 'millermedeiros/vim-statline',     Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple,not annoy to distract our focus
+    " Statusline
+    "Plug 'huawenyu/startscreen.vim',       Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
+    Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
+    "Plug 'itchyny/lightline.vim',          Cond(has('nvim') && Mode(['coder',]))	 | "
+    "Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))	 | "
+    Plug 'nvim-tree/nvim-web-devicons',     Cond(has('nvim') && HasPlug('lualine.nvim') && Mode(['coder',]))	 | "
+
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
@@ -839,7 +848,6 @@ endif
             Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
             "Plug 'liuchengxu/vista.vim',   Cond(has('nvim') && IfNoPlug('tagbar')    && Mode(['coder',]))
             "Plug 'vim-scripts/taglist.vim',Cond(has('nvim') && HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
-            Plug 'wellle/context.vim',      Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
         "}}}
 
         " Quickfix/Todo list {{{4
@@ -1046,6 +1054,9 @@ endif
         Plug 'huawenyu/VOoM',               Cond(has('nvim') && Mode(['editor', 'log', ]))
         "Plug 'vim-voom/VOoM_extras',       Cond(has('nvim') && Mode(['editor']))  | " Seems no use at all, but slow/frozen when read large file (>100M)
         Plug 'roosta/fzf-folds.vim',        Cond(has('nvim') && Mode(['editor']))
+        Plug 'wellle/context.vim',          Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))    | " High cpu
+        "Plug 'nvim-treesitter/nvim-treesitter-context', Cond(has('nvim') && Mode(['coder',]))
+        "Plug "SmiteshP/nvim-navic",         Cond(has('nvim') && Mode(['editor']) && HasPlug('nvim-lspconfig'))
     "}}}
 
 "}}}
@@ -1053,7 +1064,7 @@ endif
 " Integration {{{2
     " git {{{3
         Plug 'tpope/vim-fugitive',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
-        Plug 'tpope/vim-rhubarb',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
+        Plug 'tpope/vim-rhubarb',           Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
         Plug 'airblade/vim-gitgutter',      Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
         Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'))  | " Awesome git wrapper
 
@@ -1078,6 +1089,7 @@ endif
     Plug 'vim-jp/vital.vim',                Cond(has('nvim') && Mode(['coder']) && Mode(['library']))  | " promise?
     Plug 'google/vim-maktaba',              Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
     Plug 'tomtom/tlib_vim',                 Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
+    "Plug 'echasnovski/mini.nvim',           Cond(has('nvim') && Mode(['editor']), { 'branch': 'stable' })
 "}}}
 
 " Debug {{{2
