@@ -785,9 +785,6 @@ endif
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
     Plug 'huawenyu/which-key.nvim',         Cond(has('nvim') && IfNoPlug('mini.nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
 
-    " Preview
-    Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
-
     Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
     Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
@@ -1013,6 +1010,11 @@ endif
 
     "}}}
 
+    " Windows/Preview  {{{3
+        Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
+        Plug 'folke/edgy.nvim',                 Cond(has('nvim') && Mode(['coder'])) |  " Windows layout management
+    "}}}
+
     " Presentation? draw? pencil  {{{3
         Plug 'sk1418/blockit',              Cond(has('nvim') && Mode(['editor',]))       | " :Block -- Draw a Box around text region
         Plug 'sk1418/HowMuch',              Cond(has('nvim') && Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
@@ -1030,8 +1032,15 @@ endif
     "}}}
 
     " File/Explore {{{3
-        Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
-        Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
+        " Dependencies by neo-tree.nvim:
+            Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+            Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+            Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+            Plug '3rd/image.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+
+        Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
+        Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
         "Plug 'lambdalisue/fern.vim',            Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :Fern . -draw -width=30
             Plug 'LumaKernel/fern-mapping-fzf.vim', Cond(has('nvim') && HasPlug('fern.vim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " maps-for-fern-windows: ff, fd, fa, frf, frd, fra
             "Plug 'yuki-yano/fern-preview.vim',      Cond(has('nvim') && HasPlug('fern.vim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :
