@@ -814,7 +814,8 @@ endif
         Plug 'junegunn/heytmux',            Cond(has('nvim') && Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
         "Plug 'huawenyu/vim-shortcut',      Cond(has('nvim') && Mode(['basic', 'editor', 'floatview']))         | " replace by which-key
-        Plug 'kopischke/vim-fetch',         Cond(has('nvim') && Mode(['editor',]))			| " Support vim fname:line
+        Plug 'kopischke/vim-fetch',         Cond(has('nvim') && Mode(['editor',]))      | " Support vim fname:line
+        Plug 'nhooyr/neoman.vim',           Cond(has('nvim') && Mode(['coder',]))       | " Seems default :Man can't support view a file directly
 
         "Plug 'sudormrfbin/cheatsheet.nvim'
         "Plug 'nvim-lua/popup.nvim'
@@ -827,7 +828,7 @@ endif
         " Required if you want to use some of the search functionality
         "Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
 
-        "Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
+        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))      |  " vim config auto set
     "}}}
 
@@ -915,7 +916,7 @@ endif
         Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
         Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
-        Plug 'huawenyu/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md,   vi a-new.md
+        Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md,   vi a-new.md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
@@ -1036,7 +1037,7 @@ endif
             Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
-            Plug '3rd/image.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+            "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
         Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
 
         Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
