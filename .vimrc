@@ -1,89 +1,11 @@
 " vim: set expandtab: set tabstop=4: set shiftwidth=4: set softtabstop=4:
 " =============================================================
-" Plugins Rank:
-"   https://vimawesome.com
 " TryIt:
 " - vim --clean                          Startup vim without any config/plug
 "   vim --headless "+PlugUpdate" +qa     Update env/plugin
 " - <Space>                     : Is the leader
 " - Press ';;'                  : Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
 " - Press 'K' | <leader>K       : on topic word with the '?'
-" - Wiki                        : Define g:vim_wiki_dirs in ~/.vimrc.before
-" - Maps desc(which-key.nvim)   : Search '<c-U>' in ~/.vim/bundle
-"
-" - Debug log/troubleshooting:
-" -------------
-"   1. Enable log from global config:
-"         "let g:vim_confi_option.debug = 1
-"         # <or> specify from command line
-"         debug=1 vim <file>
-"   2. Ensure the log instance existed:
-"         " Insert this line to the front of our vimscript:
-"         silent! let s:log = logger#getLogger(expand('<sfile>:t'))
-"   3. Debug/print:
-"         silent! call s:log.info(l:__func__, 'enter')
-"   4. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
-"
-" Install:  help 'H' on the topic
-" - [Windows]
-"     ### Install
-"        - Doc: https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
-"        - Install neovim, https://github.com/neovim/neovim/wiki/Installing-Neovim
-"        - Install Git (available at https://git-scm.com/downloads)
-"        - Copy the plug.vim and place it in "autoload" directory of vim.
-"        - In your .vimrc, include the plugins that you need to install.
-"        - Save and source the .vimrc.
-"        - Run ":PlugInstall"
-"
-" - [Debian]
-"     ### Auto setup/install env
-"         wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
-"         chmod +x ~/chk-ubuntu
-"         ~/chk-ubuntu
-"
-"     ### Install neovim:
-"         sudo apt-get install neovim
-"         sudo update-alternatives --config vi
-"         sudo update-alternatives --config vim
-"
-"     ### 1. Update latest vim config:
-"         wget --no-check-certificate -O ~/.vimrc  https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
-"         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"     ### 2.1 Update vim from repo:
-"         #sudo add-apt-repository ppa:neovim-ppa/unstable -y
-"         sudo add-apt-repository ppa:neovim-ppa/stable -y
-"         sudo apt-get install neovim
-"     ### 2.2 [OR] Update vim from binary:
-"         curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-"         chmod u+x nvim.appimage
-"         sudo mv /usr/bin/nvim /usr/bin/nvim.old
-"         sudo mv nvim.appimage /usr/bin/nvim
-"     ### 3. Take `.vimrc` as Config [Reference: vi -c 'help nvim-from-vim']
-"         ### oneline version
-"         $ mkdir -p ~/.vim && rm -fr ~/.vim/init.vim && ln -s ~/.vimrc ~/.vim/init.vim && mkdir -p ~/.config && rm -fr ~/.config/nvim && ln -s ~/.vim ~/.config/nvim
-"
-"         ### Split into multiple lines
-"         $ mkdir ~/.vim
-"         $ ln -s ~/.vimrc ~/.vim/init.vim
-"         $ mkdir ~/.config
-"         $ ln -s ~/.vim ~/.config/nvim
-"
-"     $ vi -c 'PlugInstall'
-"
-" - [Optional] - other config/tool
-"     + zshrc -- Simpler zshrc for oh-my-zsh
-"       $ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-"       $ wget --no-check-certificate -O ~/.zshrc https://raw.githubusercontent.com/huawenyu/dotfiles/master/.zshrc
-"     + oh-my-bash
-"       $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-"         OSH_THEME="robbyrussell"
-"         DISABLE_AUTO_UPDATE="true"
-"     + tmux.conf -- Simpler zshrc for oh-my-zsh
-"       $ wget --no-check-certificate -O ~/.tmux.conf https://raw.githubusercontent.com/huawenyu/dotfiles/master/.tmux.conf
-"     + [neovim-remote](https://github.com/mhinz/neovim-remote)
-" - [QuickStart]
-"     - checkhealth
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
@@ -583,7 +505,7 @@ endif
     Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
 
     Plug 'huawenyu/vim-basic',          Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
-    Plug 'huawenyu/vim.config',         Cond(has('nvim') && Mode(['basic', 'log', 'conf-plug', 'editor']))  | " config the plugs
+    Plug 'huawenyu/vimConfig',          Cond(has('nvim') && Mode(['basic', 'log', 'conf-plug', 'editor']))  | " config the plugs
     Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['basic', 'log', 'conf-extra', 'editor'])) | " config the plugs
 "}}}
 
@@ -611,28 +533,6 @@ endif
 
 " Coder {{{2
     " Try/test {{{3
-        " Plug 'neovim/nvim-lspconfig'
-        " " setting with vim-lsp
-        " if executable('ccls')
-        "    au User lsp_setup call lsp#register_server({
-        "       \ 'name': 'ccls',
-        "       \ 'cmd': {server_info->['ccls']},
-        "       \ 'root_uri': {server_info->lsp#utils#path_to_uri(
-        "       \   lsp#utils#find_nearest_parent_file_directory(
-        "       \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
-        "       \ 'initialization_options': {
-        "       \   'highlight': { 'lsRanges' : v:true },
-        "       \   'cache': {'directory': stdpath('cache') . '/ccls' },
-        "       \ },
-        "       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-        "       \ })
-        " endif
-
-        "Plug 'nvim-treesitter/nvim-treesitter',             Cond (has('nvim') && Mode(['admin']), { 'do': ':TSUpdate', 'for': ['c', 'cpp', 'rust', 'java', 'awk', 'bash', 'meson', 'python', 'tcl', 'expect'] })
-        " Plug 'nvim-treesitter/nvim-treesitter-refactor',  Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
-        " Plug 'nvim-treesitter/playground',                Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
-        " Plug 'romgrk/nvim-treesitter-context',            Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
-        " Plug 'nelstrom/vimprint',                         Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
         Plug 'andymass/vim-matchup',                        Cond (has('nvim') && Mode(['editor',]))
     "}}}
 
@@ -751,7 +651,7 @@ endif
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
         " [[, []: previous header/sibling
         Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug 'ellisonleao/glow.nvim',       Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), { 'on':  ['Glow'], 'for': 'markdown'})
+        Plug 'ellisonleao/glow.nvim',       Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), { 'on':  ['Glow'], 'for': 'markdown', 'do': ':LoadGlow', })
 
         "Plug 'SidOfc/mkdx',                Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',         Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
@@ -763,9 +663,9 @@ endif
 " Facade {{{2
     " Statusline
     "Plug 'huawenyu/startscreen.vim',       Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
-    Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
+    "Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
     "Plug 'itchyny/lightline.vim',          Cond(has('nvim') && Mode(['coder',]))	 | "
-    "Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))	 | "
+    Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))
 
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
@@ -783,7 +683,7 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
-    Plug 'huawenyu/which-key.nvim',         Cond(has('nvim') && IfNoPlug('mini.nvim') && Mode(['coder']) && g:vim_confi_option.help_keys) |  " Show/remember vim keymaps
+    Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'do': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
 
     Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
@@ -854,7 +754,7 @@ endif
             Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
-            Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]) && HasPlug('plenary.nvim'))       | " :TodoLocList, :TodoQuickFix
+            Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'] } )       | " :TodoLocList, :TodoQuickFix
             "Plug 'freitass/todo.txt-vim',          Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
             "Plug 'bfrg/vim-qf-preview',            Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
 
@@ -923,14 +823,38 @@ endif
 
         Plug 'reedes/vim-wordy',            Cond(has('nvim') && Mode(['writer',]) && Mode(['snippet',]))
 
-        " :LspInfo
-        Plug 'neovim/nvim-lspconfig',           Cond(has('nvim') && Mode(['coder',]))
-        Plug 'williamboman/nvim-lsp-installer', Cond(has('nvim') && Mode(['coder',]))
+        " LSP - Autocomplete/AutoIndexer
+            " Plug 'neovim/nvim-lspconfig'
+            " " setting with vim-lsp
+            " if executable('ccls')
+            "    au User lsp_setup call lsp#register_server({
+            "       \ 'name': 'ccls',
+            "       \ 'cmd': {server_info->['ccls']},
+            "       \ 'root_uri': {server_info->lsp#utils#path_to_uri(
+            "       \   lsp#utils#find_nearest_parent_file_directory(
+            "       \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
+            "       \ 'initialization_options': {
+            "       \   'highlight': { 'lsRanges' : v:true },
+            "       \   'cache': {'directory': stdpath('cache') . '/ccls' },
+            "       \ },
+            "       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+            "       \ })
+            " endif
 
-        "Plug 'glepnir/lspsaga.nvim',       Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': 'main'})
-        Plug 'ojroques/nvim-lspfuzzy',      Cond(has('nvim') && Mode(['editor',]))  | " Sink lsp-result to fzf-float-windows, Select-All<c-aa> sink again to quickfix(<enter>)
-        "Plug 'gfanto/fzf-lsp.nvim',        Cond(has('nvim') && Mode(['editor',]))
-        "Plug 'VonHeikemen/lsp-zero.nvim',  Cond(has('nvim') && Mode(['editor',]))
+            "Plug 'nvim-treesitter/nvim-treesitter',             Cond (has('nvim') && Mode(['admin']), { 'do': ':TSUpdate', 'for': ['c', 'cpp', 'rust', 'java', 'awk', 'bash', 'meson', 'python', 'tcl', 'expect'] })
+            " Plug 'nvim-treesitter/nvim-treesitter-refactor',  Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+            " Plug 'nvim-treesitter/playground',                Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+            " Plug 'romgrk/nvim-treesitter-context',            Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+            " Plug 'nelstrom/vimprint',                         Cond (has('nvim') && HasPlug('nvim-treesitter') && Mode(['editor',]))
+
+            " :LspInfo
+            Plug 'neovim/nvim-lspconfig',           Cond(has('nvim') && Mode(['coder',]))
+            Plug 'williamboman/nvim-lsp-installer', Cond(has('nvim') && Mode(['coder',]))
+
+            "Plug 'glepnir/lspsaga.nvim',       Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': 'main'})
+            Plug 'ojroques/nvim-lspfuzzy',      Cond(has('nvim') && Mode(['editor',]))  | " Sink lsp-result to fzf-float-windows, Select-All<c-aa> sink again to quickfix(<enter>)
+            "Plug 'gfanto/fzf-lsp.nvim',        Cond(has('nvim') && Mode(['editor',]))
+            "Plug 'VonHeikemen/lsp-zero.nvim',  Cond(has('nvim') && Mode(['editor',]))
 
         " Backend using node.js and eat too much memory/CPU
         "Plug 'neoclide/coc.nvim',          Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': 'release'})
@@ -1023,7 +947,7 @@ endif
         " Terminal Powerpoint: Suggestion use `presenterm` (https://mfontanini.github.io/presenterm/guides/basics.html)
         "Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
 
-        Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]))       | " Draw pencil, seem require neovim > 0.5
+        Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]), { 'on': ['SessionRestore', 'SessionSave'] })       | " Draw pencil, seem require neovim > 0.5
     "}}}
 
     " Project/Session/Workspace {{{3
@@ -1038,7 +962,7 @@ endif
             Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
-        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
+        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree' })
 
         Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
         Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
