@@ -1,11 +1,11 @@
 " vim: set expandtab: set tabstop=4: set shiftwidth=4: set softtabstop=4:
 " =============================================================
 " TryIt:
+" - Install:        curl -fLo ~/.vim/init.vim --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+" - vim <Leader>    <Space>
+" - Help            Press 'K'
 " - vim --clean                          Startup vim without any config/plug
 "   vim --headless "+PlugUpdate" +qa     Update env/plugin
-" - <Space>                     : Is the leader
-" - Press ';;'                  : Top-outline of shortcuts, search 'silent! Shortcut!' in ~/.vim/bundle/vim.command/plugin/map.vim:30
-" - Press 'K' | <leader>K       : on topic word with the '?'
 "
 " Customize:
 "   ~/.vimrc.before     " Set variable before plugin load
@@ -434,8 +434,8 @@ if g:vim_confi_option.auto_install_vimplug
         if empty(glob('~/.vim/autoload/plug.vim'))
             echomsg "AutoInstall: download vim-plug; mkdir .vim,.config/nvim; softlink .vimrc to init.vim"
 
-            call system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
-            call system("curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
+            call system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim")
+            call system("curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim")
 
             call system("touch ~/.vimrc; mkdir ~/.vim; mkdir ~/.config")
             call system("ln -s ~/.vim ~/.config/nvim")
@@ -510,34 +510,32 @@ endif
 "}}}
 
 " ColorTheme {{{2
-    Plug 'tomasr/molokai',              Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
-    Plug 'vim-scripts/holokai',         Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
+    "Plug 'tomasr/molokai',              Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
+    "Plug 'vim-scripts/holokai',         Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
     "Plug 'pR0Ps/molokai-dark'
     "Plug 'shannonmoeller/vim-monokai256'
 
-    Plug 'huawenyu/jellybeans.vim'
-
+    Plug 'huawenyu/jellybeans.vim',      Cond(Mode(['log', 'conf-basic', 'floatview', 'editor']))
     "Plug 'loctvl842/monokai-pro.nvim'
     "Plug 'ayu-theme/ayu-vim'
-
     "Plug 'junegunn/seoul256.vim'
     "Plug 'NLKNguyen/papercolor-theme'
-    Plug 'marko-cerovac/material.nvim'
+    "Plug 'marko-cerovac/material.nvim'
     "Plug 'cpea2506/one_monokai.nvim'
 "}}}
 
 " Writer {{{2
-    Plug 'junegunn/goyo.vim',           Cond(has('nvim') && Mode(['writer',]))  | " :Goyo 80
-    Plug 'junegunn/limelight.vim',      Cond(has('nvim') && Mode(['writer',])) | "
+    Plug 'junegunn/goyo.vim',           Cond(has('nvim') && Mode(['writer',]), {'on': 'Goyo'})  | " :Goyo 80
+    Plug 'junegunn/limelight.vim',      Cond(has('nvim') && Mode(['writer',]), {'on': 'Limelight'}) | ":Limelight
 "}}}
 
 " Coder {{{2
     " Try/test {{{3
-        Plug 'andymass/vim-matchup',                        Cond (has('nvim') && Mode(['editor',]))
+        Plug 'andymass/vim-matchup',             Cond (has('nvim') && Mode(['editor',]))
     "}}}
 
     " Comment,Extra {{{3
-        Plug 'wsdjeg/SourceCounter.vim',         Cond(has('nvim') && Mode(['coder'])) | " report by command ':SourceCounter'
+        Plug 'wsdjeg/SourceCounter.vim',         Cond(has('nvim') && Mode(['coder']), {'on': 'SourceCounter'}) | " report by command ':SourceCounter'
 
         Plug 'tpope/vim-commentary',             Cond(has('nvim') && Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
         "Plug 'numToStr/Comment.nvim',           Cond(has('nvim') && Mode(['coder'])) | " gcc, gbc, gcw; not works good
@@ -547,7 +545,7 @@ endif
         Plug 'vim-scripts/iptables',             Cond(has('nvim') && Mode(['admin']) && Mode(['extra']))
         Plug 'tenfyzhong/CompleteParameter.vim', Cond(has('nvim') && Mode(['coder']) && Mode(['extra']))
         Plug 'FooSoft/vim-argwrap',              Cond(has('nvim') && Mode(['coder']) && Mode(['extra']))        | " an argument wrapping and unwrapping
-        Plug 'ericcurtin/CurtineIncSw.vim',      Cond(has('nvim') && Mode(['coder',]))          | " Toggle source/header
+        Plug 'ericcurtin/CurtineIncSw.vim',      Cond(has('nvim') && Mode(['coder']))          | " Toggle source/header
     "}}}
 
     " gdb front-end {{{3
@@ -569,14 +567,14 @@ endif
 
     " plugin {{{3
         Plug 'huawenyu/vim-scriptease',     Cond(has('nvim') && Mode(['coder'])) | " A Vim plugin for Vim plugins
-        Plug 'junegunn/vader.vim',          Cond(has('nvim') && Mode(['coder']) && Mode(['plugin'])) | " A simple Vimscript test framework
-        Plug 'mhinz/vim-lookup',            Cond(has('nvim') && Mode(['coder']) && Mode(['plugin']))
+        "Plug 'junegunn/vader.vim',          Cond(has('nvim') && Mode(['coder']) && Mode(['plugin'])) | " A simple Vimscript test framework
+        "Plug 'mhinz/vim-lookup',            Cond(has('nvim') && Mode(['coder']) && Mode(['plugin']))
     "}}}
 
     " C/Cplus {{{3
-        Plug 'huawenyu/vim-linux-coding-style',  Cond(has('nvim') && Mode(['coder']) && Mode(['c']))
-        Plug 'octol/vim-cpp-enhanced-highlight', Cond(has('nvim') && Mode(['coder']) && Mode(['c', 'floatview']))
-        Plug 'bfrg/vim-cpp-modern',              Cond(has('nvim') && HasPlug('vim-cpp-enhanced-highlight'))
+        Plug 'huawenyu/vim-linux-coding-style',  Cond(has('nvim') && Mode(['coder']) && Mode(['c']), {'for': ['c', 'cpp']})
+        Plug 'octol/vim-cpp-enhanced-highlight', Cond(has('nvim') && Mode(['coder']) && Mode(['c', 'floatview']), {'for': ['c', 'cpp']})
+        Plug 'bfrg/vim-cpp-modern',              Cond(has('nvim') && HasPlug('vim-cpp-enhanced-highlight'), {'for': ['c', 'cpp']})
     "}}}
 
     " Python {{{3
@@ -590,16 +588,16 @@ endif
 
     " Perl {{{3
         Plug 'vim-perl/vim-perl',           Cond(has('nvim') && Mode(['coder']) && Mode(['perl']), { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' })
-        Plug 'tpope/vim-cucumber',          Cond(has('nvim') && Mode(['coder']) && Mode(['perl'])) | "      Auto    test  framework                                                               base on Behaviour Drive Development(BDD)
+        Plug 'tpope/vim-cucumber',          Cond(has('nvim') && Mode(['coder']) && Mode(['perl'])) | "      Auto    test  framework base on Behaviour Drive Development(BDD)
     "}}}
 
     " Javascript {{{3
-        Plug 'pangloss/vim-javascript',     Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
-        Plug 'maksimr/vim-jsbeautify',      Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
-        Plug 'elzr/vim-json',               Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
-        "Plug 'tpope/vim-jdaddy',            Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))  | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
-        Plug 'ternjs/tern_for_vim',         Cond(has('nvim') && Mode(['coder']) && Mode(['javascript'])) | " Tern-based JavaScript editing support.
-        Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']))
+        Plug 'pangloss/vim-javascript',     Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] })
+        Plug 'maksimr/vim-jsbeautify',      Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] })
+        Plug 'elzr/vim-json',               Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] })
+        Plug 'tpope/vim-jdaddy',            Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] }) | " `:%!jq     .`         ;       `:%!jq --sort-keys .`
+        Plug 'ternjs/tern_for_vim',         Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] }) | " Tern-based JavaScript editing support.
+        Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim') && Mode(['coder']) && Mode(['javascript']), {'for': ['javascript','typescript'] })
     "}}}
 
     " TypeScript {{{3
@@ -615,13 +613,13 @@ endif
     "}}}
 
     " Golang {{{3
-        Plug 'fatih/vim-go',                Cond(has('nvim') && Mode(['coder']) && Mode(['golang']))
+        Plug 'fatih/vim-go',                Cond(has('nvim') && Mode(['coder']) && Mode(['golang']), {'for': ['golang',] })
         "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
     "}}}
 
     " Tcl {{{3
-        "Plug 'LStinson/TclShell-Vim',      Cond(has('nvim') && Mode(['coder',]) && Mode(['tcl',]))
-        "Plug 'vim-scripts/tcl.vim',        Cond(has('nvim') && Mode(['coder',]) && Mode(['tcl',]))
+        "Plug 'LStinson/TclShell-Vim',      Cond(has('nvim') && Mode(['coder',]) && Mode(['tcl',]), {'for': ['tcl', 'expect'] })
+        "Plug 'vim-scripts/tcl.vim',        Cond(has('nvim') && Mode(['coder',]) && Mode(['tcl',]), {'for': ['tcl', 'expect'] })
     "}}}
 
     " Haskell {{{3
@@ -645,13 +643,13 @@ endif
         " tool-render?
         "Plug 'vimwiki/vimwiki',            Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Another choice is  [Gollum](https://github.com/gollum/gollum)
         Plug 'lervag/wiki.vim',             Cond(has('nvim') && IfNoPlug('vimwiki') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Better vimwiki the philosophy of 'do one thing and do it well'
-        Plug 'godlygeek/tabular',           Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
+        Plug 'godlygeek/tabular',           Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'on': 'Tabularize', 'for': 'markdown'})
 
         " ge: open link
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
         " [[, []: previous header/sibling
         Plug 'preservim/vim-markdown',      Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
-        Plug 'ellisonleao/glow.nvim',       Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), { 'on':  ['Glow'], 'for': 'markdown', 'do': ':LoadGlow', })
+        Plug 'ellisonleao/glow.nvim',       Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'on':  'Glow', 'for': 'markdown', 'setup': ':LoadGlow', })
 
         "Plug 'SidOfc/mkdx',                Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',         Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
@@ -683,11 +681,11 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
-    Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'do': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
+    Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'setup': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
 
-    Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]))        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
+    Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': 'NR'})        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
-    Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
+    Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]), {'on': 'TabberNew'})        | " Tab management for Vim: the orig-version have no commands
 "}}}
 
 " Syntax/Language {{{2
@@ -698,12 +696,12 @@ endif
     ""Plug 'Chiel92/vim-autoformat',        Cond(has('nvim') && Mode(['coder',]))
 
     Plug 'justinmk/vim-syntax-extra',       Cond(has('nvim') && Mode(['coder',]), {'for': 'vim'})
-    Plug 'vim-scripts/awk.vim',             Cond(has('nvim') && Mode(['admin',]) && Mode(['script']))
+    Plug 'vim-scripts/awk.vim',             Cond(has('nvim') && Mode(['admin',]) && Mode(['script']), {'for': 'awk'})
     Plug 'huawenyu/vim-log-syntax',         Cond(has('nvim') && Mode(['editor', 'log', ]), {'for': 'log'})
     Plug 'huawenyu/vim-autotest-syntax',    Cond(has('nvim') && Mode(['editor', 'log', ]), {'for': 'log'})
     Plug 'tmux-plugins/vim-tmux',           Cond(has('nvim') && Mode(['editor',]), {'for': 'tmux'})  | " The syntax of .tmux.conf
-    Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && has('nvim') && Mode(['coder',]))
-    Plug 'xuhdev/syntax-dosini.vim',        Cond(has('nvim') && has('nvim') && Mode(['coder',]))
+    Plug 'nickhutchinson/vim-cmake-syntax', Cond(has('nvim') && has('nvim') && Mode(['coder',]), {'for': 'cmake'})
+    Plug 'xuhdev/syntax-dosini.vim',        Cond(has('nvim') && has('nvim') && Mode(['coder',]), {'for': 'dosini'})
     Plug 'eiginn/iptables-vim',             Cond(has('nvim') && has('nvim') && Mode(['coder',]))
 "}}}
 
@@ -715,28 +713,28 @@ endif
 
         "Plug 'huawenyu/vim-shortcut',      Cond(has('nvim') && Mode(['basic', 'editor', 'floatview']))         | " replace by which-key
         Plug 'kopischke/vim-fetch',         Cond(has('nvim') && Mode(['editor',]))      | " Support vim fname:line
-        Plug 'nhooyr/neoman.vim',           Cond(has('nvim') && Mode(['coder',]))       | " Seems default :Man can't support view a file directly
+        Plug 'nhooyr/neoman.vim',           Cond(has('nvim') && Mode(['coder',]), {'on': ['Nman', 'Snman']} )       | " Seems default :Man can't support view a file directly
 
         "Plug 'sudormrfbin/cheatsheet.nvim'
         "Plug 'nvim-lua/popup.nvim'
         "Plug 'nvim-lua/plenary.nvim'
 
         " Cody AI-code
-        Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
+        "Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
         " Required for various utilities
-        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor', 'floatview']))
         " Required if you want to use some of the search functionality
         "Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
 
-        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['basic', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
+        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))      |  " vim config auto set
     "}}}
 
     " Search/Jump {{{3
-        Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]))  | " :Grepper text
+        Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]), {'on': ['Grepper', 'GrepperAg', 'GrepperGit','GrepperGrep', 'GrepperRg']})  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',    Cond(has('nvim') && Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
-        Plug 'tweekmonster/fzf-filemru',    Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " : FilesMru
+        Plug 'tweekmonster/fzf-filemru',    Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'), {'on': 'FilesMru'})   | " : FilesMru
         Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
@@ -744,7 +742,7 @@ endif
         Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
 
         " Tags/cscope/indexer? {{{4
-            Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))
+            Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': 'TagbarToggle'})
             "Plug 'liuchengxu/vista.vim',   Cond(has('nvim') && IfNoPlug('tagbar')    && Mode(['coder',]))
             "Plug 'vim-scripts/taglist.vim',Cond(has('nvim') && HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
@@ -754,7 +752,7 @@ endif
             Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
-            Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'] } )       | " :TodoLocList, :TodoQuickFix
+            Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'], 'setup': ':LoadTodo', } )       | " :TodoLocList, :TodoQuickFix
             "Plug 'freitass/todo.txt-vim',          Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))       | " codeblock with 'todo', http://todotxt.org/
             "Plug 'bfrg/vim-qf-preview',            Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
 
@@ -773,18 +771,18 @@ endif
         Plug 'tpope/vim-surround',		    Cond(has('nvim') && Mode(['editor']))     | " Help add/remove surround
         Plug 'tpope/vim-endwise',           Cond(has('nvim') && Mode(['editor']))     | " smart insert certain end structures automatically.
         Plug 'tpope/vim-rsi',               Cond(has('nvim') && Mode(['editor']))     | " Readline shortcut for vim
-        Plug 'houtsnip/vim-emacscommandline', Cond(has('nvim') && Mode(['editor',]))| " Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
+        Plug 'houtsnip/vim-emacscommandline', Cond(has('nvim') && Mode(['editor',]))| " Vim Command line: Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
     "}}}
 
     " Motion {{{3
-        Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']))
+        Plug 'christoomey/vim-tmux-navigator',  Cond(has('nvim') && Mode(['basic', 'editor', 'log', 'floatview']) && !empty($TMUX_PANE))
 
         Plug 'mg979/vim-visual-multi',          Cond(has('nvim') && Mode(['editor',]))      | " `\\` Active:   Mult-select Change/replace/align, https://github.com/mg979/vim-visual-multi/blob/master/doc/vm-mappings.txt
         "Plug 'anuvyklack/hydra.nvim',          Cond(has('nvim') && Mode(['editor',]))      | " Create custom submodes and menus
         "Plug 'smoka7/multicursors.nvim',       Cond(has('nvim') && Mode(['editor',]))      | " Mult-select Change/replace/align,
 
         "Plug 'easymotion/vim-easymotion',      Cond(has('nvim') && Mode(['editor',]))
-        Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]))
+        Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]), {'on': ['HopChar1CurrentLine', 'HopChar1', 'HopChar2', 'HopPattern', 'HopLineStart', 'HopLine'], 'setup': 'LoadHop'})
 
         Plug 'tpope/vim-abolish',               Cond(has('nvim') && Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
         "Plug 'karb94/neoscroll.nvim',          Cond(has('nvim') && Mode(['editor',]))
@@ -802,7 +800,7 @@ endif
 
         Plug 'rhysd/clever-f.vim',          Cond(has('nvim') && Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion',         Cond(has('nvim') && Mode(['editor',]))  | " Jump according indent
-        Plug 'junegunn/vim-easy-align',     Cond(has('nvim') && Mode(['editor',]))   | " tablize selected and ga=
+        Plug 'junegunn/vim-easy-align',     Cond(has('nvim') && Mode(['editor',]), {'on': 'EasyAlign'})   | " tablize selected and ga=
         "Plug 'dhruvasagar/vim-table-mode',  Cond(has('nvim') && Mode(['editor',]))| " <leader>tm :TableModeToggle; <leader>tr: Align; <leader>tt: Format existed
     "}}}
 
@@ -816,7 +814,7 @@ endif
         Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
         Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
-        Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]) )                     | " :Template *.md,   vi a-new.md
+        Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]))                     | " :TemplateHere *.md,   vi a-new.md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
@@ -901,12 +899,12 @@ endif
 
         Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',])) | "
         Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
-        Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :Echoerr xxxxx
+        Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]), {'on': ['Echo', 'Echoerr']})	| " :Echoerr xxxxx
 
         "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
         Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE), { 'on':  ['VimuxTogglePane', 'VimuxRunCommand', 'VimuxOpenRunner', ] })   | " Send command to tmux's marked pane
 
-        "Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]))  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
+		"Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'load_do': ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
@@ -947,7 +945,7 @@ endif
         " Terminal Powerpoint: Suggestion use `presenterm` (https://mfontanini.github.io/presenterm/guides/basics.html)
         "Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
 
-        Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]), { 'on': ['SessionRestore', 'SessionSave'] })       | " Draw pencil, seem require neovim > 0.5
+        Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]), { 'on': ['SessionRestore', 'SessionSave'], 'setup': ':LoadAutoSession' })       | " Draw pencil, seem require neovim > 0.5
     "}}}
 
     " Project/Session/Workspace {{{3
@@ -962,7 +960,7 @@ endif
             Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
-        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree' })
+        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'load_do': ':LoadNeotree'})
 
         Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
         Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
@@ -989,7 +987,7 @@ endif
         Plug 'huawenyu/VOoM',               Cond(has('nvim') && Mode(['editor', 'log', ]))
         "Plug 'vim-voom/VOoM_extras',       Cond(has('nvim') && Mode(['editor']))  | " Seems no use at all, but slow/frozen when read large file (>100M)
         Plug 'roosta/fzf-folds.vim',        Cond(has('nvim') && Mode(['editor']))
-        Plug 'wellle/context.vim',          Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]))    | " High cpu
+        Plug 'wellle/context.vim',          Cond(has('nvim') && Mode(['coder',]))    | " Show context every where
         "Plug 'nvim-treesitter/nvim-treesitter-context', Cond(has('nvim') && Mode(['coder',]))
         "Plug "SmiteshP/nvim-navic",         Cond(has('nvim') && Mode(['editor']) && HasPlug('nvim-lspconfig'))
     "}}}
@@ -1014,23 +1012,21 @@ endif
         Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))              | " :'<,'>Gist -e 'list-sample'
     "}}}
 
-    "Plug 'wlemuel/vim-tldr',                Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
-    Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]))
-    Plug 'szw/vim-dict',                    Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
-    Plug 'szw/vim-g',                       Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
+    "Plug 'wlemuel/vim-tldr',               Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
+    Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]), {'on': 'W3m'})
+    Plug 's1n7ax/nvim-window-picker',       Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
 "}}}
 
 " Thirdpart Library {{{2
     Plug 'vim-jp/vital.vim',                Cond(has('nvim') && Mode(['coder']) && Mode(['library']))  | " promise?
     Plug 'google/vim-maktaba',              Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
     Plug 'tomtom/tlib_vim',                 Cond(has('nvim') && Mode(['coder']) && Mode(['library']))
-    Plug 'echasnovski/mini.icons',          Cond(has('nvim') && Mode(['editor']))	 | "
-    Plug 'nvim-tree/nvim-web-devicons',     Cond(has('nvim') && Mode(['editor',]))	 | "
+    "Plug 'echasnovski/mini.icons',          Cond(has('nvim') && Mode(['editor']))	 | "
 "}}}
 
 " Debug {{{2
-    Plug 'gu-fan/doctest.vim',              Cond(has('nvim') && Mode(['admin',]))     | " doctest for language vimscript, :DocTest
-    Plug 'huawenyu/vimlogger',              Cond(has('nvim') && Mode(['admin',]))
+    Plug 'gu-fan/doctest.vim',              Cond(has('nvim') && Mode(['admin', 'coder']))     | " doctest for language vimscript, :DocTest
+    Plug 'huawenyu/vimlogger',              Cond(has('nvim') && Mode(['admin', 'coder']))
 "}}}
 
 call plug#end()
