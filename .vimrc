@@ -2,6 +2,7 @@
 " =============================================================
 " TryIt:
 " - Install:        curl -fLo ~/.vim/init.vim --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+"          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim
 " - vim <Leader>    <Space>
 " - Help            Press 'K'
 " - vim --clean                          Startup vim without any config/plug
