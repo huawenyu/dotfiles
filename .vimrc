@@ -112,7 +112,7 @@ let g:vim_confi_option = {
       \ 'me_statusline': 0,
       \
       \ 'help_keys': 1,
-      \ 'qf_preview': 0,
+      \ 'qf_preview': 1,
       \
       \ 'start_page': "$HOME/dotfiles/startpage.md",
       \ 'wiki_dirs': ['~/dotwiki', '~/wiki', '~/dotfiles', ],
@@ -507,7 +507,6 @@ endif
 
     Plug 'huawenyu/vim-basic',          Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
     Plug 'huawenyu/vimConfig',          Cond(has('nvim') && Mode(['basic', 'log', 'conf-plug', 'editor']))  | " config the plugs
-    Plug 'huawenyu/vim.command',        Cond(has('nvim') && Mode(['basic', 'log', 'conf-extra', 'editor'])) | " config the plugs
 "}}}
 
 " ColorTheme {{{2
@@ -644,7 +643,7 @@ endif
         " tool-render?
         "Plug 'vimwiki/vimwiki',            Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Another choice is  [Gollum](https://github.com/gollum/gollum)
         Plug 'lervag/wiki.vim',             Cond(has('nvim') && IfNoPlug('vimwiki') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Better vimwiki the philosophy of 'do one thing and do it well'
-        Plug 'godlygeek/tabular',           Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'on': 'Tabularize', 'for': 'markdown'})
+        "Plug 'godlygeek/tabular',           Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'on': 'Tabularize', 'for': 'markdown'}) | " EasyAlign is better.
 
         " ge: open link
         " ]], ]c, ]u, ][: next-header/cur-header/parent/sibling/
@@ -654,7 +653,6 @@ endif
 
         "Plug 'SidOfc/mkdx',                Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})
         "Plug 'tpope/vim-markdown',         Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'as':  'tpope_vim-markdown', 'for': 'markdown'} )     |        "       Light  but good enough
-        "Plug 'alok/notational-fzf-vim',    Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.fzf_notes), { 'on':  ['NV'] })    | " :NV <text> Grep 'text' then fzf-preview from multiple dirs
     "}}}
 
 "}}}
@@ -686,7 +684,8 @@ endif
 
     Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': 'NR'})        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
-    Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]), {'on': 'TabberNew'})        | " Tab management for Vim: the orig-version have no commands
+    Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
+    "Plug 'akinsho/bufferline.nvim',         Cond(has('nvim') && Mode(['editor',]))        | "
 "}}}
 
 " Syntax/Language {{{2
@@ -735,7 +734,7 @@ endif
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]), {'on': ['Grepper', 'GrepperAg', 'GrepperGit','GrepperGrep', 'GrepperRg']})  | " :Grepper text
             Plug 'huawenyu/c-utils.vim',    Cond(has('nvim') && Mode(['coder']) && HasPlug('vim-grepper') )
         "Plug 'pechorin/any-jump.vim',      Cond(has('nvim') && Mode(['coder',]))  | " Regex-fail when search-by 'rg',   ;jj  ;jb  ;jl
-        Plug 'tweekmonster/fzf-filemru',    Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'), {'on': 'FilesMru'})   | " : FilesMru
+        "Plug 'tweekmonster/fzf-filemru',    Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'), {'on': 'FilesMru'})   | " : FilesMru
         Plug 'chengzeyi/fzf-preview.vim',   Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf.vim'))   | " Wrap with enable preview of fzf.vim
             Plug 'huawenyu/fzf-cscope.vim', Cond(has('nvim') && Mode(['editor',]) && HasPlug('fzf-preview.vim') && HasPlug('vim-basic'))
 
@@ -743,14 +742,15 @@ endif
         Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
 
         " Tags/cscope/indexer? {{{4
-            Plug 'preservim/tagbar',        Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': 'TagbarToggle'})
+            Plug 'preservim/tagbar',                Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': 'TagbarToggle', 'config': 'LoadTagbar'})
+            "Plug 'simrat39/symbols-outline.nvim',  Cond(has('nvim') && Mode(['coder',]), {'on': 'SymbolsOutline', 'setup': 'LoadSymbolsOutline'})
             "Plug 'liuchengxu/vista.vim',   Cond(has('nvim') && IfNoPlug('tagbar')    && Mode(['coder',]))
             "Plug 'vim-scripts/taglist.vim',Cond(has('nvim') && HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
         "}}}
 
         " Quickfix/Todo list {{{4
-            Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview)    | " Better quickfix: zf   fzf-mode
+            Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]), {'on': 'QFix', })    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
+            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview, {'on': 'QFix', })    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
             Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'], 'setup': ':LoadTodo', } )       | " :TodoLocList, :TodoQuickFix
@@ -905,7 +905,7 @@ endif
         "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
         Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE), { 'on':  ['VimuxTogglePane', 'VimuxRunCommand', 'VimuxOpenRunner', ] })   | " Send command to tmux's marked pane
 
-		"Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'load_do': ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
+		"Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'setup: ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
@@ -961,7 +961,7 @@ endif
             Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
-        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'load_do': ':LoadNeotree'})
+        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'setup': ':LoadNeotree'})
 
         Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'] })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
         Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
@@ -988,7 +988,7 @@ endif
         Plug 'huawenyu/VOoM',               Cond(has('nvim') && Mode(['editor', 'log', ]))
         "Plug 'vim-voom/VOoM_extras',       Cond(has('nvim') && Mode(['editor']))  | " Seems no use at all, but slow/frozen when read large file (>100M)
         Plug 'roosta/fzf-folds.vim',        Cond(has('nvim') && Mode(['editor']))
-        Plug 'wellle/context.vim',          Cond(has('nvim') && Mode(['coder',]))    | " Show context every where
+        Plug 'wellle/context.vim',          Cond(has('nvim') && Mode(['coder',]), {'on': 'ContextToggle', 'config': 'LoadContextVim'})    | " Show context every where
         "Plug 'nvim-treesitter/nvim-treesitter-context', Cond(has('nvim') && Mode(['coder',]))
         "Plug "SmiteshP/nvim-navic",         Cond(has('nvim') && Mode(['editor']) && HasPlug('nvim-lspconfig'))
     "}}}
@@ -999,22 +999,21 @@ endif
     " git {{{3
         Plug 'tpope/vim-fugitive',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
         Plug 'tpope/vim-rhubarb',           Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
+        Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), {'on': 'Gist'})              | " :'<,'>Gist -e 'list-sample'
         Plug 'airblade/vim-gitgutter',      Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
-        Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'))  | " Awesome git wrapper
+        Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on': ['GV'] })  | " Awesome git wrapper
 
         " Troubleshooting :SignifyDebug
         " Diff by commit: export GitSHA=76748de92fa
         Plug 'mhinz/vim-signify',           Cond(has('nvim') && Mode(['editor',]))   | " Light/Quicker then vim-gitgutter to show git diff
 
-        Plug 'rbgrouleff/bclose.vim',       Cond(has('nvim') && Mode(['editor']) && Mode(['extra']) && executable('tig'))
-        Plug 'iberianpig/tig-explorer.vim', Cond(has('nvim') && Mode(['editor']) && Mode(['extra']) && HasPlug('bclose.vim') && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
+        "Plug 'rbgrouleff/bclose.vim',       Cond(has('nvim') && Mode(['editor']) && Mode(['extra']) && executable('tig'))
+        "Plug 'iberianpig/tig-explorer.vim', Cond(has('nvim') && Mode(['editor']) && Mode(['extra']) && HasPlug('bclose.vim') && executable('tig'))         | " tig for vim (https://github.com/jonas/tig): should install tig first.
 
-        Plug 'tpope/vim-rhubarb',           Cond(has('nvim') && Mode(['editor']) && Mode(['extra']) && Mode(['hub']))   | " fugitive.vim is the Git, rhubarb.vim is the Hub.
-        Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))              | " :'<,'>Gist -e 'list-sample'
     "}}}
 
     "Plug 'wlemuel/vim-tldr',               Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
-    Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]), {'on': 'W3m'})
+    Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]), {'on':['W3m', 'W3mTab'], 'config': 'LoadW3m'} ) | " :W3m
     Plug 's1n7ax/nvim-window-picker',       Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
 "}}}
 
