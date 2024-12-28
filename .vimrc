@@ -588,7 +588,7 @@ endif
 
     " Perl {{{3
         Plug 'vim-perl/vim-perl',           Cond(has('nvim') && Mode(['coder']) && Mode(['perl']), { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' })
-        Plug 'tpope/vim-cucumber',          Cond(has('nvim') && Mode(['coder']) && Mode(['perl'])) | "      Auto    test  framework base on Behaviour Drive Development(BDD)
+        Plug 'tpope/vim-cucumber',          Cond(has('nvim') && Mode(['coder']) && Mode(['perl']), { 'for': 'perl'}) | "      Auto    test  framework base on Behaviour Drive Development(BDD)
     "}}}
 
     " Javascript {{{3
@@ -663,15 +663,16 @@ endif
     "Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
     "Plug 'itchyny/lightline.vim',          Cond(has('nvim') && Mode(['coder',]))	 | "
     Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))
+    Plug 'vimpostor/vim-tpipeline',         Cond(has('nvim') && Mode(['coder',]) && !empty($TMUX_PANE)) | " Show vim.statusline to the tmux.statusbar
 
     "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',          Cond(has('nvim') && Mode(['editor'])) | " place, toggle and display marks
-    "Plug 'ciaranm/securemodelines',         Cond(has('nvim') && Mode(['editor'])) | " Limit the vim magic mode line feature
 
     "Plug 'itchyny/vim-cursorword',          Cond(has('nvim') && Mode(['editor'])) | " Underlines the word under the cursor
     Plug 'lukas-reineke/indent-blankline.nvim', Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.indentline)
+    "Plug 'nvimdev/indentmini.nvim',         Cond(has('nvim') && Mode(['editor'])) | " Not pretty/correct
     "Plug 'junegunn/rainbow_parentheses.vim',   Cond(has('nvim') && Mode(['editor']))
 
     " Copy directly into vim.config/plugin/misc.vim
@@ -682,7 +683,7 @@ endif
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
     Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'setup': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
 
-    Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': 'NR'})        | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
+    Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': ['NR', 'NRV'], })   | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
     Plug 'huawenyu/vim-tabber',         Cond(has('nvim') && Mode(['editor',]))        | " Tab management for Vim: the orig-version have no commands
     "Plug 'akinsho/bufferline.nvim',         Cond(has('nvim') && Mode(['editor',]))        | "
@@ -726,8 +727,9 @@ endif
         " Required if you want to use some of the search functionality
         "Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
 
-        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor', 'floatview']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
-        "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))      |  " vim config auto set
+        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
+        Plug 'roxma/vim-tmux-clipboard',    Cond(has('nvim') && Mode(['editor']))       | " integration for vim and tmux's clipboard
+        "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))  |  " vim config auto set
     "}}}
 
     " Search/Jump {{{3
@@ -742,7 +744,7 @@ endif
         Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
 
         " Tags/cscope/indexer? {{{4
-            Plug 'preservim/tagbar',                Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': 'TagbarToggle', 'config': 'LoadTagbar'})
+            Plug 'preservim/tagbar',                Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': ['TagbarToggle', 'Tagbar', 'TagbarOpen'], 'config': 'LoadTagbar'})
             "Plug 'simrat39/symbols-outline.nvim',  Cond(has('nvim') && Mode(['coder',]), {'on': 'SymbolsOutline', 'setup': 'LoadSymbolsOutline'})
             "Plug 'liuchengxu/vista.vim',   Cond(has('nvim') && IfNoPlug('tagbar')    && Mode(['coder',]))
             "Plug 'vim-scripts/taglist.vim',Cond(has('nvim') && HasPlug('tagbar')     && Mode(['coder',]) && LINUX())
@@ -773,6 +775,11 @@ endif
         Plug 'tpope/vim-endwise',           Cond(has('nvim') && Mode(['editor']))     | " smart insert certain end structures automatically.
         Plug 'tpope/vim-rsi',               Cond(has('nvim') && Mode(['editor']))     | " Readline shortcut for vim
         Plug 'houtsnip/vim-emacscommandline', Cond(has('nvim') && Mode(['editor',]))| " Vim Command line: Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
+
+        " Auto indent
+        Plug 'ciaranm/securemodelines',     Cond(has('nvim') && Mode(['editor'])) | " Limit the vim magic mode line feature
+        "Plug 'tpope/vim-sleuth',           Cond(has('nvim') && Mode(['editor',]))| " vimscript base
+        Plug 'NMAC427/guess-indent.nvim',   Cond(has('nvim') && Mode(['editor',]))| " Lua base
     "}}}
 
     " Motion {{{3
@@ -875,20 +882,22 @@ endif
     " Text objects? {{{2
     " https://blog.carbonfive.com/vim-text-objects-the-definitive-guide/
         Plug 'wellle/targets.vim',              Cond(has('nvim') && Mode(['editor']))      | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
-        Plug 'kana/vim-textobj-user',           Cond(has('nvim') && Mode(['editor']))
-        Plug 'michaeljsmith/vim-indent-object', Cond(has('nvim') && Mode(['editor',]))     | " <count>ai, aI, ii, iI
-        Plug 'glts/vim-textobj-indblock',       Cond(has('nvim') && Mode(['coder',]))      | " vao, Select a block of indentation whitespace before ascii
-        Plug 'kana/vim-textobj-entire',         Cond(has('nvim') && Mode(['coder',]))      | " vae, Select entire buffer
-        Plug 'kana/vim-textobj-function',       Cond(has('nvim') && Mode(['coder',]))      | " vaf, Support: c, java, vimscript
-        Plug 'mattn/vim-textobj-url',           Cond(has('nvim') && Mode(['editor',]))     | " vau
-        Plug 'kana/vim-textobj-diff',           Cond(has('nvim') && Mode(['coder',]))      | " vdh, hunk;  vdH, file;  vdf, file
-        Plug 'glts/vim-textobj-comment',        Cond(has('nvim') && Mode(['coder',]))      | " vac, vic
-        Plug 'Julian/vim-textobj-brace',        Cond(has('nvim') && Mode(['editor',]))     | " vaj
-        Plug 'whatyouhide/vim-textobj-xmlattr', Cond(has('nvim') && Mode(['coder',]))      | " vax
+        Plug 'kana/vim-textobj-user',           Cond(has('nvim') && Mode(['editor']))      | " v-Select, d/x-Delete, c-Change, y-Yank, g-Goto; i-inside a-around
+            Plug 'michaeljsmith/vim-indent-object', Cond(has('nvim') && Mode(['editor',])) | " <count>iI
+            Plug 'glts/vim-textobj-indblock',       Cond(has('nvim') && Mode(['editor',])) | " o, Indentation block
+            "Plug 'kana/vim-textobj-indent',        Cond(has('nvim') && Mode(['editor',])) | " iI
+            Plug 'kana/vim-textobj-entire',         Cond(has('nvim') && Mode(['coder',]))  | " e, Whole buffer
+            Plug 'mattn/vim-textobj-url',           Cond(has('nvim') && Mode(['editor',])) | " u, URL
+            Plug 'kana/vim-textobj-diff',           Cond(has('nvim') && Mode(['coder',]))  | " dh-hunk  vdH-file  vdf-file
+            Plug 'Julian/vim-textobj-brace',        Cond(has('nvim') && Mode(['editor',])) | " j
+            Plug 'whatyouhide/vim-textobj-xmlattr', Cond(has('nvim') && Mode(['coder',]))  | " x
+            Plug 'pocke/vim-textobj-markdown',      Cond(has('nvim') && Mode(['editor',])) | " c
+            Plug 'glts/vim-textobj-comment',        Cond(has('nvim') && Mode(['coder',]))  | " c
+            Plug 'preservim/vim-textobj-sentence',  Cond(has('nvim') && Mode(['editor',])) | " s; motion-(); jump-g()
+            Plug 'kana/vim-textobj-function',       Cond(has('nvim') && Mode(['coder',]))  | " f, Function, support: c, java, vimscript
+            "Plug 'thinca/vim-textobj-between',     Cond(has('nvim') && Mode(['editor',])) | " f,
+            "Plug 'machakann/vim-textobj-functioncall', Cond(has('nvim') && Mode(['coder',]))
 
-        "Plug 'kana/vim-textobj-indent',        Cond(has('nvim') && Mode(['editor',]))     | " vai, vaI
-        "Plug 'machakann/vim-textobj-functioncall', Cond(has('nvim') && Mode(['coder',]))
-        "Plug 'thinca/vim-textobj-between',     Cond(has('nvim') && Mode(['editor',]))         | " vaf, break the vim-textobj-function
     "}}}
 
 "}}}
@@ -905,7 +914,7 @@ endif
         "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
         Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE), { 'on':  ['VimuxTogglePane', 'VimuxRunCommand', 'VimuxOpenRunner', ] })   | " Send command to tmux's marked pane
 
-		"Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'setup: ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
+        "Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'setup: ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
@@ -1002,6 +1011,7 @@ endif
         Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), {'on': 'Gist'})              | " :'<,'>Gist -e 'list-sample'
         Plug 'airblade/vim-gitgutter',      Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
         Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on': ['GV'] })  | " Awesome git wrapper
+        "Plug 'AckslD/nvim-FeMaco.lua',      Cond(has('nvim') && Mode(['coder']), { 'on': 'FeMaco', 'setup': ':LoadFeMaco' }) | " Dependencies: tree-sitter
 
         " Troubleshooting :SignifyDebug
         " Diff by commit: export GitSHA=76748de92fa
