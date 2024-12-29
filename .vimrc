@@ -1,85 +1,17 @@
 " vim: set expandtab: set tabstop=4: set shiftwidth=4: set softtabstop=4:
-" =============================================================
-" TryIt:
-" - Install:        curl -fLo ~/.vim/init.vim --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+"
+" QuickStart: vim <leader>    <Space>
+" - Install:
 "          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim
-" - vim <Leader>    <Space>
-" - Help            Press 'K'
-" - vim --clean                          Startup vim without any config/plug
-"   vim --headless "+PlugUpdate" +qa     Update env/plugin
+"          curl -fLo ~/.vim/init.vim          --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+" - Help by 'K':  vim_cheat, vim_maps, vim_config,
+"        Buitin:  :vimtutor" for vim, ":Tutor" for neovim
+" - Startup without plug:   vim --clean
+"       Start other mode:   mode=basic vi <myfile>
+" - Update env/plugin:      vim --headless "+PlugUpdate" +qa
 "
-" Customize:
-"   ~/.vimrc.before     " Set variable before plugin load
-"   ~/.vimrc.after      " Finally re-change keymap
-"
-"   For example,
-"   $ cat ~/.vimrc.before
-"       let mylocal_vim_confi = {
-"             \ 'debug': 1,
-"             \
-"             \ 'auto_chdir': 1,
-"             \
-"             \ 'view_folding': 1,
-"             \ 'show_number': 1,
-"             \ 'wrapline': 1,
-"             \ 'indentline': 1,
-"             \
-"             \ 'fzf_files': ['~/mywiki',],
-"             \}
-"       let g:vim_confi_option = extend(g:vim_confi_option, mylocal_vim_confi)
-"
-"
-" Check_commands:
-" https://www.color-hex.com/color
-"
-" :colorscheme holokai
-" :colorscheme jellybeans
-" :echo colors_name
-"
-" Help:(press <leader>K on the words, ":vimtutor" for vim, ":Tutor" for neovim)
-"       require-plug(vim-floaterm/vim-basic/vim.config
-" - vim-tutor?
-" - vi-to-neovim?
-" - troubleshooting? (Find which script change the config, howto enable debug log)
 " =============================================================
-"  Mode:
-"  Support set from env's variable, like: mode=basic vi ~/.vimrc
-"
-"  - config: conf-basic, conf-local, conf-extra,
-"  - addon:  snippet, tool, admin, theme, plugin, extra, library, git, hub
-"  - role:   basic, editor, writer, coder
-"    - coder-language: c, markdown, script, python, javascript
-"
-"
-"                         ┌──────┐
-"                     ┌──►│writer│
-"  ┌─────┐  ┌──────┐  │   └──────┘
-"  │basic│─►│editor│──┤
-"  └─────┘  └──────┘  │   ┌──────┐
-"                     └──►│coder │
-"                         └──────┘
-"               ┌──────┐
-"               │config│
-"               └──┬───┘
-"          ┌───────┼─────────┐
-"          ▼       ▼         ▼
-"       ┌─────┐  ┌─────┐  ┌─────┐
-"       │basic│  │local│  │extra│
-"       └─────┘  └─────┘  └─────┘
-"
-"               ┌──────┐
-"               │addon │
-"               └──┬───┘
-"      ┌───────┬───┴─────┬────────┬──────────┐
-"      ▼       ▼         ▼        ▼          ▼
-"   ┌─────┐  ┌─────┐  ┌─────┐  ┌───────┐  ┌──────┐
-"   │theme│  │tool │  │admin│  │snippet│  │plugin│
-"   └─────┘  └─────┘  └─────┘  └───────┘  └──────┘
-"
-"  Misc:
-"  - start_page:    startscreen
-"  - fzf_files:     current use as cheat search by filename
-"
+
 let g:vim_confi_option = {
       \ 'mode': ['basic', 'theme', 'local', 'editor', 'admin', 'coder', 'log', 'c', 'markdown', 'git', 'script', 'tool'],
       \ 'remap_leader': 1,
@@ -99,7 +31,6 @@ let g:vim_confi_option = {
       \ 'auto_chdir': 0,
       \ 'auto_save': 1,
       \ 'auto_restore_cursor': 1,
-      \ 'auto_session': 'vim.session',
       \
       \ 'keywordprg_filetype': 1,
       \
@@ -108,13 +39,10 @@ let g:vim_confi_option = {
       \ 'show_number': 0,
       \ 'wrapline': 0,
       \ 'indentline': 0,
-      \ 'me_statusline': 0,
       \
       \ 'help_keys': 1,
       \ 'alt_shortcut': 1,
-      \ 'qf_preview': 1,
       \
-      \ 'start_page': "$HOME/dotfiles/startpage.md",
       \ 'wiki_dirs': ['~/dotwiki', '~/wiki', '~/dotfiles', ],
       \ 'tmp_file': '/tmp/vim.tmp',
       \}
@@ -136,9 +64,6 @@ if g:vim_confi_option.remap_leader
     map Q <Nop>
 endif
 
-if g:vim_confi_option.me_statusline == 0
-    let g:loaded_c_utils_statusline = 0
-endif
 
 if !empty($mode)
     let g:vim_confi_option.mode = [$mode]
@@ -191,44 +116,6 @@ endif
             " echo match("Linux localhost.localdomain 3.10.0-957.el7.x86_64 #1 SMP Thu", 'Linux .*\.el\d\+x86_64 #')
             return (match(s:uname, 'Linux .*\.fc\d\+\.') >= 0)
         endfunction
-    " }
-
-
-    " Basics {
-        set nocompatible        " Must be first line
-        if UNIXLIKE()
-            set shell=/bin/sh
-            " https://github.com/habamax/.vim/blob/e9312935fb915fd6bfc4436b70b300387445aef8/vimrc
-            " Vim-Plug bootstrapping. {{{2
-            " Don't forget to call :PlugInstall
-            let g:vim_plug_installed = filereadable(expand('~/.vim/autoload/plug.vim'))
-            if !g:vim_plug_installed
-                echomsg "Install vim-plug with 'InstallVimPlug' command and restart vim."
-                echomsg "'curl' should be installed first"
-                command InstallVimPlug !mkdir -p ~/.vim/autoload |
-                            \ curl -fLo ~/.vim/autoload/plug.vim
-                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-            endif
-
-            " Do not load plugins if plugin manager is not installed.
-            if !g:vim_plug_installed
-                finish
-            endif
-
-            ":help 'rtp'
-            ":help $VIMRUNTIME
-            if !empty($VIM)
-                let $VIM='/usr/share/nvim'
-            endif
-        endif
-    " }
-
-    " Windows Compatible {
-        " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-        " across (heterogeneous) systems easier.
-        "if WINDOWS()
-        "    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-        "endif
     " }
 
     " Arrow Key Fix {
@@ -503,7 +390,7 @@ endif
     "Plug 'echasnovski/mini.nvim',       Cond(has('nvim') && Mode(['editor']))	 | " Alternertive ~40 plugins
 
     Plug 'tpope/vim-sensible',          Cond(Mode(['basic', 'log', 'floatview', 'editor']))
-    Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
+    "Plug 'lambdalisue/vim-manpager',    Cond(Mode(['basic', 'log', 'floatview', 'editor']))
 
     Plug 'huawenyu/vim-basic',          Cond(Mode(['basic', 'log', 'conf-basic', 'floatview', 'editor']))
     Plug 'huawenyu/vimConfig',          Cond(has('nvim') && Mode(['basic', 'log', 'conf-plug', 'editor']))  | " config the plugs
@@ -535,8 +422,6 @@ endif
     "}}}
 
     " Comment,Extra {{{3
-        Plug 'wsdjeg/SourceCounter.vim',         Cond(has('nvim') && Mode(['coder']), {'on': 'SourceCounter'}) | " report by command ':SourceCounter'
-
         Plug 'tpope/vim-commentary',             Cond(has('nvim') && Mode(['coder'])) | " gcc comment-line, gc<motion>: gcap comment-paragraph)
         "Plug 'numToStr/Comment.nvim',           Cond(has('nvim') && Mode(['coder'])) | " gcc, gbc, gcw; not works good
         Plug 'huawenyu/nerdcommenter',           Cond(has('nvim') && Mode(['coder'])) | " remap to <C-/>
@@ -562,7 +447,7 @@ endif
     "}}}
 
     " Hex editor {{{3
-        Plug 'fidian/hexmode',              Cond(has('nvim') && Mode(['editor',])) | " Hex viewer, wrap of xxd, it's good.
+        Plug 'fidian/hexmode',              Cond(has('nvim') && Mode(['editor',]), { 'on': 'Hexmode' }) | " Hex viewer, wrap of xxd, it's good.
     "}}}
 
     " plugin {{{3
@@ -642,7 +527,7 @@ endif
     " Markdown/Writing/Wiki {{{3
         " tool-render?
         "Plug 'vimwiki/vimwiki',            Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Another choice is  [Gollum](https://github.com/gollum/gollum)
-        Plug 'lervag/wiki.vim',             Cond(has('nvim') && IfNoPlug('vimwiki') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Better vimwiki the philosophy of 'do one thing and do it well'
+        "Plug 'lervag/wiki.vim',             Cond(has('nvim') && IfNoPlug('vimwiki') && Mode(['editor']) && Mode(['markdown']), {'for': 'markdown'})  | " Better vimwiki the philosophy of 'do one thing and do it well'
         "Plug 'godlygeek/tabular',           Cond(has('nvim') && Mode(['editor']) && Mode(['markdown']), {'on': 'Tabularize', 'for': 'markdown'}) | " EasyAlign is better.
 
         " ge: open link
@@ -752,7 +637,7 @@ endif
 
         " Quickfix/Todo list {{{4
             Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]), {'on': 'QFix', })    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]) && g:vim_confi_option.qf_preview, {'on': 'QFix', })    | " Better quickfix: zf   fzf-mode
+            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]), {'on': 'QFix', })    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
             Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'], 'setup': ':LoadTodo', } )       | " :TodoLocList, :TodoQuickFix
@@ -799,9 +684,9 @@ endif
         Plug 'tpope/vim-repeat',            Cond(has('nvim') && Mode(['editor',]))
             " gA                   shows the four representations of the number under the cursor.
             " crd, crx, cro, crb   convert the number under the cursor to decimal, hex, octal, binary, respectively.
-            Plug  'glts/vim-radical',       Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
-            Plug  'glts/vim-magnum',        Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
-            Plug  'triglav/vim-visual-increment', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))    | " Select by C-v, then increase by C-a, <OR-step-#>  #C-a
+            " Plug  'glts/vim-radical',       Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
+            " Plug  'glts/vim-magnum',        Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
+            " Plug  'triglav/vim-visual-increment', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))    | " Select by C-v, then increase by C-a, <OR-step-#>  #C-a
 
             "Plug 'svermeulen/vim-macrobatics', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
             "Plug  'huawenyu/vim-macroscope',   Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
@@ -905,10 +790,10 @@ endif
 " Tools {{{2
     " Terminal/shell  {{{3
         Plug 'tpope/vim-eunuch',            Cond(has('nvim') && Mode(['admin',]))  | " Support unix shell cmd: Delete,Unlink,Move,Rename,Chmod,Mkdir,Cfind,Clocate,Lfind,Wall,SudoWrite,SudoEdit
-        Plug 'tpope/vim-dotenv',            Cond(has('nvim') && Mode(['admin',]))  | " Basic support for .env and Procfile
+        "Plug 'tpope/vim-dotenv',            Cond(has('nvim') && Mode(['admin',]))  | " Basic support for .env and Procfile
 
-        Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',])) | "
-        Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]))  | "
+        Plug 'voldikss/vim-floaterm',      Cond(has('nvim') && Mode(['editor',]), {'on': ['FloatermKill', 'FloatermNew', 'FloatermShow', 'FloatermUpdate']}) | "
+        Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]), {'on': 'FloatermRepl'})  | "
         Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]), {'on': ['Echo', 'Echoerr']})	| " :Echoerr xxxxx
 
         "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
@@ -929,28 +814,28 @@ endif
         "Plug 'Shougo/vimproc.vim',         Cond(has('nvim') && Mode(['admin',]), {'do' : 'make'})
         "Plug 'neomake/neomake',            Cond(has('nvim') && Mode(['admin',]))
 
-        Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]))
+        Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]), {'on': ['AsyncRun', 'AsyncStop', 'AsyncTask']})
         Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
     "}}}
 
     " Repl {{{3
-        "Plug 'jdhao/better-escape.vim',   Cond(has('nvim') && Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
+        "Plug 'jdhao/better-escape.vim',    Cond(has('nvim') && Mode(['editor',]))	| " :let g:better_escape_shortcut = 'jj'
 
         "Plug 'michaelb/sniprun',           Cond(has('nvim') && Mode(['admin']), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
         "Plug 'arjunmahishi/flow.nvim',     Cond(has('nvim') && Mode(['coder',]))   | " runcode.nvim
         "Plug 'huawenyu/vimux-script',      Cond(has('nvim') && Mode(['coder',]))	| " :
         "Plug 'xolox/vim-misc',             Cond(has('nvim') && Mode(['coder',]))	| " :
+        "Plug 'skywind3000/vim-preview',    Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
 
     "}}}
 
     " Windows/Preview  {{{3
-        Plug 'skywind3000/vim-preview',         Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
-        Plug 'folke/edgy.nvim',                 Cond(has('nvim') && Mode(['coder'])) |  " Windows layout management
+        Plug 'folke/edgy.nvim',             Cond(has('nvim') && Mode(['coder'])) |  " Windows layout management
     "}}}
 
     " Presentation? draw? pencil  {{{3
-        Plug 'sk1418/blockit',              Cond(has('nvim') && Mode(['editor',]))       | " :Block -- Draw a Box around text region
-        Plug 'sk1418/HowMuch',              Cond(has('nvim') && Mode(['editor',]))       | " V-Select, then get summary by: <Leader><Leader>?s
+        Plug 'sk1418/blockit',              Cond(has('nvim') && Mode(['editor',]), { 'on': 'Block' })       | " :Block -- Draw a Box around text region
+        Plug 'sk1418/HowMuch',              Cond(has('nvim') && Mode(['editor',]), { 'on': 'HowMuch' })       | " V-Select, then get summary by: <Leader><Leader>?s
 
         " Terminal Powerpoint: Suggestion use `presenterm` (https://mfontanini.github.io/presenterm/guides/basics.html)
         "Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
@@ -970,23 +855,15 @@ endif
             Plug 'nvim-tree/nvim-web-devicons',  Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             Plug 'MunifTanjim/nui.nvim',         Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
             "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
-        Plug 'nvim-neo-tree/neo-tree.nvim',  Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'setup': ':LoadNeotree'})
+        Plug 'nvim-neo-tree/neo-tree.nvim', Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'setup': ':LoadNeotree'})
 
         Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'], 'config': 'LoadNerdtree' })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
-        "Plug 'jistr/vim-nerdtree-tabs',     Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
+        "Plug 'jistr/vim-nerdtree-tabs',    Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
         "Plug 'lambdalisue/fern.vim',            Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :Fern . -draw -width=30
             Plug 'LumaKernel/fern-mapping-fzf.vim', Cond(has('nvim') && HasPlug('fern.vim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " maps-for-fern-windows: ff, fd, fa, frf, frd, fra
             "Plug 'yuki-yano/fern-preview.vim',      Cond(has('nvim') && HasPlug('fern.vim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :
 
-        " Plugin 'defx' {{{4
-        if has('nvim')
-            Plug 'Shougo/defx.nvim',        Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), { 'do': ':UpdateRemotePlugins' })
-        else
-            Plug 'Shougo/defx.nvim',        Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))
-            Plug 'roxma/nvim-yarp',         Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))
-            Plug 'roxma/vim-hug-neovim-rpc',Cond(has('nvim') && Mode(['editor']) && Mode(['extra']))
-        endif
-
+        Plug 'Shougo/defx.nvim',            Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), { 'do': ':UpdateRemotePlugins' })
         Plug 'kristijanhusak/defx-git',     Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
         Plug 'kristijanhusak/defx-icons',   Cond(has('nvim') && Mode(['editor',]) && Mode(['extra']))
 
@@ -994,9 +871,8 @@ endif
     "
 
     " Outline/Context {{{3
-        Plug 'huawenyu/VOoM',               Cond(has('nvim') && Mode(['editor', 'log', ]))
+        Plug 'huawenyu/VOoM',               Cond(has('nvim') && Mode(['editor', 'log', ]), { 'on': ['VoomToggle', 'Voom'] })
         "Plug 'vim-voom/VOoM_extras',       Cond(has('nvim') && Mode(['editor']))  | " Seems no use at all, but slow/frozen when read large file (>100M)
-        Plug 'roosta/fzf-folds.vim',        Cond(has('nvim') && Mode(['editor']))
         Plug 'wellle/context.vim',          Cond(has('nvim') && Mode(['coder',]), {'on': 'ContextToggle', 'config': 'LoadContextVim'})    | " Show context every where
         "Plug 'nvim-treesitter/nvim-treesitter-context', Cond(has('nvim') && Mode(['coder',]))
         "Plug "SmiteshP/nvim-navic",         Cond(has('nvim') && Mode(['editor']) && HasPlug('nvim-lspconfig'))
@@ -1007,7 +883,7 @@ endif
 " Integration {{{2
     " git {{{3
         Plug 'tpope/vim-fugitive',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
-        Plug 'tpope/vim-rhubarb',           Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
+        "Plug 'tpope/vim-rhubarb',          Cond(has('nvim') && Mode(['editor']) && Mode(['git']))   | " git blame:  :Gblame, help-g?  close-gq  key: -,~,P
         Plug 'mattn/gist-vim',              Cond(has('nvim') && Mode(['editor']) && Mode(['extra']), {'on': 'Gist'})              | " :'<,'>Gist -e 'list-sample'
         Plug 'airblade/vim-gitgutter',      Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on':  ['GitGutterToggle'] })  | " Heavy Shows a git diff
         Plug 'junegunn/gv.vim',             Cond(has('nvim') && Mode(['editor']) && HasPlug('vim-fugitive'), { 'on': ['GV'] })  | " Awesome git wrapper
@@ -1035,7 +911,7 @@ endif
 "}}}
 
 " Debug {{{2
-    Plug 'gu-fan/doctest.vim',              Cond(has('nvim') && Mode(['admin', 'coder']))     | " doctest for language vimscript, :DocTest
+    "Plug 'gu-fan/doctest.vim',              Cond(has('nvim') && Mode(['admin', 'coder']))     | " doctest for language vimscript, :DocTest
     Plug 'huawenyu/vimlogger',              Cond(has('nvim') && Mode(['admin', 'coder']))
 "}}}
 

@@ -17,121 +17,133 @@ SYNOPSIS
 
 -`<LD>*`     : c-Change  v-Views  e-Edit/Execute  g-Git  t-Terminal  m-Make/Mark  s-Session/Workspace/Save
 
-```table
+```plaintext
 
-Category\Prefix | Alt | L    | L2   | Comment                   | Sample
---------------  | --  | --   | --   | --                        |
-Leader prefix   | M   | 󱁐    | ;    |                           |
---------------  | --  | --   | --   | --                        |
-Shortcut        |     | 󱁐    |      |                           |
--               | M   | 󱁐    | ;    |                           |
-                | ➜ e |      |      | (view)Toggle explore      |
-                | ➜ t |      |      | (view)Toggle tag          |
-                | ➜ f |      |      | (lsp)Reference            |
-           n/v  | ➜ s |      |      | Search text               |
-                | ➜ w |      |      | Toggle maximize window    |
-                | ➜ g |      |      | (view)Toggle git-status   |
-                | ➜ b |      |      | (view)Toggle buffers      |
-                |     | v➜ v | v➜ v | Search all                |
-                |     | g➜ g | g➜ g | Search in <dir>           |
-                |     |      | ➜ ;  | (motion)Hop by char2      |
-Views           |     | 󱁐v   |      |                           |
--               |     | ➜ 1  |      | Outline 1                 |
-                |     | ➜ a  |      | buffer swap               |
-                |     | ➜ b  |      | buffers                   |
-                |     | ➜ e  |      | Files                     |
-                |     | ➜ f  |      | Focus                     |
-                |     | ➜ g  |      | Git                       |
-                |     | ➜ i  |      | Markdown preview          |
-                |     | ➜ o  |      | Outline                   |
-                |     | ➜ q  |      | quickfix                  |
-                |     | ➜ r  |      | Replace                   |
-                |     | ➜ s  |      | Pick a window             |
-                |     | ➜ t  |      | Tag                       |
-                |     | ➜ v  |      | Search all                |
-                |     | ➜ w  |      | Max-windo                 |
-Change          |     | 󱁐c   |      |                           |
--               |     | ➜ c  |      | EasyAlign                 |
-                |     | ➜ t  |      | Trim trailing space       |
-                |     | ➜ i  |      | Capitalize                |
-                |     | ➜ l  |      | lowercase                 |
-                |     | ➜ u  |      | UPPERCASE                 |
-                |     | ➜ w  |      | Wrap pagraph              |
-                |     | ➜ d  |      | Delete search             |
-                |     | ➜ 󱁐  |      | Text keep one space       |
-Edit/Execute    |     | 󱁐e   |      |                           |
--               |     | ➜ e  |      | Execute                   |
-                |     | ➜ p  |      | TemplateHere              |
-Find            |     | 󱁐f   | ;f   |                           |
--               |     | ➜ f  | ➜ f  | (fzf)Open file            |
-                |     | ➜ s  | ➜ s  | (fzf)Symbol               |
-Find-tag/cscope |     | 󱁐f   |      |                           |
-                |     | ➜ F  |      | Open file (all)           |
-                |     | ➜ g  |      | (fzf)Grep                 |
-                |     | ➜ c  |      | (cscope)Caller            |
-                |     | ➜ C  |      | (cscope)Callee            |
-                |     | ➜ S  |      | (cscope)Reference +       |
-                |     | ➜ w  |      | (cscope)Ref-write         |
-                |     | ➜ W  |      | (cscope)Ref-write +       |
-                |     | ➜ ]  |      | (tag)Create               |
-                |     | ➜ t  |      | (fzf)Tag                  |
-                |     | ➜ T  |      | (fzf)TagWiki              |
-Find(lsp)       |     |      | ;f   |                           |
--               |     |      | ➜ d  | (lsp)Definition           |
-                |     |      | ➜ D  | (lsp)Declaration          |
-                |     |      | ➜ h  | (lsp)Show info            |
-                |     |      | ➜ H  | (lsp)Show action          |
-                |     |      | ➜ i  | (lsp)Implement            |
-                |     |      | ➜ n  | (lsp)Diag next            |
-                |     |      | ➜ p  | (lsp)Diag prev            |
-                |     |      | ➜ q  | (lsp)Diag sink local      |
-                |     |      | ➜ r  | (lsp)Refactor rename      |
-Git             |     | 󱁐g   |      |                           |
--               |     | ➜ b  |      | (git)Blame                |
-                |     | ➜ d  |      | (git)Diff                 |
-                |     | ➜ D  |      | (git)DiffTab              |
-                |     | ➜ g  |      | (git)Search               |
-                |     | ➜ f  |      | (tool)GotoFile            |
-                |     | ➜ l  |      | (git)Log                  |
-                |     | ➜ s  |      | (git)Status               |
-                |     | ➜ x  |      | (git)Clean                |
-                |     | ➜ r  |      | (gutter)Review            |
-                |     | ➜ a  |      | (gutter)Stage             |
-                |     | ➜ p  |      | (gutter)Prev              |
-                |     | ➜ n  |      | (gutter)Next              |
-                |     | ➜ u  |      | (gutter)Undo              |
-Mark/Make       |     | 󱁐m   |      |                           |
--               |     | ➜ a  |      | Make all                  |
-                |     | ➜ c  |      | QF add caller             |
-                |     | ➜ f  |      | QF filter                 |
-                |     | ➜ k  |      | Make wad                  |
-                |     | ➜ m  |      | Colorize word             |
-                |     | ➜ w  |      | (tool)Dictionary          |
-                |     | ➜ x  |      | (color)Clear all colorize |
-Search/Session  |     | 󱁐s   |      |                           |
--               |     | ➜ 1  |      | Search wad                |
-                |     | ➜ 2  |      | Search cmf                |
-                |     | ➜ 3  |      | Search                    |
-                |     | ➜ a  |      | Save file as              |
-                |     | ➜ b  |      | (fzf)Buffers              |
-                |     | ➜ c  |      | (fzf)Changes              |
-                |     | ➜ g  |      | (fzf)git-status           |
-                |     | ➜ h  |      | (fzf)History              |
-                |     | ➜ j  |      | (fzf)Jump                 |
-                |     | ➜ l  |      | (fzf)Line                 |
-                |     | ➜ m  |      | (fzf)Marks                |
-                |     | ➜ q  |      | (fzf)Quickfix             |
-                |     | ➜ r  |      | Session restore           |
-                |     | ➜ s  |      | Session save              |
-                |     | ➜ w  |      | (fzf)Windows              |
-                |     | ➜ /  |      | (fzf)history-search       |
-                |     | ➜ :  |      | (fzf)history-cmd          |
-                |     | ➜ ;  |      | (fzf)history-cmd          |
-Info            |     | 󱁐i   |      |                           |
--               |     | ➜ f  |      | (info)File                |
-                |     | ➜ c  |      | (info)Code                |
-                |     | ➜ s  |      | (info)Syntax              |
-                |     | ➜ S  |      | (info)Syntax +            |
+Category\Prefix | Alt | L    | L2   | Comment                    | Sample
+--------------  | --  | --   | --   | --                         |
+Leader prefix   | M   | 󱁐    | ;    |                            |
+--------------  | --  | --   | --   | --                         |
+Shortcut        |     |      |      |                            |
+-               | M   | 󱁐    | ;    |                            |
+                | ➜ e |      |      | (view)Toggle explore       |
+                | ➜ t |      |      | (view)Toggle tag           |
+                | ➜ f |      |      | (lsp)Reference             |
+           n/v  | ➜ s |      |      | Search in <dir>            |
+                | ➜ w |      |      | Toggle maximize window     |
+                | ➜ g |      |      | (view)Toggle git-status    |
+                | ➜ b |      |      | (view)Toggle buffers       |
+-               |     | 󱁐    | ;    |                            |
+                |     | 󱁐➜ 󱁐 |      | Preview tag                |
+                |     | v➜ v | v➜ v | Search all                 |
+                |     | g➜ g | g➜ g | Search in <dir>            |
+-               |     | 󱁐    |      |                            |
+                |     | c➜ c |      | EasyAlign                  |
+                |     | e➜ e |      | REPL Exeucte buf-file      |
+                |     |      | e➜ e | REPL Execute fence code    |
+                |     | f➜ f |      | (fzf)Open file             |
+                |     | a➜ a |      | (info)Toggle Context       |
+-               |     |      | a➜   | (info)Toggle source/header |
+                |     | s➜ s |      | Session save               |
+-               |     |      | ;    |                            |
+                |     |      | ➜ ;  | (motion)Hop by char2       |
+Views           |     | 󱁐v   |      |                            |
+-               |     | ➜ 1  |      | Outline 1                  |
+                |     | ➜ a  |      | buffer swap                |
+                |     | ➜ b  |      | buffers                    |
+                |     | ➜ e  |      | Files                      |
+                |     | ➜ f  |      | Focus                      |
+                |     | ➜ g  |      | Git                        |
+                |     | ➜ i  |      | Markdown preview           |
+                |     | ➜ o  |      | Outline                    |
+                |     | ➜ q  |      | quickfix                   |
+                |     | ➜ r  |      | Replace                    |
+                |     | ➜ s  |      | Pick a window              |
+                |     | ➜ t  |      | Tag                        |
+                |     | ➜ v  |      | Search all                 |
+                |     | ➜ w  |      | Max-windo                  |
+Change          |     | 󱁐c   |      |                            |
+-               |     | ➜ c  |      | EasyAlign                  |
+                |     | ➜ t  |      | Trim trailing space        |
+                |     | ➜ i  |      | Capitalize                 |
+                |     | ➜ l  |      | lowercase                  |
+                |     | ➜ u  |      | UPPERCASE                  |
+                |     | ➜ w  |      | Wrap pagraph               |
+                |     | ➜ d  |      | Delete search              |
+                |     | ➜ 󱁐  |      | Text keep one space        |
+Edit/Execute    |     | 󱁐e   |      |                            |
+-               |     | ➜ e  |      | Execute                    |
+                |     | ➜ p  |      | TemplateHere               |
+Find            |     | 󱁐f   | ;f   |                            |
+-               |     | ➜ f  | ➜ f  | (fzf)Open file             |
+                |     | ➜ s  | ➜ s  | (fzf)Symbol                |
+Find-tag/cscope |     | 󱁐f   |      |                            |
+                |     | ➜ F  |      | Open file (all)            |
+                |     | ➜ g  |      | (fzf)Grep                  |
+                |     | ➜ c  |      | (cscope)Caller             |
+                |     | ➜ C  |      | (cscope)Callee             |
+                |     | ➜ S  |      | (cscope)Reference +        |
+                |     | ➜ w  |      | (cscope)Ref-write          |
+                |     | ➜ W  |      | (cscope)Ref-write +        |
+                |     | ➜ ]  |      | (tag)Create                |
+                |     | ➜ t  |      | (fzf)Tag                   |
+                |     | ➜ T  |      | (fzf)TagWiki               |
+Find(lsp)       |     |      | ;f   |                            |
+-               |     |      | ➜ d  | (lsp)Definition            |
+                |     |      | ➜ D  | (lsp)Declaration           |
+                |     |      | ➜ h  | (lsp)Show info             |
+                |     |      | ➜ H  | (lsp)Show action           |
+                |     |      | ➜ i  | (lsp)Implement             |
+                |     |      | ➜ n  | (lsp)Diag next             |
+                |     |      | ➜ p  | (lsp)Diag prev             |
+                |     |      | ➜ q  | (lsp)Diag sink local       |
+                |     |      | ➜ r  | (lsp)Refactor rename       |
+Git             |     | 󱁐g   |      |                            |
+-               |     | ➜ b  |      | (git)Blame                 |
+                |     | ➜ d  |      | (git)Diff                  |
+                |     | ➜ D  |      | (git)DiffTab               |
+                |     | ➜ g  |      | (git)Search                |
+                |     | ➜ f  |      | (tool)GotoFile             |
+                |     | ➜ l  |      | (git)Log                   |
+                |     | ➜ s  |      | (git)Status                |
+                |     | ➜ x  |      | (git)Clean                 |
+                |     | ➜ r  |      | (gutter)Review             |
+                |     | ➜ a  |      | (gutter)Stage              |
+                |     | ➜ p  |      | (gutter)Prev               |
+                |     | ➜ n  |      | (gutter)Next               |
+                |     | ➜ u  |      | (gutter)Undo               |
+Mark/Make       |     | 󱁐m   |      |                            |
+-               |     | ➜ a  |      | Make all                   |
+                |     | ➜ c  |      | QF add caller              |
+                |     | ➜ f  |      | QF filter                  |
+                |     | ➜ k  |      | Make wad                   |
+                |     | ➜ m  |      | Colorize word              |
+                |     | ➜ w  |      | (tool)Dictionary           |
+                |     | ➜ x  |      | (color)Clear all colorize  |
+Search/Session  |     | 󱁐s   |      |                            |
+-               |     | ➜ 1  |      | Search wad                 |
+                |     | ➜ 2  |      | Search cmf                 |
+                |     | ➜ 3  |      | Search                     |
+                |     | ➜ a  |      | Save file as               |
+                |     | ➜ b  |      | (fzf)Buffers               |
+                |     | ➜ c  |      | (fzf)Changes               |
+                |     | ➜ g  |      | (fzf)git-status            |
+                |     | ➜ h  |      | (fzf)History               |
+                |     | ➜ j  |      | (fzf)Jump                  |
+                |     | ➜ l  |      | (fzf)Line                  |
+                |     | ➜ m  |      | (fzf)Marks                 |
+                |     | ➜ q  |      | (fzf)Quickfix              |
+                |     | ➜ r  |      | Session restore            |
+                |     | ➜ s  |      | Session save               |
+                |     | ➜ w  |      | (fzf)Windows               |
+                |     | ➜ /  |      | (fzf)history-search        |
+                |     | ➜ :  |      | (fzf)history-cmd           |
+                |     | ➜ ;  |      | (fzf)history-cmd           |
+Info            |     | 󱁐a   | ;    |                            |
+-               |     | ➜ a  |      | (info)Toggle Context       |
+-               |     |      | a➜   | (info)Toggle source/header |
+                |     | ➜ f  |      | (info)File                 |
+                |     | ➜ s  |      | (info)Syntax               |
+                |     | ➜ S  |      | (info)Syntax +             |
 
 ```
 
