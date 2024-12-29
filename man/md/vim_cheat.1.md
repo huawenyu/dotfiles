@@ -14,20 +14,9 @@ Windows: `#` - Use Numbers choose Win/Tab
 ---
 :    <C-#>-Terminal Tab  <A-#>-Tmux Tab  <C-hjkl>-Win|Pane  `;#`-Vim Tab
 
--[Views:]__`<A-*>`
-:    `;v*`| <A-w>-Maximize  <A-e>-Explore  `<LD>vo`-Outline as fmr `<A-'>`-Outline  `<A-;>`-QF  `<A-/>`-tag
-
 Motion    `<C-*>`
 ---
     `<C-]>`-tag  `<C-io>`-history  `<C-np>`-QF  `<C-/>`-Comment  `<C-\>`-Terminal
-
-Find      `<LD>f*`
----
-    `f|F`-Files `s`-Symbol `c`-Caller `w`-Assign  `t`-tags `b`-buffers  `e`-changes  `j`-Jumps  `m`-Marks
-
-Jump      `g*`
----
-    `gf`-Openfile  `gi`-Last insert  `gv`-Reselect  `gd`-Definition  `g;`-older change  `g,`-newer change  `gg`/`G`-begin/end   zt/zz/zb-Top/Middle/Bottom
 
 QuickFix  `-QF-`
 ---
@@ -156,6 +145,45 @@ So we only install for our Terminal, for Windows11, only require for windows 11:
 + [neovim-remote](https://github.com/mhinz/neovim-remote)
 - [QuickStart]
     - checkhealth
+```
+# icon
+
+```
+Separator Options
+1. Powerline Arrows
+Left-facing: , , , 
+Right-facing: , , , 
+2. Curves
+,  (double curves)
+,  (round edges)
+,  (wavy curves)
+3. Minimal Separators
+| (straight bar)
+/ (forward slash)
+‖ (double bar)
+⋮ (vertical ellipsis)
+4. Decorative Lines
+═, ─, ━ (horizontal bars)
+║, ┃ (vertical bars)
+╲, ╱ (diagonals)
+★, ✦, ❖ (symbols for decorative purposes)
+5. Unique Symbols
+», « (angled quotes)
+›, ‹ (single angles)
+⮂, ⮃ (loop arrows)
+➤, ➥ (chevrons)
+
+
+. Bold Arrows
+⟶, ⟵ (bold single arrows)
+⇢, ⇠ (curved arrows)
+➔, ➜, ➙ (sharp arrows)
+2. Chevrons
+», « (double chevrons)
+›, ‹ (single chevrons)
+⯈, ⯇ (rounded chevrons)
+3. Blocks and Bars
+▐, ▌ (half-blocks)
 ```
 
 # SEE ALSO {{{1}}}
