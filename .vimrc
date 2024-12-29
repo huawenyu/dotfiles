@@ -92,14 +92,13 @@ let g:vim_confi_option = {
       \ 'enable_map_basic': 1,
       \ 'enable_map_useful': 1,
       \
-      \ 'auto_install_vimplug': 1,
-      \ 'auto_install_plugs': 1,
-      \ 'auto_install_tools': 1,
+      \ 'auto_install_vimplug': 0,
+      \ 'auto_install_plugs': 0,
+      \ 'auto_install_tools': 0,
       \
       \ 'auto_chdir': 0,
       \ 'auto_save': 1,
       \ 'auto_restore_cursor': 1,
-      \ 'auto_qf_height': 0,
       \ 'auto_session': 'vim.session',
       \
       \ 'keywordprg_filetype': 1,
@@ -666,7 +665,7 @@ endif
     Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))
     Plug 'vimpostor/vim-tpipeline',         Cond(has('nvim') && Mode(['coder',]) && !empty($TMUX_PANE)) | " Show vim.statusline to the tmux.statusbar
 
-    "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))	 | " Substitute the vim's original print-type message
+    "Plug 'rcarriga/nvim-notify',           Cond(has('nvim') && Mode(['coder',]))  | " Substitute the vim's original print-type message
     Plug 'j-hui/fidget.nvim',               Cond(has('nvim') && Mode(['coder',]), {'tag': 'legacy'})	 | " Standalone UI for nvim-lsp progress
     Plug 'huawenyu/vim-mark',               Cond(has('nvim') && Mode(['editor'])) | " mm  colorize current word
     Plug 'huawenyu/vim-signature',          Cond(has('nvim') && Mode(['editor'])) | " place, toggle and display marks

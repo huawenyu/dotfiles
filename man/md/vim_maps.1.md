@@ -29,7 +29,7 @@ Shortcut        |     | 󱁐    |      |                           |
                 | ➜ t |      |      | (view)Toggle tag          |
                 | ➜ f |      |      | (lsp)Reference            |
            n/v  | ➜ s |      |      | Search text               |
-                | ➜ w |      |      | Edit Fence Code           |
+                | ➜ w |      |      | Toggle maximize window    |
                 | ➜ g |      |      | (view)Toggle git-status   |
                 | ➜ b |      |      | (view)Toggle buffers      |
                 |     | v➜ v | v➜ v | Search all                |
