@@ -35,14 +35,6 @@ Shortcut        |     | 󱁐    |      |                           |
                 |     | v➜ v | v➜ v | Search all                |
                 |     | g➜ g | g➜ g | Search in <dir>           |
                 |     |      | ➜ ;  | (motion)Hop by char2      |
-Change          |     | 󱁐c   |      |                           |
--               |     | ➜ c  |      | EasyAlign                 |
-                |     | ➜ d  |      | Trim trailing space       |
-                |     | ➜ i  |      | Capitalize                |
-                |     | ➜ l  |      | lowercase                 |
-                |     | ➜ u  |      | UPPERCASE                 |
-                |     | ➜ w  |      | Wrap pagraph              |
-                |     | ➜ 󱁐  |      | Text keep one space       |
 Views           |     | 󱁐v   |      |                           |
 -               |     | ➜ 1  |      | Outline 1                 |
                 |     | ➜ a  |      | buffer swap               |
@@ -58,11 +50,18 @@ Views           |     | 󱁐v   |      |                           |
                 |     | ➜ t  |      | Tag                       |
                 |     | ➜ v  |      | Search all                |
                 |     | ➜ w  |      | Max-windo                 |
+Change          |     | 󱁐c   |      |                           |
+-               |     | ➜ c  |      | EasyAlign                 |
+                |     | ➜ t  |      | Trim trailing space       |
+                |     | ➜ i  |      | Capitalize                |
+                |     | ➜ l  |      | lowercase                 |
+                |     | ➜ u  |      | UPPERCASE                 |
+                |     | ➜ w  |      | Wrap pagraph              |
+                |     | ➜ d  |      | Delete search             |
+                |     | ➜ 󱁐  |      | Text keep one space       |
 Edit/Execute    |     | 󱁐e   |      |                           |
--               |     | ➜ d  |      | Delete search             |
-                |     | ➜ e  |      | Execute                   |
+-               |     | ➜ e  |      | Execute                   |
                 |     | ➜ p  |      | TemplateHere              |
-                |     | ➜ t  |      | Remove trailing           |
 Find            |     | 󱁐f   | ;f   |                           |
 -               |     | ➜ f  | ➜ f  | (fzf)Open file            |
                 |     | ➜ s  | ➜ s  | (fzf)Symbol               |
@@ -128,6 +127,11 @@ Search/Session  |     | 󱁐s   |      |                           |
                 |     | ➜ /  |      | (fzf)history-search       |
                 |     | ➜ :  |      | (fzf)history-cmd          |
                 |     | ➜ ;  |      | (fzf)history-cmd          |
+Info            |     | 󱁐i   |      |                           |
+-               |     | ➜ f  |      | (info)File                |
+                |     | ➜ c  |      | (info)Code                |
+                |     | ➜ s  |      | (info)Syntax              |
+                |     | ➜ S  |      | (info)Syntax +            |
 
 ```
 

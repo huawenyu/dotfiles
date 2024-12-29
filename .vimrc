@@ -112,6 +112,7 @@ let g:vim_confi_option = {
       \ 'me_statusline': 0,
       \
       \ 'help_keys': 1,
+      \ 'alt_shortcut': 1,
       \ 'qf_preview': 1,
       \
       \ 'start_page': "$HOME/dotfiles/startpage.md",
@@ -1086,6 +1087,14 @@ endif
         syntax sync minlines=256
     "}}}
 "}}}
+
+
+if g:vim_confi_option.auto_install_plugs
+    autocmd VimEnter *
+        \   if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        \ |     PlugInstall --sync | q
+        \ | endif
+endif
 
 if filereadable(expand("~/.vimrc.after"))
     source ~/.vimrc.after
