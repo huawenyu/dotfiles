@@ -5,67 +5,13 @@
 NAME
 ===
 **Vim_cheat** - A man page for `neovim` + plug-`vimConfig`
+Help 'K' on the topic word.
 
 **vim_maps(1)**, **vim(1)**
 
-# DESCRIPTION {{{1}}}
+# DESCRIPTION
 
-Windows: `#` - Use Numbers choose Win/Tab
----
-:    <C-#>-Terminal Tab  <A-#>-Tmux Tab  <C-hjkl>-Win|Pane  `;#`-Vim Tab
-
-Motion    `<C-*>`
----
-    `<C-]>`-tag  `<C-io>`-history  `<C-np>`-QF  `<C-/>`-Comment  `<C-\>`-Terminal
-
-QuickFix  `-QF-`
----
-    `<c-q><cr>`-Fzf to quickfix  `mf`-filterQF  `mc`-callerQF
-
-Option    `o[*`
----
-    <space>-add blank lines  `e`-exchange lines  `n`-conflict
-
-Object    `v*`
----
-    `vie`-buffer  `vif`-function  `vi'`-fence  `vi'`-Quota `viu`-URL  `vij`-Brace  `vic`-Comment  `vib`-Block
-
-Mode      `-GDB-`
----
-    `F4`-Cont  `F5`-next(S-skip)  `F6`-stepIn(S-Finish)  `F7`-RunToHere  `F8`-Evaluate(S-Watch)  `F9`-ToggleBreak
-
-Mode      `Search`
----
-    `;#`-Count  `;^`-Popup  `;*`-ToQF
-
-Misc      `-note-`
----
-    : `<LD>w;` - buf Swap
-    : `<LD>ee` - Execute current file
-    : `<LD>ga` - Load Easy Align
-    : `:e ++ff=dos`| `:set ff=unix`| `:C0|C2|C4|C08`
-    : `:verbose map|function *`|
-    : `1G`-file path|
-    : Diff(env $VimGit)
-
-
-Debug log/troubleshooting: {{{2}}}
----
-1. Enable log from global config:
-        "let g:vim_confi_option.debug = 1
-        # <or> specify from command line
-        debug=1 vim <file>
-2. Ensure the log instance existed:
-        " Insert this line to the front of our vimscript:
-        silent! let s:log = logger#getLogger(expand('<sfile>:t'))
-3. Debug/print:
-        silent! call s:log.info(l:__func__, 'enter')
-4. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
-
-Install:  help 'K' on the topic {{{1}}}
----
-
-## Install OS - Windows {{{2}}}
+## Install OS - Windows
 
 - Doc: https://jdhao.github.io/2018/11/15/neovim_configuration_windows/
 - Install neovim, https://github.com/neovim/neovim/wiki/Installing-Neovim
@@ -75,9 +21,9 @@ Install:  help 'K' on the topic {{{1}}}
 - Save and source the .vimrc.
 - Run ":PlugInstall"
 
-## Install OS - Debian/Ubuntu {{{2}}}
+## Install OS - Debian/Ubuntu
 
-### Auto setup/install env {{{3}}}
+### Auto setup/install env
 
 ```bash
         wget --no-check-certificate -O ~/chk-ubuntu  https://raw.githubusercontent.com/huawenyu/zsh-local/master/bin/chk-ubuntu
@@ -85,7 +31,7 @@ Install:  help 'K' on the topic {{{1}}}
         ~/chk-ubuntu
 ```
 
-### Install neovim: {{{3}}}
+### Install neovim:
 
 ```bash
         sudo apt-get install neovim
@@ -119,7 +65,7 @@ Install:  help 'K' on the topic {{{1}}}
     $ vi -c 'PlugInstall'
 ```
 
-### [Optional] - other config/tool {{{3}}}
+### [Optional] - other config/tool
 
 
 ```bash
@@ -146,7 +92,10 @@ So we only install for our Terminal, for Windows11, only require for windows 11:
 - [QuickStart]
     - checkhealth
 ```
-# icon
+
+# MISC
+
+## icon
 
 ```
 Separator Options
@@ -186,7 +135,28 @@ Right-facing: , , , 
 ▐, ▌ (half-blocks)
 ```
 
-# SEE ALSO {{{1}}}
+# Troubleshooting
+
+## Log
+
+1. Enable log from global config:
+        "let g:vim_confi_option.debug = 1
+        # <or> specify from command line
+        debug=1 vim <file>
+2. Ensure the log instance existed:
+        " Insert this line to the front of our vimscript:
+        silent! let s:log = logger#getLogger(expand('<sfile>:t'))
+3. Debug/print:
+        silent! call s:log.info(l:__func__, 'enter')
+4. Check log:    (LinuxPC) $ tail -f /tmp/vim.log
+
+## Inspect lua.object
+
+```lua
+     lua print(vim.inspect(require('edgy')))
+```
+
+# SEE ALSO
 
 **vim_maps(1)**, **vim(1)**
 

@@ -636,8 +636,8 @@ endif
         "}}}
 
         " Quickfix/Todo list {{{4
-            Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]), {'on': 'QFix', })    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]), {'on': 'QFix', })    | " Better quickfix: zf   fzf-mode
+            Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
+            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
             Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'], 'setup': ':LoadTodo', } )       | " :TodoLocList, :TodoQuickFix
@@ -652,14 +652,14 @@ endif
     "}}}
 
     " Suggar {{{3
-        Plug 'Raimondi/delimitMate',        Cond(has('nvim') && Mode(['editor']) && IfNoPlug('auto-pairs'))
-        Plug 'jiangmiao/auto-pairs',        Cond(has('nvim') && Mode(['editor']) && IfNoPlug('delimitMate')) |  " Not work if  :set paste
+        "Plug 'Raimondi/delimitMate',       Cond(has('nvim') && Mode(['editor']) && IfNoPlug('auto-pairs'))
+        "Plug 'jiangmiao/auto-pairs',       Cond(has('nvim') && Mode(['editor']) && IfNoPlug('delimitMate')) |  " Not work if  :set paste
+        "Plug 'tpope/vim-endwise',          Cond(has('nvim') && Mode(['editor']))     | " smart insert certain end structures automatically.
+        Plug 'windwp/nvim-autopairs',       Cond(has('nvim') && Mode(['editor']))
+
         Plug 'huawenyu/vim-unimpaired',     Cond(has('nvim') && Mode(['editor']))     | "Clone from @tpope
-        Plug 'terryma/vim-expand-region',   Cond(has('nvim') && Mode(['editor']))     | " W - select region expand; B - shrink
-        Plug 'tpope/vim-surround',		    Cond(has('nvim') && Mode(['editor']))     | " Help add/remove surround
-        Plug 'tpope/vim-endwise',           Cond(has('nvim') && Mode(['editor']))     | " smart insert certain end structures automatically.
+        Plug 'tpope/vim-surround',          Cond(has('nvim') && Mode(['editor']))     | " Help add/remove surround
         Plug 'tpope/vim-rsi',               Cond(has('nvim') && Mode(['editor']))     | " Readline shortcut for vim
-        Plug 'houtsnip/vim-emacscommandline', Cond(has('nvim') && Mode(['editor',]))| " Vim Command line: Ctl-a  begin; Ctl-e  end; Ctl-f/b  forward/backward
 
         " Auto indent
         Plug 'ciaranm/securemodelines',     Cond(has('nvim') && Mode(['editor'])) | " Limit the vim magic mode line feature
@@ -678,7 +678,7 @@ endif
         Plug 'phaazon/hop.nvim',                Cond(has('nvim') && Mode(['editor',]), {'on': ['HopChar1CurrentLine', 'HopChar1', 'HopChar2', 'HopPattern', 'HopLineStart', 'HopLine'], 'setup': 'LoadHop'})
 
         Plug 'tpope/vim-abolish',               Cond(has('nvim') && Mode(['editor',]))      | " :Subvert/child{,ren}/adult{,s}/g
-        "Plug 'karb94/neoscroll.nvim',          Cond(has('nvim') && Mode(['editor',]))
+        "Plug 'karb94/neoscroll.nvim',          Cond(has('nvim') && Mode(['editor',]))  | " Make eye dizzy
 
         " 1. Rename a var:  search the var -> cgn -> change-it -> .(repeat-it-whole)
         Plug 'tpope/vim-repeat',            Cond(has('nvim') && Mode(['editor',]))
@@ -704,10 +704,10 @@ endif
         "Plug 'ms-jpq/coq.thirdparty',      Cond(has('nvim') && Mode(['coder',]) && LINUX(), {'branch': '3p'})
 
         Plug 'Shougo/deoplete.nvim',        Cond(has('nvim') && Mode(['editor',]) && LINUX(), )         | "{ 'do': ':UpdateRemotePlugins' }
-        Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
-        Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
-        Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
-        Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]))                     | " :TemplateHere *.md,   vi a-new.md
+            Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " <Tab> apply code, c-n next, c-p previous, :NeoSnippetEdit
+            Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
+            Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
+            Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]))                     | " :TemplateHere *.md,   vi a-new.md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
@@ -767,6 +767,7 @@ endif
     " Text objects? {{{2
     " https://blog.carbonfive.com/vim-text-objects-the-definitive-guide/
         Plug 'wellle/targets.vim',              Cond(has('nvim') && Mode(['editor']))      | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
+        Plug 'terryma/vim-expand-region',       Cond(has('nvim') && Mode(['editor']))     | " W/Q - wider/narrow select-region
         Plug 'kana/vim-textobj-user',           Cond(has('nvim') && Mode(['editor']))      | " v-Select, d/x-Delete, c-Change, y-Yank, g-Goto; i-inside a-around
             Plug 'michaeljsmith/vim-indent-object', Cond(has('nvim') && Mode(['editor',])) | " <count>iI
             Plug 'glts/vim-textobj-indblock',       Cond(has('nvim') && Mode(['editor',])) | " o, Indentation block
@@ -953,14 +954,6 @@ endif
     endif
     "}}}
 
-    " reset to sure scroll perfermance {{{2
-    " https://stackoverflow.com/questions/307148/vim-scrolling-slowly
-    " https://eduncan911.com/software/fix-slow-scrolling-in-vim-and-neovim.html
-        set ttyfast
-        set nocul
-        set synmaxcol=128
-        syntax sync minlines=256
-    "}}}
 "}}}
 
 
