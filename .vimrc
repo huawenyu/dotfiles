@@ -610,12 +610,12 @@ endif
         " Required for various utilities
         Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor', 'floatview']))
         " Required if you want to use some of the search functionality
-        "Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
+        Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
 
+    " Copy {{{3
         Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
         Plug 'roxma/vim-tmux-clipboard',    Cond(has('nvim') && Mode(['editor']))       | " integration for vim and tmux's clipboard
-        "Plug 'editorconfig/editorconfig-vim',   Cond(has('nvim') && Mode(['editor']))  |  " vim config auto set
-    "}}}
+        Plug 'gbprod/yanky.nvim',           Cond(has('nvim') && Mode(['editor']))       |  " vim history of select
 
     " Search/Jump {{{3
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]), {'on': ['Grepper', 'GrepperAg', 'GrepperGit','GrepperGrep', 'GrepperRg']})  | " :Grepper text
@@ -841,7 +841,7 @@ endif
         " Terminal Powerpoint: Suggestion use `presenterm` (https://mfontanini.github.io/presenterm/guides/basics.html)
         "Plug 'sotte/presenting.vim',        Cond(has('nvim') && Mode(['editor',]), {'for': 'markdown'})    | "PPT: n-next, p-prev, q-quit
 
-        Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]), { 'on': ['SessionRestore', 'SessionSave'], 'setup': ':LoadAutoSession' })       | " Draw pencil, seem require neovim > 0.5
+        "Plug 'jbyuki/venn.nvim',            Cond(has('nvim') && Mode(['editor',]), { 'on': ['ToggleVennDraw', ], })       | " Draw pencil
     "}}}
 
     " Project/Session/Workspace {{{3

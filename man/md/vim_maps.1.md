@@ -46,7 +46,7 @@ Shortcut        |     |      |      |                            |
                 |     | s➜ s |      | Session save               |
 -               |     |      | ;    |                            |
                 |     |      | ➜ ;  | (motion)Hop by char2       |
-Views           |     | 󱁐v   |      |                            |
+View explore    |     | 󱁐v   |      |                            |
 -               |     | ➜ 1  |      | Outline 1                  |
                 |     | ➜ a  |      | buffer swap                |
                 |     | ➜ b  |      | buffers                    |
@@ -60,7 +60,22 @@ Views           |     | 󱁐v   |      |                            |
                 |     | ➜ s  |      | Pick a window              |
                 |     | ➜ t  |      | Tag                        |
                 |     | ➜ v  |      | Search all                 |
-                |     | ➜ w  |      | Max-windo                  |
+                |     | ➜ w  |      | Maximize-window            |
+View jump/list  |     |      | ;v   |                            |
+                |     |      | ➜ a  | Save file as               |
+                |     |      | ➜ b  | (fzf)Buffers               |
+                |     |      | ➜ c  | (fzf)Changes               |
+                |     |      | ➜ g  | (fzf)git-status            |
+                |     |      | ➜ h  | (fzf)History               |
+                |     |      | ➜ j  | (fzf)Jump                  |
+                |     |      | ➜ m  | (fzf)Marks                 |
+                |     |      | ➜ q  | (fzf)Quickfix              |
+                |     |      | ➜ r  | Session restore            |
+                |     |      | ➜ s  | Session save               |
+                |     |      | ➜ w  | (fzf)Windows               |
+                |     |      | ➜ /  | (fzf)history-search        |
+                |     |      | ➜ :  | (fzf)history-cmd           |
+                |     |      | ➜ ;  | (fzf)history-cmd           |
 Change          |     | 󱁐c   |      |                            |
 -               |     | ➜ c  |      | EasyAlign                  |
                 |     | ➜ t  |      | Trim trailing space        |
@@ -77,8 +92,12 @@ Find            |     | 󱁐f   | ;f   |                            |
 -               |     | ➜ f  | ➜ f  | (fzf)Open file             |
                 |     | ➜ s  | ➜ s  | (fzf)Symbol                |
 Find-tag/cscope |     | 󱁐f   |      |                            |
+-               |     | ➜ e  |      | Search                     |
+                |     | ➜ 1  |      | Search wad                 |
+                |     | ➜ 2  |      | Search cmf                 |
                 |     | ➜ F  |      | Open file (all)            |
                 |     | ➜ g  |      | (fzf)Grep                  |
+                |     | ➜ l  |      | (fzf)Line                  |
                 |     | ➜ c  |      | (cscope)Caller             |
                 |     | ➜ C  |      | (cscope)Callee             |
                 |     | ➜ S  |      | (cscope)Reference +        |
@@ -87,7 +106,7 @@ Find-tag/cscope |     | 󱁐f   |      |                            |
                 |     | ➜ ]  |      | (tag)Create                |
                 |     | ➜ t  |      | (fzf)Tag                   |
                 |     | ➜ T  |      | (fzf)TagWiki               |
-Find(lsp)       |     |      | ;f   |                            |
+--Find(lsp)     |     |      | ;f   |                            |
 -               |     |      | ➜ d  | (lsp)Definition            |
                 |     |      | ➜ D  | (lsp)Declaration           |
                 |     |      | ➜ h  | (lsp)Show info             |
@@ -119,25 +138,8 @@ Mark/Make       |     | 󱁐m   |      |                            |
                 |     | ➜ m  |      | Colorize word              |
                 |     | ➜ w  |      | (tool)Dictionary           |
                 |     | ➜ x  |      | (color)Clear all colorize  |
-Search/Session  |     | 󱁐s   |      |                            |
--               |     | ➜ 1  |      | Search wad                 |
-                |     | ➜ 2  |      | Search cmf                 |
-                |     | ➜ 3  |      | Search                     |
-                |     | ➜ a  |      | Save file as               |
-                |     | ➜ b  |      | (fzf)Buffers               |
-                |     | ➜ c  |      | (fzf)Changes               |
-                |     | ➜ g  |      | (fzf)git-status            |
-                |     | ➜ h  |      | (fzf)History               |
-                |     | ➜ j  |      | (fzf)Jump                  |
-                |     | ➜ l  |      | (fzf)Line                  |
-                |     | ➜ m  |      | (fzf)Marks                 |
-                |     | ➜ q  |      | (fzf)Quickfix              |
-                |     | ➜ r  |      | Session restore            |
-                |     | ➜ s  |      | Session save               |
-                |     | ➜ w  |      | (fzf)Windows               |
-                |     | ➜ /  |      | (fzf)history-search        |
-                |     | ➜ :  |      | (fzf)history-cmd           |
-                |     | ➜ ;  |      | (fzf)history-cmd           |
+--Git           |     |      | ;g   |                            |
+-               |     |      | ➜ g  | Search wad                 |
 Info            |     | 󱁐a   | ;    |                            |
 -               |     | ➜ a  |      | (info)Toggle Context       |
 -               |     |      | a➜   | (info)Toggle source/header |
