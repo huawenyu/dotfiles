@@ -610,7 +610,8 @@ endif
         " Required for various utilities
         Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor', 'floatview']))
         " Required if you want to use some of the search functionality
-        Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))			| " Popup error message
+        Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))        | "
+        Plug 'nvim-telescope/telescope-hop.nvim', Cond(has('nvim') && Mode(['coder',]))    | "
 
     " Copy {{{3
         Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
@@ -627,6 +628,7 @@ endif
 
         Plug 'romainl/vim-cool',           Cond(has('nvim') && Mode(['editor',]))  | " No config, just disables search highlighting when you are done searching and re-enables it when you search again.
         Plug 'PeterRincker/vim-searchlight',Cond(has('nvim') && Mode(['editor',]))  | " No config
+        Plug 'kwkarlwang/bufjump.nvim',    Cond(has('nvim') && Mode(['editor',]))  | "
 
         " Tags/cscope/indexer? {{{4
             Plug 'preservim/tagbar',                Cond(has('nvim') && IfNoPlug('vista.vim') && Mode(['coder',]), {'on': ['TagbarToggle', 'Tagbar', 'TagbarOpen'], 'config': 'LoadTagbar'})
@@ -637,7 +639,7 @@ endif
 
         " Quickfix/Todo list {{{4
             Plug 'huawenyu/quickfix-reflector.vim', Cond(has('nvim') && Mode(['editor',]))    | " Directly edit the quickfix, Refactor code from a quickfix list and makes it editable
-            Plug 'kevinhwang91/nvim-bqf',           Cond(has('nvim') && Mode(['editor',]))    | " Better quickfix: zf   fzf-mode
+            "Plug 'kevinhwang91/nvim-bqf',          Cond(has('nvim') && Mode(['editor',]))    | " Seems telescope.quickfix cover the feature, Better quickfix: zf   fzf-mode
             "Plug 'romainl/vim-qf',                 Cond(has('nvim') && Mode(['editor',]))    | " Tame the quickfix window
 
             Plug 'folke/todo-comments.nvim',        Cond(has('nvim') && Mode(['editor',]), { 'on': ['TodoLocList', 'TodoQuickFix'], 'setup': ':LoadTodo', } )       | " :TodoLocList, :TodoQuickFix
@@ -826,7 +828,7 @@ endif
         "Plug 'arjunmahishi/flow.nvim',     Cond(has('nvim') && Mode(['coder',]))   | " runcode.nvim
         "Plug 'huawenyu/vimux-script',      Cond(has('nvim') && Mode(['coder',]))	| " :
         "Plug 'xolox/vim-misc',             Cond(has('nvim') && Mode(['coder',]))	| " :
-        "Plug 'skywind3000/vim-preview',    Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
+        Plug 'skywind3000/vim-preview',     Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
 
     "}}}
 
