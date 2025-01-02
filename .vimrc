@@ -8,6 +8,8 @@
 "        Buitin:  :vimtutor" for vim, ":Tutor" for neovim
 " - Startup without plug:   vim --clean
 "       Start other mode:   mode=basic vi <myfile>
+"                           mode=basic,test vi <myfile>
+"                           mode=all vi <myfile>
 " - Update env/plugin:      vim --headless "+PlugUpdate" +qa
 "
 " =============================================================
@@ -25,7 +27,7 @@ let g:vim_confi_option = {
       \ 'enable_map_useful': 1,
       \
       \ 'auto_install_vimplug': 0,
-      \ 'auto_install_plugs': 0,
+      \ 'auto_install_plugs': 1,
       \ 'auto_install_tools': 0,
       \
       \ 'auto_chdir': 0,
@@ -66,6 +68,8 @@ endif
 
 
 if !empty($mode)
+    let envMode = $mode
+    let usrModes = split(envMode, ',')
     let g:vim_confi_option.mode = [$mode]
     "echomsg "UserMode=". $mode
 endif
@@ -419,6 +423,7 @@ endif
 " Coder {{{2
     " Try/test {{{3
         Plug 'andymass/vim-matchup',             Cond (has('nvim') && Mode(['editor',]))
+        Plug 'huawenyu/vim.demo',                Cond (has('nvim') && Mode(['test',]))
     "}}}
 
     " Comment,Extra {{{3
@@ -769,7 +774,7 @@ endif
     " Text objects? {{{2
     " https://blog.carbonfive.com/vim-text-objects-the-definitive-guide/
         Plug 'wellle/targets.vim',              Cond(has('nvim') && Mode(['editor']))      | " number-repeat/`n`ext/`l`ast: quota `,`, comma `,`, `(` as n
-        Plug 'terryma/vim-expand-region',       Cond(has('nvim') && Mode(['editor']))     | " W/Q - wider/narrow select-region
+        Plug 'terryma/vim-expand-region',       Cond(has('nvim') && Mode(['editor']))     | " W/B - wider/narrow select-region
         Plug 'kana/vim-textobj-user',           Cond(has('nvim') && Mode(['editor']))      | " v-Select, d/x-Delete, c-Change, y-Yank, g-Goto; i-inside a-around
             Plug 'michaeljsmith/vim-indent-object', Cond(has('nvim') && Mode(['editor',])) | " <count>iI
             Plug 'glts/vim-textobj-indblock',       Cond(has('nvim') && Mode(['editor',])) | " o, Indentation block
@@ -965,6 +970,7 @@ if g:vim_confi_option.auto_install_plugs
         \ |     PlugInstall --sync | q
         \ | endif
 endif
+
 
 if filereadable(expand("~/.vimrc.after"))
     source ~/.vimrc.after
