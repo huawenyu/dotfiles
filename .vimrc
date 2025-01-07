@@ -2,8 +2,12 @@
 "
 " QuickStart: vim <leader>    <Space>
 " - Install:
+"   - Linux
 "          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim
 "          curl -fLo ~/.vim/init.vim          --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
+"   - Windows (by WSL)
+"          curl -fLo /mnt/c/Users/<your-user-name>/AppData/Local/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/huawenyu/vim-plug/master/plug.vim
+"          curl -fLo /mnt/c/Users/<your-user-name>/AppData/Local/nvim/init.vim          --create-dirs https://raw.githubusercontent.com/huawenyu/dotfiles/master/.vimrc
 " - Help by 'K':  vim_cheat, vim_maps, vim_config,
 "        Buitin:  :vimtutor" for vim, ":Tutor" for neovim
 " - Startup without plug:   vim --clean
@@ -439,7 +443,6 @@ endif
     "}}}
 
     " gdb front-end {{{3
-        "Plug 'huawenyu/vimgdb',            Cond(has('nvim') && Mode(['coder']) && IfNoPlug('vimspector'))    | "
         Plug 'huawenyu/vwm.vim',            Cond(has('nvim') && Mode(['coder']))      |  " Clone from fireflowerr/vwm.vim, vim windows management
         Plug 'huawenyu/vim-windowswap',     Cond(has('nvim') && Mode(['coder']))      |  " Swap window buffers
         Plug 'huawenyu/termdebug.nvim',     Cond(has('nvim') && Mode(['coder']) && IfNoPlug('vimspector'))    | " Add config after copy /usr/share/nvim/runtime/pack/dist/opt/termdebug/plugin/termdebug.vim
@@ -549,7 +552,6 @@ endif
 
 " Facade {{{2
     " Statusline
-    "Plug 'huawenyu/startscreen.vim',       Cond(has('nvim') && Mode(['editor']) && len(g:vim_confi_option.start_page))
     "Plug 'millermedeiros/vim-statline',    Cond(has('nvim') && Mode(['coder',]))	 | " Show current-function-name, simple, not annoy to distract our focus
     "Plug 'itchyny/lightline.vim',          Cond(has('nvim') && Mode(['coder',]))	 | "
     Plug 'nvim-lualine/lualine.nvim',       Cond(has('nvim') && Mode(['coder',]))
@@ -571,7 +573,6 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
-    Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'setup': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
 
     Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': ['NR', 'NRV'], })   | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
@@ -602,7 +603,6 @@ endif
         Plug 'junegunn/fzf.vim',            Cond(has('nvim') && HasPlug('fzf') && Mode(['editor',]))
         Plug 'junegunn/heytmux',            Cond(has('nvim') && Mode(['editor',]), { 'do': 'gem install heytmux' })     | " Shell: $ heytmux workspace.yml
 
-        "Plug 'huawenyu/vim-shortcut',      Cond(has('nvim') && Mode(['basic', 'editor', 'floatview']))         | " replace by which-key
         Plug 'kopischke/vim-fetch',         Cond(has('nvim') && Mode(['editor',]))      | " Support vim fname:line
         Plug 'nhooyr/neoman.vim',           Cond(has('nvim') && Mode(['coder',]), {'on': ['Nman', 'Snman']} )       | " Seems default :Man can't support view a file directly
 
@@ -619,9 +619,8 @@ endif
         Plug 'nvim-telescope/telescope-hop.nvim', Cond(has('nvim') && Mode(['coder',]))    | "
 
     " Copy {{{3
-        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Copy/paste cross host/instance when coperate with terminal Alacritty
-        Plug 'roxma/vim-tmux-clipboard',    Cond(has('nvim') && Mode(['editor']))       | " integration for vim and tmux's clipboard
-        Plug 'gbprod/yanky.nvim',           Cond(has('nvim') && Mode(['editor']))       |  " vim history of select
+        Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Tmux-user following [doc](https://github.com/tmux/tmux/wiki/Clipboard#quick-summary)
+        Plug 'gbprod/yanky.nvim',           Cond(has('nvim') && Mode(['editor']))       |  " vim history of select, alternative 'AckslD/nvim-neoclip.lua'
 
     " Search/Jump {{{3
         Plug 'mhinz/vim-grepper',           Cond(has('nvim') && Mode(['editor',]), {'on': ['Grepper', 'GrepperAg', 'GrepperGit','GrepperGrep', 'GrepperRg']})  | " :Grepper text
@@ -694,9 +693,6 @@ endif
             " Plug  'glts/vim-radical',       Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
             " Plug  'glts/vim-magnum',        Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
             " Plug  'triglav/vim-visual-increment', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))    | " Select by C-v, then increase by C-a, <OR-step-#>  #C-a
-
-            "Plug 'svermeulen/vim-macrobatics', Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
-            "Plug  'huawenyu/vim-macroscope',   Cond(has('nvim') && HasPlug('vim-repeat') && Mode(['editor',]))
 
         Plug 'rhysd/clever-f.vim',          Cond(has('nvim') && Mode(['editor',]))   | " Using 'f' to repeat, and also we can release ';' as our new map leader
         Plug 'huawenyu/vim-motion',         Cond(has('nvim') && Mode(['editor',]))  | " Jump according indent
@@ -804,17 +800,15 @@ endif
         Plug 'huawenyu/vim-floaterm-repl', Cond(has('nvim') && HasPlug('vim-floaterm') && HasPlug('vim-basic') && Mode(['editor',]), {'on': 'FloatermRepl'})  | "
         Plug 'wsdjeg/notifications.vim',   Cond(has('nvim') && Mode(['editor',]), {'on': ['Echo', 'Echoerr']})	| " :Echoerr xxxxx
 
-        "Plug 'huawenyu/vim-tmux-runner',   Cond(has('nvim') && Mode(['admin']), { 'on':  ['VtrLoad', 'VtrSendCommandToRunner', 'VtrSendLinesToRunner', 'VtrSendFile', 'VtrOpenRunner'] })   | " Send command to tmux's marked pane
-        Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE), { 'on':  ['VimuxTogglePane', 'VimuxRunCommand', 'VimuxOpenRunner', ] })   | " Send command to tmux's marked pane
+        Plug 'huawenyu/vimux',             Cond(has('nvim') && Mode(['admin']) && !empty($TMUX_PANE))   | " Send command to tmux's marked pane
 
-        "Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'on': 'TermExec', 'setup: ':LoadToggleTerm'})  | " :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
+        Plug 'akinsho/toggleterm.nvim',     Cond(has('nvim') && Mode(['admin',]), {'tag' : '*'})  | " Used by AsyncTask, :TermExec cmd='ls -l'  <OR> Toogle-terminal by <C-\>;     BUT 1.start-shell-slow 2.Can't re-use-same-window exe next command
         "Plug 'nikvdp/neomux',               Cond(has('nvim') && Mode(['editor',])) | " :Neomux,    BUT 2.Can't re-use-same-window exe next command
         "Plug 'wincent/terminus',            Cond(has('nvim') && Mode(['admin',]))  | " Enhanced terminal integration for Vim
 
         "Plug 'thinca/vim-quickrun',            Cond(has('nvim') && Mode(['editor',]))   | " :QuickRun
         "Plug 'jpalardy/vim-slime',             Cond(has('nvim') && Mode(['editor',]))   | " :
         "Plug 'jalvesaq/vimcmdline',            Cond(has('nvim') && Mode(['editor',]))   | " :
-        Plug 'skywind3000/vim-terminal-help',   Cond(has('nvim') && Mode(['editor',]))   | " :H ls -l  <OR> Toogle-terminal by <C-\>;
     "}}}
 
     " Async {{{3
@@ -822,8 +816,9 @@ endif
         "Plug 'Shougo/vimproc.vim',         Cond(has('nvim') && Mode(['admin',]), {'do' : 'make'})
         "Plug 'neomake/neomake',            Cond(has('nvim') && Mode(['admin',]))
 
-        Plug 'skywind3000/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]), {'on': ['AsyncRun', 'AsyncStop', 'AsyncTask']})
-        Plug 'skywind3000/asynctasks.vim',  Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
+        Plug 'huawenyu/asyncrun.vim',    Cond(has('nvim') && Mode(['admin',]))
+        Plug 'skywind3000/asynctasks.vim',     Cond(has('nvim') && HasPlug('asyncrun.vim') && Mode(['admin',]))   | " ~/.vim/tasks.ini
+        "Plug 'skywind3000/vim-terminal-help',   Cond(has('nvim') && Mode(['editor',]))   | " :H ls -l  <OR> Toogle-terminal by <C-\>;
     "}}}
 
     " Repl {{{3
@@ -831,7 +826,6 @@ endif
 
         "Plug 'michaelb/sniprun',           Cond(has('nvim') && Mode(['admin']), {'do': 'bash install.sh'})   | " REPL/interpreters:  :SnipRun, :'<,'>SnipRun, :SnipReset, :SnipClose
         "Plug 'arjunmahishi/flow.nvim',     Cond(has('nvim') && Mode(['coder',]))   | " runcode.nvim
-        "Plug 'huawenyu/vimux-script',      Cond(has('nvim') && Mode(['coder',]))	| " :
         "Plug 'xolox/vim-misc',             Cond(has('nvim') && Mode(['coder',]))	| " :
         Plug 'skywind3000/vim-preview',     Cond(has('nvim') && Mode(['coder'])) |  " Improve preview
 
