@@ -573,6 +573,7 @@ endif
 
     " Windows related
     "Plug 'stevearc/stickybuf.nvim',        Cond(has('nvim') && Mode(['coder']))      |  " Can't make it works; bind buffer with the window
+    Plug 'folke/which-key.nvim',        Cond(has('nvim') && Mode(['editor']) && g:vim_confi_option.help_keys, { 'setup': ':let g:which_key_preferred_mappings = 1' }) |  " Show/remember vim keymaps
 
     Plug 'chrisbra/NrrwRgn',            Cond(has('nvim') && Mode(['editor',]), {'on': ['NR', 'NRV'], })   | " focus on a selected region. :NR - Open selected into new window; :w - (in the new window) write the changes back
     "Plug 'jamessan/vim-gnupg',         Cond(has('nvim') && Mode(['extra']) && Mode(['admin']))         | " implements transparent editing of gpg encrypted files.
@@ -859,7 +860,7 @@ endif
             "Plug '3rd/image.nvim',              Cond(has('nvim') && Mode(['editor',]))   | " :Neotree
         Plug 'nvim-neo-tree/neo-tree.nvim', Cond(has('nvim') && Mode(['editor',]), { 'on': 'Neotree', 'setup': ':LoadNeotree'})
 
-        Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle'], 'config': 'LoadNerdtree' })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
+        Plug 'preservim/nerdtree',          Cond(has('nvim') && Mode(['editor',]), { 'on':  ['NERDTreeToggle', 'NERDTreeTabsToggle', 'NERDTreeFocus'], 'config': 'LoadNerdtree' })   | " :NERDTreeToggle; <Enter> open-file; '?' Help, and remap 'M' as menu
         "Plug 'jistr/vim-nerdtree-tabs',    Cond(has('nvim') && Mode(['editor',]) && IfNoPlug('neo-tree.nvim'), { 'on':  'NERDTreeTabsToggle' })   | " :NERDTreeTabsToggle, Just one NERDTree, always and ever. It will always look the same in all tabs, including expanded/collapsed nodes, scroll position etc.
         "Plug 'lambdalisue/fern.vim',            Cond(has('nvim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " :Fern . -draw -width=30
             Plug 'LumaKernel/fern-mapping-fzf.vim', Cond(has('nvim') && HasPlug('fern.vim') && Mode(['editor',]), { 'on':  ['Fern',] })   | " maps-for-fern-windows: ff, fd, fa, frf, frd, fra
