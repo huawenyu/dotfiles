@@ -711,12 +711,14 @@ endif
             Plug 'Shougo/neosnippet.vim',       Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " <Tab> apply code, c-n next, c-p previous, :NeoSnippetEdit
             Plug 'Shougo/neosnippet-snippets',  Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))
             Plug 'huawenyu/vim-snippets.local', Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',])  && Mode(['snippet',]))
-            Plug 'aperezdc/vim-template',       Cond(has('nvim') && Mode(['editor',]))                     | " :TemplateHere *.md,   vi a-new.md
+            Plug 'huawenyu/vim-template',       Cond(has('nvim') && Mode(['editor',]))                     | " :TemplateHere .md
 
         "Plug 'SirVer/ultisnips',           Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]))        | " c-k apply code, c-n next, c-p previous, :NeoSnippetEdit
         "Plug 'honza/vim-snippets',         Cond(has('nvim') && HasPlug('deoplete.nvim') && Mode(['editor',]) && Mode(['snippet',]))
 
         Plug 'reedes/vim-wordy',            Cond(has('nvim') && Mode(['writer',]) && Mode(['snippet',]))
+        Plug 'gelguy/wilder.nvim',          Cond(has('nvim') && Mode(['editor',]), { 'do': ':UpdateRemotePlugins' })  | " command line autocomplete
+            Plug 'roxma/nvim-yarp',        Cond(has('nvim') && Mode(['editor',]) && HasPlug('wilder.nvim'), { 'do': 'pip install -r requirements.txt' })  | " command line autocomplete
 
         " LSP - Autocomplete/AutoIndexer
             " Plug 'neovim/nvim-lspconfig'
@@ -901,7 +903,7 @@ endif
 
     "}}}
 
-    "Plug 'wlemuel/vim-tldr',               Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <linux-cmd>
+    Plug 'huawenyu/tldr.nvim',              Cond(has('nvim') && executable('tldr') && Mode(['editor',]))    | " :Tldr <list>
     Plug 'yuratomo/w3m.vim',                Cond(has('nvim') && executable('w3m') && Mode(['admin',]) && Mode(['tool',]), {'on':['W3m', 'W3mTab'], 'config': 'LoadW3m'} ) | " :W3m
     Plug 's1n7ax/nvim-window-picker',       Cond(has('nvim') && Mode(['editor',]) && Mode(['tool',]))
 "}}}

@@ -67,7 +67,7 @@
 	vimdiff = "!f() { vim -p $(git diff --name-only) +\"tabdo Gvdiff $@\" +tabfirst; }; f"
 
 [credential]
-	helper = cache --timeout 3600
+	helper = store
 [pack]
 	windowMemory = 100m
 	SizeLimit = 100m
