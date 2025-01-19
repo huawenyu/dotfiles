@@ -130,12 +130,7 @@ do
 done
 
 ## Loading customize local bashrc {{{2}}}
-if [ -f "$HOME/.local/local" ]; then
-    #echo "load local succ!"
-    source $HOME/.local/local
-else
-    do-echo "Harmless! [$me] no local-env loaded from '$HOME/.local/local', silent by `touch $HOME/.local/local`!"
-fi
+[ -f "$HOME/.local/local" ] && source "$HOME/.local/local"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -164,13 +159,13 @@ fi
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
-eval "$(/home/hyu/sub-me/bin/me init -)"
+[ -f /home/hyu/sub-me/bin/me ] && eval "$(/home/hyu/sub-me/bin/me init -)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash --disable-up-arrow)"
+command -v atuin &> /dev/null && eval "$(atuin init bash --disable-up-arrow)"
 
+[ -f "$HOME/.atuin/bin/env" ] && source "$HOME/.atuin/bin/env"
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-. "$HOME/.atuin/bin/env"
-. "$HOME/.cargo/env"
