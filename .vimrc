@@ -614,10 +614,11 @@ endif
         " Cody AI-code
         "Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
         " Required for various utilities
-        Plug 'nvim-lua/plenary.nvim',        Cond(has('nvim') && Mode(['editor', 'floatview']))
+        Plug 'nvim-lua/plenary.nvim',                       Cond(has('nvim') && Mode(['editor', 'floatview']))
         " Required if you want to use some of the search functionality
-        Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim') && Mode(['coder',]))        | "
-        Plug 'nvim-telescope/telescope-hop.nvim', Cond(has('nvim') && Mode(['coder',]))    | "
+        Plug 'nvim-telescope/telescope.nvim',               Cond(has('nvim') && Mode(['coder',]))        | "
+        Plug 'nvim-telescope/telescope-fzf-native.nvim',    Cond(has('nvim') && Mode(['coder',]), { 'do': 'make' })        | "
+        Plug 'nvim-telescope/telescope-hop.nvim',           Cond(has('nvim') && Mode(['coder',]))    | "
 
     " Copy {{{3
         Plug 'ojroques/vim-oscyank',        Cond(has('nvim') && Mode(['editor']))       | " Tmux-user following [doc](https://github.com/tmux/tmux/wiki/Clipboard#quick-summary)
@@ -671,7 +672,7 @@ endif
         " Auto indent
         Plug 'ciaranm/securemodelines',     Cond(has('nvim') && Mode(['editor'])) | " Limit the vim magic mode line feature
         "Plug 'tpope/vim-sleuth',           Cond(has('nvim') && Mode(['editor',]))| " vimscript base
-        Plug 'NMAC427/guess-indent.nvim',   Cond(has('nvim') && Mode(['editor',]))| " Lua base
+        "Plug 'NMAC427/guess-indent.nvim',  Cond(has('nvim') && Mode(['editor',]))| " Lua base
     "}}}
 
     " Motion {{{3
